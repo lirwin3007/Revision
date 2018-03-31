@@ -737,7 +737,7 @@ Public Class question
         Dim questionNumberPosition As New Rectangle(New Point(0, 0), TextRenderer.MeasureText(questionNumber.ToString() + ".", boldFont))
 
         Dim textPadding As Integer = 10
-        Dim questionPosition As New Rectangle(New Point(questionNumberPosition.Width + textPadding, 0), New Size(result.Width - (questionNumberPosition.Width + textPadding + textPadding), 0))
+        Dim questionPosition As New Rectangle(New Point(questionNumberPosition.Width + textPadding, 0), New Size(result.Width - (questionNumberPosition.Width + textPadding + textPadding), result.Height))
 
         If questionType = "Written" Then
             Dim counter = question.Length
@@ -777,11 +777,13 @@ Public Class question
         Else
             Dim questionImage As New Bitmap(questionImageLocation)
             Dim resultQuestionImage As Bitmap
-            If questionImage.Width > questionImage.Height And (questionImage.Width > questionPosition.Width Or questionImage.Width < questionPosition.Width * 0.5) Then
+            If questionImage.Width > questionPosition.Width Or questionImage.Width < questionPosition.Width * 0.5 Then
                 Dim scalefactor As Double = questionPosition.Width / questionImage.Width
                 resultQuestionImage = New Bitmap(questionImage, questionImage.Width * scalefactor, questionImage.Height * scalefactor)
-            Else
-                resultQuestionImage = questionImage
+            End If
+            If questionImage.Height > questionPosition.Height Then
+                Dim scalefactor As Double = questionPosition.Height / questionImage.Height
+                resultQuestionImage = New Bitmap(questionImage, questionImage.Width * scalefactor, questionImage.Height * scalefactor)
             End If
             graphics.DrawImage(resultQuestionImage, questionPosition.Location)
             questionPosition.Height = resultQuestionImage.Height
