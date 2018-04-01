@@ -103,5 +103,6 @@
             scores.Add(question, score)
         Next
         Form1.assessments(Form1.getSelectedAssessment()).addNewResult(Form1.assessments(Form1.getSelectedAssessment()).publications(CType(Form1.listPublications.SelectedItem, publication).ID).tests(CType(Form1.listTests.SelectedItem, test).ID), scores)
+        Me.Close()
     End Sub
 End Class
