@@ -1208,7 +1208,7 @@ Public Class test
     Sub New(path As String)
         Me.ID = path.Split("\").Last
         For Each file In IO.Directory.GetFiles(path)
-            pages.Add(file)
+            If file.Split("\").Last <> "info.txt" Then pages.Add(file)
         Next
         For Each file In IO.Directory.GetFiles(path + "\results")
             Dim newResult As New result(file)
