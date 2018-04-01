@@ -1011,28 +1011,29 @@ Public Class publication
             Next
             questionCollections = jumble(questionCollections)
         Else
-            For Each question In questionsToUse
-
-                If multiPageQuestionHeights.ContainsKey(question.Key) Then
+            Dim sortedQuestionKeys As List(Of Integer) = questionsToUse.Keys.ToList
+            sortedQuestionKeys.Sort()
+            For Each questionKey In sortedQuestionKeys
+                If multiPageQuestionHeights.ContainsKey(questionKey) Then
                     Dim newBin As New questionCollection(200 * paperRatio.A, True)
-                    If newBin.canFit(New KeyValuePair(Of String, Integer)(question.Key, multiPageQuestionHeights(question.Key))) Then
-                        newBin.addItem(New KeyValuePair(Of String, Integer)(question.Key, multiPageQuestionHeights(question.Key)))
+                    If newBin.canFit(New KeyValuePair(Of String, Integer)(questionKey, multiPageQuestionHeights(questionKey))) Then
+                        newBin.addItem(New KeyValuePair(Of String, Integer)(questionKey, multiPageQuestionHeights(questionKey)))
                     End If
                     questionCollections.Add(newBin)
                 Else
                     If questionCollections.Count = 0 Then
                         Dim newBin As New questionCollection(200 * paperRatio.A, False)
-                        If newBin.canFit(New KeyValuePair(Of String, Integer)(question.Key, singlePageQuestionHeights(question.Key))) Then
-                            newBin.addItem(New KeyValuePair(Of String, Integer)(question.Key, singlePageQuestionHeights(question.Key)))
+                        If newBin.canFit(New KeyValuePair(Of String, Integer)(questionKey, singlePageQuestionHeights(questionKey))) Then
+                            newBin.addItem(New KeyValuePair(Of String, Integer)(questionKey, singlePageQuestionHeights(questionKey)))
                         End If
                         questionCollections.Add(newBin)
                     Else
-                        If questionCollections.Last.canFit(New KeyValuePair(Of String, Integer)(question.Key, singlePageQuestionHeights(question.Key))) Then
-                            questionCollections(questionCollections.Count - 1).addItem(New KeyValuePair(Of String, Integer)(question.Key, singlePageQuestionHeights(question.Key)))
+                        If questionCollections.Last.canFit(New KeyValuePair(Of String, Integer)(questionKey, singlePageQuestionHeights(questionKey))) Then
+                            questionCollections(questionCollections.Count - 1).addItem(New KeyValuePair(Of String, Integer)(questionKey, singlePageQuestionHeights(questionKey)))
                         Else
                             Dim newBin As New questionCollection(200 * paperRatio.A, False)
-                            If newBin.canFit(New KeyValuePair(Of String, Integer)(question.Key, singlePageQuestionHeights(question.Key))) Then
-                                newBin.addItem(New KeyValuePair(Of String, Integer)(question.Key, singlePageQuestionHeights(question.Key)))
+                            If newBin.canFit(New KeyValuePair(Of String, Integer)(questionKey, singlePageQuestionHeights(questionKey))) Then
+                                newBin.addItem(New KeyValuePair(Of String, Integer)(questionKey, singlePageQuestionHeights(questionKey)))
                             End If
                             questionCollections.Add(newBin)
                         End If
