@@ -443,20 +443,24 @@
     End Sub
 
     Private Sub listPublications_SelectedIndexChanged(sender As Object, e As EventArgs) Handles listPublications.SelectedIndexChanged
-        btnGenerateTest.Items.Clear()
+        listTests.Items.Clear()
         For Each kvp As KeyValuePair(Of Integer, test) In CType(listPublications.SelectedItem, publication).tests
             Dim test As test = kvp.Value
-            btnGenerateTest.Items.Add(test)
+            listTests.Items.Add(test)
         Next
-    End Sub
-
-    Private Sub listTests_SelectedIndexChanged(sender As Object, e As EventArgs) Handles btnGenerateTest.SelectedIndexChanged
-        testViewer.showForm(CType(listPublications.SelectedItem, publication).tests(CType(btnGenerateTest.SelectedItem, test).ID))
     End Sub
 
     Private Sub btnTestsGen_Click(sender As Object, e As EventArgs) Handles btnTestsGen.Click
         assessments(getSelectedAssessment()).publications(CType(listPublications.SelectedItem, publication).ID).generateTest(assessments(getSelectedAssessment()).questions)
         GC.Collect()
+    End Sub
+
+    Private Sub btnMarkTest_Click(sender As Object, e As EventArgs) Handles btnMarkTest.Click
+        Marker.showForm(listTests.SelectedItem, assessments(getSelectedAssessment()).questions)
+    End Sub
+
+    Private Sub btnPrintTest_Click(sender As Object, e As EventArgs) Handles btnPrintTest.Click
+        testViewer.showForm(CType(listPublications.SelectedItem, publication).tests(CType(listTests.SelectedItem, test).ID))
     End Sub
 End Class
 
@@ -565,6 +569,15 @@ Public Class assessment
         End While
         Dim newPublication As New publication(counter, style, minMarks, maxMarks, tags, includeuntagged, questionCount, randomised, Me.name + "\Publications\", pubName)
         publications.Add(newPublication.ID, newPublication)
+    End Sub
+
+    Public Sub addNewResult(ByRef test As test, scores As Dictionary(Of Integer, Integer))
+        Dim counter As Integer = 0
+        While test.results.ContainsKey(counter)
+            counter += 1
+        End While
+        Dim newResult As New result(counter, scores)
+        test.results.Add(newResult.ID, newResult)
     End Sub
 
     Private Sub addFolders(paths As IO.DirectoryInfo(), ByRef folderStructure As TreeView)
@@ -943,6 +956,9 @@ Public Class publication
         file.Write(tagString + "¬")
         file.WriteLine(includeUntagged.ToString + "¬" + questionCount.ToString + "¬" + randomised.ToString() + "¬" + name)
         file.Close()
+        For Each test In tests
+            test.Value.save(path)
+        Next
     End Sub
 
     Public Sub generateTest(completeQuestions As Dictionary(Of Integer, question))
@@ -1061,19 +1077,20 @@ Public Class publication
         Next
 
         'Save Publication
-        addNewTest(pages)
+        addNewTest(pages, questionsToUse.Keys.ToList)
         Form1.updatePublicationsGUI()
         graphics.Dispose()
         GC.Collect()
     End Sub
 
-    Sub addNewTest(pages As List(Of Bitmap))
+    Sub addNewTest(pages As List(Of Bitmap), questionsIDs As List(Of Integer))
         Dim counter As Integer = 0
         While tests.ContainsKey(counter)
             counter += 1
         End While
 
         IO.Directory.CreateDirectory(path + "\" + counter.ToString())
+        IO.Directory.CreateDirectory(path + "\" + counter.ToString() + "\Results")
         Dim pagePaths As New List(Of String)
         Dim secondCounter As Integer = 0
         For Each page In pages
@@ -1082,7 +1099,7 @@ Public Class publication
             secondCounter += 1
         Next
 
-        Dim newTest As New test(counter, pagePaths)
+        Dim newTest As New test(counter, pagePaths, questionsIDs)
         tests.Add(newTest.ID, newTest)
     End Sub
 
@@ -1179,10 +1196,13 @@ Public Class test
     Public ID As Integer
     Public pages As New List(Of String)
     Public name As String
+    Public questionIDs As New List(Of Integer)
+    Public results As New Dictionary(Of Integer, result)
 
-    Sub New(ID As Integer, pages As List(Of String))
+    Sub New(ID As Integer, pages As List(Of String), questionIDs As List(Of Integer))
         Me.ID = ID
         Me.pages = pages
+        Me.questionIDs = questionIDs
     End Sub
 
     Sub New(path As String)
@@ -1190,11 +1210,65 @@ Public Class test
         For Each file In IO.Directory.GetFiles(path)
             pages.Add(file)
         Next
+        For Each file In IO.Directory.GetFiles(path + "\results")
+            Dim newResult As New result(file)
+            results.Add(newResult.ID, newResult)
+        Next
+        Dim fileReader As IO.StreamReader
+        fileReader = My.Computer.FileSystem.OpenTextFileReader(path + "\info.txt")
+        Dim lines() As String = fileReader.ReadToEnd().Split("¬")
+        For Each q In lines(0).Split(",")
+            Me.questionIDs.Add(Int(q))
+        Next
+        fileReader.Close()
+    End Sub
+
+    Sub save(path)
+        Dim file As IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(path + "\" + ID.ToString() + "\info.txt", False)
+        Dim qString As String = ""
+        For Each questionID In questionIDs
+            qString += questionID.ToString() + ","
+        Next
+        If qString.Length > 0 Then qString = Mid(qString, 1, qString.Length - 1)
+        file.WriteLine(qString + "¬")
+        file.Close()
+        For Each result In results
+            result.Value.save(path + "\" + ID.ToString() + "\results")
+        Next
     End Sub
 
 End Class
 
 Public Class result
+    Public ID As Integer
+    Public scores As New Dictionary(Of Integer, Integer)
+
+    Sub New(ID As Integer, scores As Dictionary(Of Integer, Integer))
+        Me.ID = ID
+        Me.scores = scores
+    End Sub
+
+    Sub New(path As String)
+        Me.ID = Mid(path.Split("\").Last, 1, path.Split("\").Last.IndexOf("."))
+        Dim fileReader As IO.StreamReader
+        fileReader = My.Computer.FileSystem.OpenTextFileReader(path)
+        Dim lines() As String = fileReader.ReadToEnd().Split(",")
+        For Each score In lines
+            Me.scores.Add(score.Split("¬")(0).Trim({Chr(13), Chr(10)}), score.Split("¬")(1).Trim({Chr(13), Chr(10)}))
+        Next
+        fileReader.Close()
+    End Sub
+
+    Sub save(path)
+        Dim file As IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(path + "\" + ID.ToString() + ".txt", False)
+        Dim scoreString As String = ""
+        For Each score In scores
+            scoreString += score.Key.ToString() + "¬" + score.Value.ToString() + ","
+        Next
+        If scoreString.Length > 0 Then scoreString = Mid(scoreString, 1, scoreString.Length - 1)
+        file.WriteLine(scoreString)
+        file.Close()
+    End Sub
 
 End Class
 

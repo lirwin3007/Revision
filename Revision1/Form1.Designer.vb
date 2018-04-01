@@ -124,8 +124,11 @@ Partial Class Form1
         Me.buttonRemovePublication = New System.Windows.Forms.Button()
         Me.buttonAddPublication = New System.Windows.Forms.Button()
         Me.TableLayoutPanel33 = New System.Windows.Forms.TableLayoutPanel()
-        Me.btnGenerateTest = New System.Windows.Forms.ListBox()
+        Me.TableLayoutPanel37 = New System.Windows.Forms.TableLayoutPanel()
+        Me.btnPrintTest = New System.Windows.Forms.Button()
         Me.btnTestsGen = New System.Windows.Forms.Button()
+        Me.btnMarkTest = New System.Windows.Forms.Button()
+        Me.listTests = New System.Windows.Forms.ListBox()
         Me.Results = New System.Windows.Forms.TabPage()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.TableLayoutPanel17 = New System.Windows.Forms.TableLayoutPanel()
@@ -187,6 +190,7 @@ Partial Class Form1
         Me.TableLayoutPanel35.SuspendLayout()
         Me.TableLayoutPanel36.SuspendLayout()
         Me.TableLayoutPanel33.SuspendLayout()
+        Me.TableLayoutPanel37.SuspendLayout()
         Me.Results.SuspendLayout()
         Me.TableLayoutPanel17.SuspendLayout()
         Me.TableLayoutPanel18.SuspendLayout()
@@ -1402,8 +1406,8 @@ Partial Class Form1
         '
         Me.TableLayoutPanel33.ColumnCount = 1
         Me.TableLayoutPanel33.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel33.Controls.Add(Me.btnGenerateTest, 0, 0)
-        Me.TableLayoutPanel33.Controls.Add(Me.btnTestsGen, 0, 1)
+        Me.TableLayoutPanel33.Controls.Add(Me.TableLayoutPanel37, 0, 1)
+        Me.TableLayoutPanel33.Controls.Add(Me.listTests, 0, 0)
         Me.TableLayoutPanel33.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel33.Location = New System.Drawing.Point(536, 3)
         Me.TableLayoutPanel33.Name = "TableLayoutPanel33"
@@ -1413,24 +1417,61 @@ Partial Class Form1
         Me.TableLayoutPanel33.Size = New System.Drawing.Size(794, 823)
         Me.TableLayoutPanel33.TabIndex = 1
         '
-        'btnGenerateTest
+        'TableLayoutPanel37
         '
-        Me.btnGenerateTest.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.btnGenerateTest.FormattingEnabled = True
-        Me.btnGenerateTest.Location = New System.Drawing.Point(3, 3)
-        Me.btnGenerateTest.Name = "btnGenerateTest"
-        Me.btnGenerateTest.Size = New System.Drawing.Size(788, 775)
-        Me.btnGenerateTest.TabIndex = 0
+        Me.TableLayoutPanel37.ColumnCount = 3
+        Me.TableLayoutPanel37.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel37.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel37.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel37.Controls.Add(Me.btnPrintTest, 0, 0)
+        Me.TableLayoutPanel37.Controls.Add(Me.btnTestsGen, 0, 0)
+        Me.TableLayoutPanel37.Controls.Add(Me.btnMarkTest, 2, 0)
+        Me.TableLayoutPanel37.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel37.Location = New System.Drawing.Point(3, 784)
+        Me.TableLayoutPanel37.Name = "TableLayoutPanel37"
+        Me.TableLayoutPanel37.RowCount = 1
+        Me.TableLayoutPanel37.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel37.Size = New System.Drawing.Size(788, 36)
+        Me.TableLayoutPanel37.TabIndex = 1
+        '
+        'btnPrintTest
+        '
+        Me.btnPrintTest.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.btnPrintTest.Location = New System.Drawing.Point(265, 3)
+        Me.btnPrintTest.Name = "btnPrintTest"
+        Me.btnPrintTest.Size = New System.Drawing.Size(256, 30)
+        Me.btnPrintTest.TabIndex = 3
+        Me.btnPrintTest.Text = "Print Test"
+        Me.btnPrintTest.UseVisualStyleBackColor = True
         '
         'btnTestsGen
         '
         Me.btnTestsGen.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.btnTestsGen.Location = New System.Drawing.Point(3, 784)
+        Me.btnTestsGen.Location = New System.Drawing.Point(3, 3)
         Me.btnTestsGen.Name = "btnTestsGen"
-        Me.btnTestsGen.Size = New System.Drawing.Size(788, 36)
+        Me.btnTestsGen.Size = New System.Drawing.Size(256, 30)
         Me.btnTestsGen.TabIndex = 1
         Me.btnTestsGen.Text = "Generate Test"
         Me.btnTestsGen.UseVisualStyleBackColor = True
+        '
+        'btnMarkTest
+        '
+        Me.btnMarkTest.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.btnMarkTest.Location = New System.Drawing.Point(527, 3)
+        Me.btnMarkTest.Name = "btnMarkTest"
+        Me.btnMarkTest.Size = New System.Drawing.Size(258, 30)
+        Me.btnMarkTest.TabIndex = 2
+        Me.btnMarkTest.Text = "Mark Test"
+        Me.btnMarkTest.UseVisualStyleBackColor = True
+        '
+        'listTests
+        '
+        Me.listTests.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.listTests.FormattingEnabled = True
+        Me.listTests.Location = New System.Drawing.Point(3, 3)
+        Me.listTests.Name = "listTests"
+        Me.listTests.Size = New System.Drawing.Size(788, 775)
+        Me.listTests.TabIndex = 0
         '
         'Results
         '
@@ -1601,6 +1642,7 @@ Partial Class Form1
         Me.TableLayoutPanel35.ResumeLayout(False)
         Me.TableLayoutPanel36.ResumeLayout(False)
         Me.TableLayoutPanel33.ResumeLayout(False)
+        Me.TableLayoutPanel37.ResumeLayout(False)
         Me.Results.ResumeLayout(False)
         Me.Results.PerformLayout()
         Me.TableLayoutPanel17.ResumeLayout(False)
@@ -1720,6 +1762,9 @@ Partial Class Form1
     Friend WithEvents buttonRemovePublication As Button
     Friend WithEvents buttonAddPublication As Button
     Friend WithEvents TableLayoutPanel33 As TableLayoutPanel
-    Friend WithEvents btnGenerateTest As ListBox
+    Friend WithEvents listTests As ListBox
     Friend WithEvents btnTestsGen As Button
+    Friend WithEvents TableLayoutPanel37 As TableLayoutPanel
+    Friend WithEvents btnMarkTest As Button
+    Friend WithEvents btnPrintTest As Button
 End Class
