@@ -27,7 +27,7 @@ Partial Class Publisher
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.textboxName = New System.Windows.Forms.TextBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
         Me.listStyles = New System.Windows.Forms.ListBox()
@@ -124,7 +124,7 @@ Partial Class Publisher
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel3.Controls.Add(Me.Label1, 0, 0)
-        Me.TableLayoutPanel3.Controls.Add(Me.TextBox1, 1, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.textboxName, 1, 0)
         Me.TableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel3.Location = New System.Drawing.Point(3, 3)
         Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
@@ -143,14 +143,14 @@ Partial Class Publisher
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Publication Name:"
         '
-        'TextBox1
+        'textboxName
         '
-        Me.TextBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TextBox1.Location = New System.Drawing.Point(338, 207)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(330, 20)
-        Me.TextBox1.TabIndex = 1
-        Me.TextBox1.Text = "My Publication"
+        Me.textboxName.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.textboxName.Location = New System.Drawing.Point(338, 207)
+        Me.textboxName.Name = "textboxName"
+        Me.textboxName.Size = New System.Drawing.Size(330, 20)
+        Me.textboxName.TabIndex = 1
+        Me.textboxName.Text = "My Publication"
         '
         'TabPage2
         '
@@ -565,7 +565,7 @@ Partial Class Publisher
     Friend WithEvents TabPage4 As TabPage
     Friend WithEvents TableLayoutPanel3 As TableLayoutPanel
     Friend WithEvents Label1 As Label
-    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents textboxName As TextBox
     Friend WithEvents TableLayoutPanel4 As TableLayoutPanel
     Friend WithEvents listStyles As ListBox
     Friend WithEvents PictureBox1 As PictureBox

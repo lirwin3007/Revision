@@ -97,7 +97,7 @@
             tagList.Add(item)
         Next
 
-        Form1.assessments(assessment.name).addNewPublication(styles(listStyles.SelectedItem), nudMinMark.Value, nudMaxMark.Value, tagList, checkIncludeUntagged.Checked, nudQuestionCount.Value, Form1.getSelectedPath, checkRandom.Checked)
+        Form1.assessments(assessment.name).addNewPublication(styles(listStyles.SelectedItem), nudMinMark.Value, nudMaxMark.Value, tagList, checkIncludeUntagged.Checked, nudQuestionCount.Value, Form1.getSelectedPath, checkRandom.Checked, textboxName.Text)
 
     End Sub
 

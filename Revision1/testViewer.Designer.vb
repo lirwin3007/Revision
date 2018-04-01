@@ -25,11 +25,11 @@ Partial Class testViewer
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.buttonPrint = New System.Windows.Forms.Button()
-        Me.PrintDocument1 = New System.Drawing.Printing.PrintDocument()
-        Me.PrintDialog1 = New System.Windows.Forms.PrintDialog()
-        Me.printPreview = New System.Windows.Forms.PrintPreviewControl()
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
         Me.VScrollBar1 = New System.Windows.Forms.VScrollBar()
+        Me.printPreview = New System.Windows.Forms.PrintPreviewControl()
+        Me.PrintDocument1 = New System.Drawing.Printing.PrintDocument()
+        Me.PrintDialog1 = New System.Windows.Forms.PrintDialog()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
@@ -75,23 +75,6 @@ Partial Class testViewer
         Me.buttonPrint.Text = "Print"
         Me.buttonPrint.UseVisualStyleBackColor = True
         '
-        'PrintDocument1
-        '
-        '
-        'PrintDialog1
-        '
-        Me.PrintDialog1.UseEXDialog = True
-        '
-        'printPreview
-        '
-        Me.printPreview.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.printPreview.Document = Me.PrintDocument1
-        Me.printPreview.Location = New System.Drawing.Point(3, 3)
-        Me.printPreview.Name = "printPreview"
-        Me.printPreview.Size = New System.Drawing.Size(702, 696)
-        Me.printPreview.TabIndex = 1
-        Me.printPreview.Zoom = 0.6030795551753636R
-        '
         'TableLayoutPanel3
         '
         Me.TableLayoutPanel3.ColumnCount = 2
@@ -115,6 +98,24 @@ Partial Class testViewer
         Me.VScrollBar1.Name = "VScrollBar1"
         Me.VScrollBar1.Size = New System.Drawing.Size(15, 702)
         Me.VScrollBar1.TabIndex = 0
+        '
+        'printPreview
+        '
+        Me.printPreview.AutoZoom = False
+        Me.printPreview.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.printPreview.Document = Me.PrintDocument1
+        Me.printPreview.Location = New System.Drawing.Point(3, 3)
+        Me.printPreview.Name = "printPreview"
+        Me.printPreview.Size = New System.Drawing.Size(702, 696)
+        Me.printPreview.TabIndex = 1
+        Me.printPreview.Zoom = 0.6030795551753636R
+        '
+        'PrintDocument1
+        '
+        '
+        'PrintDialog1
+        '
+        Me.PrintDialog1.UseEXDialog = True
         '
         'testViewer
         '

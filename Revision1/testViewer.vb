@@ -4,12 +4,14 @@
 
     Sub showForm(test As test)
         Me.test = test
-        pageList = test.pages
+        For Each path In test.pages
+            pageList.Add(New Bitmap(path))
+        Next
         workingPageList = New List(Of Bitmap)(pageList)
         Me.Show()
     End Sub
 
-    Dim pageList As List(Of Bitmap)
+    Dim pageList As New List(Of Bitmap)
     Dim workingPageList As List(Of Bitmap)
     Dim pageCount As Integer = 0
 
@@ -37,5 +39,9 @@
 
     Private Sub VScrollBar1_Scroll(sender As Object, e As ScrollEventArgs) Handles VScrollBar1.Scroll
         printPreview.StartPage = VScrollBar1.Value
+    End Sub
+
+    Private Sub testViewer_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+        GC.Collect()
     End Sub
 End Class

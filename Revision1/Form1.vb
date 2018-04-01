@@ -521,6 +521,7 @@ Public Class assessment
 
         parseResources({New IO.DirectoryInfo(filepath + "\Resources")})
         parseQuestions({New IO.DirectoryInfo(filepath + "\Questions")})
+        parsePublications(filepath + "\Publications")
         parseInfo()
 
     End Sub
@@ -557,12 +558,12 @@ Public Class assessment
         resources.Add(newResource.ID, newResource)
     End Sub
 
-    Public Sub addNewPublication(style As Bitmap, minMarks As Integer, maxMarks As Integer, tags As List(Of String), includeuntagged As Boolean, questionCount As Integer, path As String, randomised As Boolean)
+    Public Sub addNewPublication(style As Bitmap, minMarks As Integer, maxMarks As Integer, tags As List(Of String), includeuntagged As Boolean, questionCount As Integer, path As String, randomised As Boolean, pubName As String)
         Dim counter As Integer = 0
         While publications.ContainsKey(counter)
             counter += 1
         End While
-        Dim newPublication As New publication(counter, style, minMarks, maxMarks, tags, includeuntagged, questionCount, randomised)
+        Dim newPublication As New publication(counter, style, minMarks, maxMarks, tags, includeuntagged, questionCount, randomised, Me.name + "\Publications\", pubName)
         publications.Add(newPublication.ID, newPublication)
     End Sub
 
@@ -616,6 +617,13 @@ Public Class assessment
         Next
     End Sub
 
+    Private Sub parsePublications(path As String)
+        For Each directory In IO.Directory.GetDirectories(path.ToString)
+            Dim newPublications As New publication(directory)
+            publications.Add(newPublications.ID, newPublications)
+        Next
+    End Sub
+
     Private Sub parseInfo()
         Dim fileReader As IO.StreamReader
         fileReader = My.Computer.FileSystem.OpenTextFileReader(name + "/info.txt")
@@ -629,6 +637,9 @@ Public Class assessment
     Public Sub save()
         For Each key In questions.Keys
             questions(key).save()
+        Next
+        For Each publication In publications
+            publication.Value.save()
         Next
         Me._save()
     End Sub
@@ -872,13 +883,15 @@ Public Class publication
     Public minMarks As Integer
     Public maxMarks As Integer
     Public includeUntagged As Boolean
-    Public tags As List(Of String)
+    Public tags As New List(Of String)
     Public questionCount As Integer
     Public randomised As Boolean
+    Public path As String
+    Public name As String
 
     Public tests As New Dictionary(Of Integer, test)
 
-    Sub New(ID As Integer, style As Bitmap, minMarks As Integer, maxMarks As Integer, tags As List(Of String), includeuntagged As Boolean, questionCount As Integer, randomised As Boolean)
+    Sub New(ID As Integer, style As Bitmap, minMarks As Integer, maxMarks As Integer, tags As List(Of String), includeuntagged As Boolean, questionCount As Integer, randomised As Boolean, path As String, name As String)
         Me.ID = ID
         Me.style = style
         Me.minMarks = minMarks
@@ -887,6 +900,49 @@ Public Class publication
         Me.includeUntagged = includeuntagged
         Me.questionCount = questionCount
         Me.randomised = randomised
+        Me.path = path + ID.ToString()
+        Me.name = name
+        IO.Directory.CreateDirectory(path + ID.ToString())
+        save()
+    End Sub
+
+    Sub New(path As String)
+        Me.path = path
+        Me.ID = path.Split("\").Last
+        For Each directory In IO.Directory.GetDirectories(path)
+            Dim newTest As New test(directory)
+            tests.Add(newTest.ID, newTest)
+        Next
+
+        Dim fileReader As IO.StreamReader
+        fileReader = My.Computer.FileSystem.OpenTextFileReader(path + "\info.txt")
+        Dim lines() As String = fileReader.ReadToEnd().Split("¬")
+        Me.minMarks = lines(0).Trim({Chr(13), Chr(10)})
+        Me.maxMarks = lines(1).Trim({Chr(13), Chr(10)})
+        For Each tagName In lines(2).Split(",")
+            Me.tags.Add(tagName)
+        Next
+        Me.includeUntagged = CType(lines(3).Trim({Chr(13), Chr(10)}), Boolean)
+        Me.questionCount = lines(4).Trim({Chr(13), Chr(10)})
+        Me.randomised = CType(lines(5).Trim({Chr(13), Chr(10)}), Boolean)
+        Me.name = lines(6).Trim({Chr(13), Chr(10)})
+        fileReader.Close()
+
+        Me.style = New Bitmap(path + "\¬style.png")
+    End Sub
+
+    Sub save()
+        If Not IO.File.Exists(path + "\¬style.png") Then style.Save(path + "\¬style.png")
+        Dim file As IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(path + "\info.txt", False)
+        file.Write(minMarks.ToString() + "¬" + maxMarks.ToString() + "¬")
+        Dim tagString As String = ""
+        For Each tagName In tags
+            tagString += tagName + ","
+        Next
+        If tagString.Length > 0 Then tagString = Mid(tagString, 1, tagString.Length - 1)
+        file.Write(tagString + "¬")
+        file.WriteLine(includeUntagged.ToString + "¬" + questionCount.ToString + "¬" + randomised.ToString() + "¬" + name)
+        file.Close()
     End Sub
 
     Public Sub generateTest(completeQuestions As Dictionary(Of Integer, question))
@@ -1016,7 +1072,17 @@ Public Class publication
         While tests.ContainsKey(counter)
             counter += 1
         End While
-        Dim newTest As New test(counter, pages)
+
+        IO.Directory.CreateDirectory(path + "\" + counter.ToString())
+        Dim pagePaths As New List(Of String)
+        Dim secondCounter As Integer = 0
+        For Each page In pages
+            page.Save(path + "\" + counter.ToString() + "\" + secondCounter.ToString() + ".png")
+            pagePaths.Add(path + "\" + counter.ToString() + "\" + secondCounter.ToString() + ".png")
+            secondCounter += 1
+        Next
+
+        Dim newTest As New test(counter, pagePaths)
         tests.Add(newTest.ID, newTest)
     End Sub
 
@@ -1099,15 +1165,31 @@ Public Class publication
 
     End Function
 
+    Overrides Function tostring() As String
+        If Me.name <> Nothing Then
+            Return Me.name
+        Else
+            Return "Untitled Publication"
+        End If
+    End Function
+
 End Class
 
 Public Class test
     Public ID As Integer
-    Public pages As List(Of Bitmap)
+    Public pages As New List(Of String)
+    Public name As String
 
-    Sub New(ID As Integer, pages As List(Of Bitmap))
+    Sub New(ID As Integer, pages As List(Of String))
         Me.ID = ID
         Me.pages = pages
+    End Sub
+
+    Sub New(path As String)
+        Me.ID = path.Split("\").Last
+        For Each file In IO.Directory.GetFiles(path)
+            pages.Add(file)
+        Next
     End Sub
 
 End Class
