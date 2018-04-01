@@ -907,41 +907,72 @@ Public Class publication
         Next
 
         Dim questionCollections As New List(Of questionCollection)
-        For Each question In multiPageQuestionHeights
-            Dim newCol As New questionCollection(200 * paperRatio.A, True)
-            newCol.addItem(question)
-            questionCollections.Add(newCol)
-        Next
-        Dim collected As Boolean = False
-        For counter = 0 To singlePageQuestionHeights.Count - 1
-            Dim question As KeyValuePair(Of String, Integer) = singlePageQuestionHeights.Single(Function(item) item.Key = maximum(singlePageQuestionHeights))
-            collected = False
-            For Each bin In questionCollections
-                If bin.canFit(question) Then
-                    bin.addItem(question)
-                    collected = True
-                    Exit For
-                End If
-            Next
-            If Not collected Then
-                Dim newBin As New questionCollection(200 * paperRatio.A, False)
-                If newBin.canFit(question) Then
-                    newBin.addItem(question)
-                End If
-                questionCollections.Add(newBin)
-            End If
-            singlePageQuestionHeights.Remove(question.Key)
-        Next
         If randomised Then
+            For Each question In multiPageQuestionHeights
+                Dim newCol As New questionCollection(200 * paperRatio.A, True)
+                newCol.addItem(question)
+                questionCollections.Add(newCol)
+            Next
+            Dim collected As Boolean = False
+            For counter = 0 To singlePageQuestionHeights.Count - 1
+                Dim question As KeyValuePair(Of String, Integer) = singlePageQuestionHeights.Single(Function(item) item.Key = maximum(singlePageQuestionHeights))
+                collected = False
+                For Each bin In questionCollections
+                    If bin.canFit(question) Then
+                        bin.addItem(question)
+                        collected = True
+                        Exit For
+                    End If
+                Next
+                If Not collected Then
+                    Dim newBin As New questionCollection(200 * paperRatio.A, False)
+                    If newBin.canFit(question) Then
+                        newBin.addItem(question)
+                    End If
+                    questionCollections.Add(newBin)
+                End If
+                singlePageQuestionHeights.Remove(question.Key)
+            Next
+
             For Each collection In questionCollections
                 collection.questions = jumble(collection.questions)
             Next
             questionCollections = jumble(questionCollections)
+        Else
+            For Each question In questionsToUse
+
+                If multiPageQuestionHeights.ContainsKey(question.Key) Then
+                    Dim newBin As New questionCollection(200 * paperRatio.A, True)
+                    If newBin.canFit(New KeyValuePair(Of String, Integer)(question.Key, multiPageQuestionHeights(question.Key))) Then
+                        newBin.addItem(New KeyValuePair(Of String, Integer)(question.Key, multiPageQuestionHeights(question.Key)))
+                    End If
+                    questionCollections.Add(newBin)
+                Else
+                    If questionCollections.Count = 0 Then
+                        Dim newBin As New questionCollection(200 * paperRatio.A, False)
+                        If newBin.canFit(New KeyValuePair(Of String, Integer)(question.Key, singlePageQuestionHeights(question.Key))) Then
+                            newBin.addItem(New KeyValuePair(Of String, Integer)(question.Key, singlePageQuestionHeights(question.Key)))
+                        End If
+                        questionCollections.Add(newBin)
+                    Else
+                        If questionCollections.Last.canFit(New KeyValuePair(Of String, Integer)(question.Key, singlePageQuestionHeights(question.Key))) Then
+                            questionCollections(questionCollections.Count - 1).addItem(New KeyValuePair(Of String, Integer)(question.Key, singlePageQuestionHeights(question.Key)))
+                        Else
+                            Dim newBin As New questionCollection(200 * paperRatio.A, False)
+                            If newBin.canFit(New KeyValuePair(Of String, Integer)(question.Key, singlePageQuestionHeights(question.Key))) Then
+                                newBin.addItem(New KeyValuePair(Of String, Integer)(question.Key, singlePageQuestionHeights(question.Key)))
+                            End If
+                            questionCollections.Add(newBin)
+                        End If
+                    End If
+                End If
+            Next
         End If
 
 
         'Render Questions
         Dim pages As New List(Of Bitmap)
+        pages.Add(New Bitmap("ExamStyles/Edexcel-Cover.png"))
         Dim currentPage As Bitmap
         Dim graphics As Graphics
         Dim currentY As Integer = 0
