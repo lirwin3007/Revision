@@ -749,7 +749,7 @@ Public Class question
 
         Dim resultList As New List(Of Bitmap)
 
-        Dim result As New Bitmap(2000, CType(200 * papersize, Integer))
+        Dim result As New Bitmap(1000, CType(100 * papersize, Integer))
         Dim position As Point
         Dim graphics As Graphics
         graphics = Graphics.FromImage(result)
@@ -761,7 +761,7 @@ Public Class question
         TextRenderer.DrawText(graphics, questionNumber.ToString() + ".", boldFont, New Point(0, 0), format.fontColour)
         Dim questionNumberPosition As New Rectangle(New Point(0, 0), TextRenderer.MeasureText(questionNumber.ToString() + ".", boldFont))
 
-        Dim textPadding As Integer = 10
+        Dim textPadding As Integer = 5
         Dim questionPosition As New Rectangle(New Point(questionNumberPosition.Width + textPadding, 0), New Size(result.Width - (questionNumberPosition.Width + textPadding + textPadding), result.Height))
 
         If questionType = "Written" Then
@@ -829,8 +829,8 @@ Public Class question
             TextRenderer.DrawText(graphics, "(" + marks.ToString + ")", boldItalicFont, position, format.fontColour)
         End If
 
-        Dim questionanswerpadding As Integer = 20
-        Dim lineSpacing As Integer = 100
+        Dim questionanswerpadding As Integer = 10
+        Dim lineSpacing As Integer = 50
         Dim answerPosition As New Rectangle(New Point(0, questionPosition.Y + questionPosition.Height + questionanswerpadding + lineSpacing), New Size(result.Width, 0))
 
         If lineOrPage = "Lines" Then
@@ -997,7 +997,7 @@ Public Class publication
         Dim questionCollections As New List(Of questionCollection)
         If randomised Then
             For Each question In multiPageQuestionHeights
-                Dim newCol As New questionCollection(200 * paperRatio.A, True)
+                Dim newCol As New questionCollection(100 * paperRatio.A, True)
                 newCol.addItem(question)
                 questionCollections.Add(newCol)
             Next
@@ -1013,7 +1013,7 @@ Public Class publication
                     End If
                 Next
                 If Not collected Then
-                    Dim newBin As New questionCollection(200 * paperRatio.A, False)
+                    Dim newBin As New questionCollection(100 * paperRatio.A, False)
                     If newBin.canFit(question) Then
                         newBin.addItem(question)
                     End If
@@ -1031,14 +1031,14 @@ Public Class publication
             sortedQuestionKeys.Sort()
             For Each questionKey In sortedQuestionKeys
                 If multiPageQuestionHeights.ContainsKey(questionKey) Then
-                    Dim newBin As New questionCollection(200 * paperRatio.A, True)
+                    Dim newBin As New questionCollection(100 * paperRatio.A, True)
                     If newBin.canFit(New KeyValuePair(Of String, Integer)(questionKey, multiPageQuestionHeights(questionKey))) Then
                         newBin.addItem(New KeyValuePair(Of String, Integer)(questionKey, multiPageQuestionHeights(questionKey)))
                     End If
                     questionCollections.Add(newBin)
                 Else
                     If questionCollections.Count = 0 Then
-                        Dim newBin As New questionCollection(200 * paperRatio.A, False)
+                        Dim newBin As New questionCollection(100 * paperRatio.A, False)
                         If newBin.canFit(New KeyValuePair(Of String, Integer)(questionKey, singlePageQuestionHeights(questionKey))) Then
                             newBin.addItem(New KeyValuePair(Of String, Integer)(questionKey, singlePageQuestionHeights(questionKey)))
                         End If
@@ -1047,7 +1047,7 @@ Public Class publication
                         If questionCollections.Last.canFit(New KeyValuePair(Of String, Integer)(questionKey, singlePageQuestionHeights(questionKey))) Then
                             questionCollections(questionCollections.Count - 1).addItem(New KeyValuePair(Of String, Integer)(questionKey, singlePageQuestionHeights(questionKey)))
                         Else
-                            Dim newBin As New questionCollection(200 * paperRatio.A, False)
+                            Dim newBin As New questionCollection(100 * paperRatio.A, False)
                             If newBin.canFit(New KeyValuePair(Of String, Integer)(questionKey, singlePageQuestionHeights(questionKey))) Then
                                 newBin.addItem(New KeyValuePair(Of String, Integer)(questionKey, singlePageQuestionHeights(questionKey)))
                             End If
@@ -1061,7 +1061,9 @@ Public Class publication
 
         'Render Questions
         Dim pages As New List(Of Bitmap)
-        pages.Add(New Bitmap("ExamStyles/Edexcel-Cover.png"))
+        Dim coverPage As New Bitmap("ExamStyles/Edexcel-Cover.png")
+        pages.Add(New Bitmap(coverPage, coverPage.Width / 2, coverPage.Height / 2))
+        coverPage.Dispose()
         Dim currentPage As Bitmap
         Dim graphics As Graphics
         Dim currentY As Integer = 0
@@ -1080,14 +1082,14 @@ Public Class publication
                 questionCounter += 1
             End If
             currentY = 0
-            currentPage = New Bitmap(style)
+            currentPage = New Bitmap(style, style.Width / 2, style.Height / 2)
             Dim addedTo As Boolean = False
             For Each key In collection.questions.Skip(skip)
                 addedTo = True
                 graphics = Graphics.FromImage(currentPage)
                 Dim render As Bitmap = completeQuestions(key).renderQuestion(questionNumber:=questionCounter)(0)
                 questionCounter += 1
-                graphics.DrawImage(render, New Point(262, 286 + currentY))
+                graphics.DrawImage(render, New Point(262 / 2, (286 / 2) + currentY))
                 currentY += render.Height
             Next
             If addedTo Then pages.Add(New Bitmap(currentPage))
@@ -1146,6 +1148,7 @@ Public Class publication
             For counter = 0 To questionCount - 1
                 finalResult.Add(result.Keys(counter), result(result.Keys(counter)))
             Next
+            result = finalResult
         End If
 
         Return result
@@ -1294,7 +1297,7 @@ Public Class format
     Public fontColour As Color
 
     Sub New()
-        font = New Font("Microsoft Sans Serif", 35)
+        font = New Font("Microsoft Sans Serif", 15)
         fontColour = Color.Black
     End Sub
 End Class
