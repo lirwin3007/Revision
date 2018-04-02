@@ -750,6 +750,7 @@ Public Class question
         Dim resultList As New List(Of Bitmap)
 
         Dim result As New Bitmap(2000, CType(200 * papersize, Integer))
+        Dim position As Point
         Dim graphics As Graphics
         graphics = Graphics.FromImage(result)
         graphics.Clear(Color.White)
@@ -788,16 +789,12 @@ Public Class question
                 counter = workingString.Length
                 cutString = False
             Loop
-            Dim position As New Point(questionNumberPosition.Width + textPadding, 0)
+            position = New Point(questionNumberPosition.Width + textPadding, 0)
             For Each line In lines
                 TextRenderer.DrawText(graphics, line, format.font, position, format.fontColour)
                 position.Y += TextRenderer.MeasureText(line, format.font).Height
             Next
             questionPosition.Height = position.Y
-
-            Dim Size As Size = TextRenderer.MeasureText("(" + marks.ToString + ")", boldItalicFont)
-            position = New Point(result.Width - Size.Width, questionPosition.Bottom - Size.Height)
-            TextRenderer.DrawText(graphics, "(" + marks.ToString + ")", boldItalicFont, position, format.fontColour)
         Else
             Dim questionImage As New Bitmap(questionImageLocation)
             Dim resultQuestionImage As Bitmap
@@ -811,6 +808,25 @@ Public Class question
             End If
             graphics.DrawImage(resultQuestionImage, questionPosition.Location)
             questionPosition.Height = resultQuestionImage.Height
+        End If
+        For Each resource In resources
+            Dim resourceScaled As New Bitmap(resource.image)
+            If resourceScaled.Width < result.Width * 0.5 Then
+                Dim scaleFactor As Double = (result.Width * 0.5) / resourceScaled.Width
+                resourceScaled = New Bitmap(resourceScaled, resourceScaled.Width * scaleFactor, resourceScaled.Height * scaleFactor)
+            ElseIf resourceScaled.Width > result.Width Then
+                Dim scaleFactor As Double = result.Width / resourceScaled.Width
+                resourceScaled = New Bitmap(resourceScaled, resourceScaled.Width * scaleFactor, resourceScaled.Height * scaleFactor)
+            End If
+            position = New Point((result.Width - resourceScaled.Width) / 2, questionPosition.Bottom)
+            graphics.DrawImage(resourceScaled, position)
+            questionPosition.Height += resourceScaled.Height
+        Next
+
+        If questionType = "Written" Then
+            Dim Size As Size = TextRenderer.MeasureText("(" + marks.ToString + ")", boldItalicFont)
+            position = New Point(result.Width - Size.Width, questionPosition.Bottom - Size.Height)
+            TextRenderer.DrawText(graphics, "(" + marks.ToString + ")", boldItalicFont, position, format.fontColour)
         End If
 
         Dim questionanswerpadding As Integer = 20
