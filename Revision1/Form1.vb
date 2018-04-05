@@ -798,12 +798,12 @@ Public Class question
         Else
             Dim questionImage As New Bitmap(questionImageLocation)
             Dim resultQuestionImage As Bitmap
-            If questionImage.Width > questionPosition.Width Or questionImage.Width < questionPosition.Width * 0.5 Then
-                Dim scalefactor As Double = questionPosition.Width / questionImage.Width
+            'If questionImage.Width > questionPosition.Width Or questionImage.Width < questionPosition.Width * 0.4 Then
+            Dim scalefactor As Double = questionPosition.Width / questionImage.Width
                 resultQuestionImage = New Bitmap(questionImage, questionImage.Width * scalefactor, questionImage.Height * scalefactor)
-            End If
+            'End If
             If questionImage.Height > questionPosition.Height Then
-                Dim scalefactor As Double = questionPosition.Height / questionImage.Height
+                scalefactor = questionPosition.Height / questionImage.Height
                 resultQuestionImage = New Bitmap(questionImage, questionImage.Width * scalefactor, questionImage.Height * scalefactor)
             End If
             graphics.DrawImage(resultQuestionImage, questionPosition.Location)
