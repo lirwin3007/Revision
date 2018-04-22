@@ -14,6 +14,7 @@
     Dim pageList As New List(Of Bitmap)
     Dim workingPageList As List(Of Bitmap)
     Dim pageCount As Integer = 0
+    Dim printPreviewDone As Boolean = False
 
     Private Sub PrintDocument1_PrintPage(sender As Object, e As Printing.PrintPageEventArgs) Handles PrintDocument1.PrintPage
         Dim scaleFactor As Double = e.PageSettings.PrintableArea.Height / workingPageList(0).Height
@@ -25,9 +26,12 @@
         Else
             e.HasMorePages = False
             workingPageList = New List(Of Bitmap)(pageList)
+            printPreviewDone = True
         End If
-        pageCount += 1
-        VScrollBar1.Maximum = pageCount - 1
+        If Not printPreviewDone Then
+            pageCount += 1
+            VScrollBar1.Maximum = pageCount - 1
+        End If
     End Sub
 
     Private Sub buttonPrint_Click(sender As Object, e As EventArgs) Handles buttonPrint.Click
