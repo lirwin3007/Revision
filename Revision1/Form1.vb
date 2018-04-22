@@ -186,6 +186,8 @@
     End Sub
 
     Private Sub listboxQuestions_SelectedIndexChanged(sender As Object, e As EventArgs) Handles listboxQuestions.SelectedIndexChanged
+        picQuestion.Image = Nothing
+        picMarkScheme.Image = Nothing
         If getSelectedAssessment() Is Nothing Then Exit Sub
         tbxQuestion.Text = CType(listboxQuestions.SelectedItem, question).question
         tbxMarkScheme.Text = CType(listboxQuestions.SelectedItem, question).markScheme

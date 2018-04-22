@@ -259,8 +259,6 @@ Partial Class Publisher
         '
         Me.checkIncludeUntagged.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.checkIncludeUntagged.AutoSize = True
-        Me.checkIncludeUntagged.Checked = True
-        Me.checkIncludeUntagged.CheckState = System.Windows.Forms.CheckState.Checked
         Me.checkIncludeUntagged.Location = New System.Drawing.Point(338, 12)
         Me.checkIncludeUntagged.Name = "checkIncludeUntagged"
         Me.checkIncludeUntagged.Size = New System.Drawing.Size(15, 14)
@@ -284,6 +282,7 @@ Partial Class Publisher
         '
         'listTags
         '
+        Me.listTags.CheckOnClick = True
         Me.listTags.Dock = System.Windows.Forms.DockStyle.Fill
         Me.listTags.FormattingEnabled = True
         Me.listTags.Location = New System.Drawing.Point(3, 15)
