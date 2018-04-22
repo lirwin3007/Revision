@@ -106,6 +106,72 @@
         If listPublications.Items.Count > 0 Then listPublications.SelectedIndex = 0
     End Sub
 
+    Sub updateResultsGUI()
+        checkedLbxTags.Items.Clear()
+        For Each tagName In assessments(getSelectedAssessment).tags
+            checkedLbxTags.Items.Add(tagName, True)
+        Next
+        updateResultsGraph()
+    End Sub
+
+    Sub updateResultsGraph()
+
+        Dim tagSums As New Dictionary(Of String, Integer)
+        Dim tagCounts As New Dictionary(Of String, Integer)
+
+        For Each publicationPair As KeyValuePair(Of Integer, publication) In assessments(getSelectedAssessment).publications
+            Dim publication As publication = publicationPair.Value
+            For Each testPair As KeyValuePair(Of Integer, test) In publication.tests
+                Dim test As test = testPair.Value
+                For Each resultPair As KeyValuePair(Of Integer, result) In test.results
+                    Dim result As result = resultPair.Value
+                    For Each score In result.scores
+                        Dim question As question = assessments(getSelectedAssessment()).questions(score.Key)
+                        For Each tagName In question.tags
+                            If Not tagSums.ContainsKey(tagName) Then
+                                tagSums.Add(tagName, score.Value)
+                                tagCounts.Add(tagName, question.marks)
+                            Else
+                                tagSums(tagName) += score.Value
+                                tagCounts(tagName) += question.marks
+                            End If
+                        Next
+                    Next
+                Next
+            Next
+        Next
+
+        Dim tagPercentages As New Dictionary(Of String, Integer)
+        For Each tagName In tagSums.Keys
+            tagPercentages.Add(tagName, (tagSums(tagName) / tagCounts(tagName)) * 100)
+        Next
+
+
+        Dim dataTable As New DataTable
+        dataTable.Columns.Add("Tag", GetType(String))
+        dataTable.Columns.Add("Percentage Results", GetType(Integer))
+
+        For Each tagName In checkedLbxTags.CheckedItems
+            If tagPercentages.ContainsKey(tagName) Then
+                dataTable.Rows.Add(tagName, tagPercentages(tagName))
+            Else
+                'dataTable.Rows.Add(tagName, 0)
+            End If
+        Next
+
+        resultChart.DataSource = dataTable
+        resultChart.Series.Clear()
+        resultChart.ChartAreas.Clear()
+        resultChart.ChartAreas.Add("Area0")
+        resultChart.Series.Add("Percentage Results")
+
+        resultChart.Series(0).XValueMember = "Tag"
+        resultChart.Series(0).YValueMembers = "Percentage Results"
+        resultChart.Series(0).IsValueShownAsLabel = True
+        resultChart.ChartAreas(0).AxisX.LabelStyle.Angle = -90
+
+    End Sub
+
     Private Sub folderStructure_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles folderStructure.AfterSelect
         Dim currentNode = folderStructure.SelectedNode
         Do Until currentNode.Text = "Questions" Or currentNode.Text = "Publications" Or currentNode.Text = "Results" Or currentNode.Text = "Resources" Or currentNode.Parent Is Nothing
@@ -127,6 +193,7 @@
                 updatePublicationsGUI()
                 MainTab.SelectedIndex = stages.publications
             Case = "Results"
+                updateResultsGUI()
                 MainTab.SelectedIndex = stages.results
         End Select
     End Sub
@@ -463,6 +530,10 @@
 
     Private Sub btnPrintTest_Click(sender As Object, e As EventArgs) Handles btnPrintTest.Click
         testViewer.showForm(CType(listPublications.SelectedItem, publication).tests(CType(listTests.SelectedItem, test).ID))
+    End Sub
+
+    Private Sub checkedLbxTags_SelectedIndexChanged(sender As Object, e As EventArgs) Handles checkedLbxTags.SelectedIndexChanged
+        updateResultsGraph()
     End Sub
 End Class
 
