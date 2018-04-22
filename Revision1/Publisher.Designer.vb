@@ -58,6 +58,8 @@ Partial Class Publisher
         Me.buttonNext = New System.Windows.Forms.Button()
         Me.buttonFinish = New System.Windows.Forms.Button()
         Me.buttonPrevious = New System.Windows.Forms.Button()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.listTagsExcluded = New System.Windows.Forms.CheckedListBox()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.mainTab.SuspendLayout()
         Me.TabPage1.SuspendLayout()
@@ -267,10 +269,13 @@ Partial Class Publisher
         '
         'TableLayoutPanel8
         '
-        Me.TableLayoutPanel8.ColumnCount = 1
-        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel8.ColumnCount = 2
+        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel8.Controls.Add(Me.listTags, 0, 1)
         Me.TableLayoutPanel8.Controls.Add(Me.Label2, 0, 0)
+        Me.TableLayoutPanel8.Controls.Add(Me.Label8, 1, 0)
+        Me.TableLayoutPanel8.Controls.Add(Me.listTagsExcluded, 1, 1)
         Me.TableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel8.Location = New System.Drawing.Point(3, 135)
         Me.TableLayoutPanel8.Name = "TableLayoutPanel8"
@@ -287,7 +292,7 @@ Partial Class Publisher
         Me.listTags.FormattingEnabled = True
         Me.listTags.Location = New System.Drawing.Point(3, 15)
         Me.listTags.Name = "listTags"
-        Me.listTags.Size = New System.Drawing.Size(665, 240)
+        Me.listTags.Size = New System.Drawing.Size(329, 240)
         Me.listTags.TabIndex = 0
         '
         'Label2
@@ -513,6 +518,25 @@ Partial Class Publisher
         Me.buttonPrevious.Text = "< Previous"
         Me.buttonPrevious.UseVisualStyleBackColor = True
         '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(338, 0)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(75, 12)
+        Me.Label8.TabIndex = 2
+        Me.Label8.Text = "Exclude Tags:"
+        '
+        'listTagsExcluded
+        '
+        Me.listTagsExcluded.CheckOnClick = True
+        Me.listTagsExcluded.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.listTagsExcluded.FormattingEnabled = True
+        Me.listTagsExcluded.Location = New System.Drawing.Point(338, 15)
+        Me.listTagsExcluded.Name = "listTagsExcluded"
+        Me.listTagsExcluded.Size = New System.Drawing.Size(330, 240)
+        Me.listTagsExcluded.TabIndex = 3
+        '
         'Publisher
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -587,4 +611,6 @@ Partial Class Publisher
     Friend WithEvents TableLayoutPanel11 As TableLayoutPanel
     Friend WithEvents nudQuestionCount As NumericUpDown
     Friend WithEvents Label7 As Label
+    Friend WithEvents Label8 As Label
+    Friend WithEvents listTagsExcluded As CheckedListBox
 End Class

@@ -635,12 +635,12 @@ Public Class assessment
         resources.Add(newResource.ID, newResource)
     End Sub
 
-    Public Sub addNewPublication(style As Bitmap, minMarks As Integer, maxMarks As Integer, tags As List(Of String), includeuntagged As Boolean, questionCount As Integer, path As String, randomised As Boolean, pubName As String)
+    Public Sub addNewPublication(style As Bitmap, minMarks As Integer, maxMarks As Integer, tags As List(Of String), excludedTags As List(Of String), includeuntagged As Boolean, questionCount As Integer, path As String, randomised As Boolean, pubName As String)
         Dim counter As Integer = 0
         While publications.ContainsKey(counter)
             counter += 1
         End While
-        Dim newPublication As New publication(counter, style, minMarks, maxMarks, tags, includeuntagged, questionCount, randomised, Me.name + "\Publications\", pubName)
+        Dim newPublication As New publication(counter, style, minMarks, maxMarks, tags, excludedTags, includeuntagged, questionCount, randomised, Me.name + "\Publications\", pubName)
         publications.Add(newPublication.ID, newPublication)
     End Sub
 
@@ -873,7 +873,7 @@ Public Class question
             Dim resultQuestionImage As Bitmap
             'If questionImage.Width > questionPosition.Width Or questionImage.Width < questionPosition.Width * 0.4 Then
             Dim scalefactor As Double = questionPosition.Width / questionImage.Width
-                resultQuestionImage = New Bitmap(questionImage, questionImage.Width * scalefactor, questionImage.Height * scalefactor)
+            resultQuestionImage = New Bitmap(questionImage, questionImage.Width * scalefactor, questionImage.Height * scalefactor)
             'End If
             If questionImage.Height > questionPosition.Height Then
                 scalefactor = questionPosition.Height / questionImage.Height
@@ -949,6 +949,15 @@ Public Class question
         Return resultList
     End Function
 
+    Public Function containsTag(tagNames As List(Of String)) As Boolean
+        For Each tagName In tagNames
+            For Each possibleTag In tags
+                If possibleTag = tagName Then Return True
+            Next
+        Next
+        Return False
+    End Function
+
 End Class
 
 Public Class resource
@@ -986,6 +995,7 @@ Public Class publication
     Public maxMarks As Integer
     Public includeUntagged As Boolean
     Public tags As New List(Of String)
+    Public excludedTags As New List(Of String)
     Public questionCount As Integer
     Public randomised As Boolean
     Public path As String
@@ -993,13 +1003,14 @@ Public Class publication
 
     Public tests As New Dictionary(Of Integer, test)
 
-    Sub New(ID As Integer, style As Bitmap, minMarks As Integer, maxMarks As Integer, tags As List(Of String), includeuntagged As Boolean, questionCount As Integer, randomised As Boolean, path As String, name As String)
+    Sub New(ID As Integer, style As Bitmap, minMarks As Integer, maxMarks As Integer, tags As List(Of String), excludedTags As List(Of String), includeuntagged As Boolean, questionCount As Integer, randomised As Boolean, path As String, name As String)
         Me.ID = ID
         Me.style = style
         Me.minMarks = minMarks
         Me.maxMarks = maxMarks
         Me.tags = tags
         Me.includeUntagged = includeuntagged
+        Me.excludedTags = excludedTags
         Me.questionCount = questionCount
         Me.randomised = randomised
         Me.path = path + ID.ToString()
@@ -1024,10 +1035,13 @@ Public Class publication
         For Each tagName In lines(2).Split(",")
             Me.tags.Add(tagName)
         Next
-        Me.includeUntagged = CType(lines(3).Trim({Chr(13), Chr(10)}), Boolean)
-        Me.questionCount = lines(4).Trim({Chr(13), Chr(10)})
-        Me.randomised = CType(lines(5).Trim({Chr(13), Chr(10)}), Boolean)
-        Me.name = lines(6).Trim({Chr(13), Chr(10)})
+        For Each tagName In lines(3).Split(",")
+            Me.excludedTags.Add(tagName)
+        Next
+        Me.includeUntagged = CType(lines(4).Trim({Chr(13), Chr(10)}), Boolean)
+        Me.questionCount = lines(5).Trim({Chr(13), Chr(10)})
+        Me.randomised = CType(lines(6).Trim({Chr(13), Chr(10)}), Boolean)
+        Me.name = lines(7).Trim({Chr(13), Chr(10)})
         fileReader.Close()
 
         Me.style = New Bitmap(path + "\¬style.png")
@@ -1043,6 +1057,12 @@ Public Class publication
         Next
         If tagString.Length > 0 Then tagString = Mid(tagString, 1, tagString.Length - 1)
         file.Write(tagString + "¬")
+        Dim excludedTagString As String = ""
+        For Each tagName In excludedTags
+            excludedTagString += tagName + ","
+        Next
+        If excludedTagString.Length > 0 Then excludedTagString = Mid(excludedTagString, 1, excludedTagString.Length - 1)
+        file.Write(excludedTagString + "¬")
         file.WriteLine(includeUntagged.ToString + "¬" + questionCount.ToString + "¬" + randomised.ToString() + "¬" + name)
         file.Close()
         For Each test In tests
@@ -1202,14 +1222,11 @@ Public Class publication
         Dim result As New Dictionary(Of Integer, question)
         For Each questionKey In completeQuestions.Keys
             Dim question As question = completeQuestions(questionKey)
-            For Each tagName In Me.tags
-                If question.tags.Contains(tagName) Then
-                    If question.marks > minMarks And question.marks < maxMarks Then
-                        result.Add(questionKey, question)
-                    End If
-                    Exit For
+            If question.containsTag(tags) And Not question.containsTag(excludedTags) Then
+                If question.marks > minMarks And question.marks < maxMarks Then
+                    result.Add(questionKey, question)
                 End If
-            Next
+            End If
             If question.tags.Count = 0 And includeUntagged Then
                 If question.marks > minMarks And question.marks < maxMarks Then
                     result.Add(questionKey, question)

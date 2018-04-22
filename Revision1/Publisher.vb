@@ -58,6 +58,7 @@
 
         For Each tagName In assessment.tags
             listTags.Items.Add(tagName, True)
+            listTagsExcluded.Items.Add(tagName, False)
         Next
 
         nudQuestionCount.Maximum = assessment.questions.Count
@@ -97,7 +98,12 @@
             tagList.Add(item)
         Next
 
-        Form1.assessments(assessment.name).addNewPublication(styles(listStyles.SelectedItem), nudMinMark.Value, nudMaxMark.Value, tagList, checkIncludeUntagged.Checked, nudQuestionCount.Value, Form1.getSelectedPath, checkRandom.Checked, textboxName.Text)
+        Dim excludedTagList As New List(Of String)
+        For Each item In listTagsExcluded.CheckedItems
+            excludedTagList.Add(item)
+        Next
+
+        Form1.assessments(assessment.name).addNewPublication(styles(listStyles.SelectedItem), nudMinMark.Value, nudMaxMark.Value, tagList, excludedTagList, checkIncludeUntagged.Checked, nudQuestionCount.Value, Form1.getSelectedPath, checkRandom.Checked, textboxName.Text)
 
     End Sub
 
