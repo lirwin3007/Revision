@@ -1147,9 +1147,9 @@ Public Class publication
             If collection.containsFullPage = True Then
                 skip = 1
                 For Each page As Bitmap In completeQuestions(collection.questions(0)).renderQuestion(questionNumber:=questionCounter)
-                    currentPage = New Bitmap(style)
+                    currentPage = New Bitmap(style, style.Width / 2, style.Height / 2)
                     graphics = Graphics.FromImage(currentPage)
-                    graphics.DrawImage(page, New Point(262, 286))
+                    graphics.DrawImage(page, New Point(262 / 2, 286 / 2))
                     pages.Add(New Bitmap(currentPage))
                 Next
                 questionCounter += 1
