@@ -21,16 +21,16 @@
         Dim scaledImage As New Bitmap(workingPageList(0), workingPageList(0).Width * scaleFactor, workingPageList(0).Height * scaleFactor)
         e.Graphics.DrawImage(scaledImage, 0, 0)
         workingPageList.RemoveAt(0)
+        If Not printPreviewDone Then
+            pageCount += 1
+            VScrollBar1.Maximum = pageCount - 1
+        End If
         If workingPageList.Count > 0 Then
             e.HasMorePages = True
         Else
             e.HasMorePages = False
             workingPageList = New List(Of Bitmap)(pageList)
             printPreviewDone = True
-        End If
-        If Not printPreviewDone Then
-            pageCount += 1
-            VScrollBar1.Maximum = pageCount - 1
         End If
     End Sub
 
