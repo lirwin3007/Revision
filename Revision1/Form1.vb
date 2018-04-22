@@ -1131,6 +1131,7 @@ Public Class publication
             Next
         End If
 
+        Dim questionNumbers As New List(Of Integer)
 
         'Render Questions
         Dim pages As New List(Of Bitmap)
@@ -1152,6 +1153,7 @@ Public Class publication
                     graphics.DrawImage(page, New Point(262 / 2, 286 / 2))
                     pages.Add(New Bitmap(currentPage))
                 Next
+                questionNumbers.Add(completeQuestions(collection.questions(0)).ID)
                 questionCounter += 1
             End If
             currentY = 0
@@ -1164,12 +1166,13 @@ Public Class publication
                 questionCounter += 1
                 graphics.DrawImage(render, New Point(262 / 2, (286 / 2) + currentY))
                 currentY += render.Height
+                questionNumbers.Add(key)
             Next
             If addedTo Then pages.Add(New Bitmap(currentPage))
         Next
 
         'Save Publication
-        addNewTest(pages, questionsToUse.Keys.ToList)
+        addNewTest(pages, questionNumbers)
         Form1.updatePublicationsGUI()
         graphics.Dispose()
         GC.Collect()
