@@ -1320,8 +1320,11 @@ Public Class test
 
     Sub New(path As String)
         Me.ID = path.Split("\").Last
-        For Each file In IO.Directory.GetFiles(path)
-            If file.Split("\").Last <> "info.txt" Then pages.Add(file)
+        'For Each file In IO.Directory.GetFiles(path)
+        '    If file.Split("\").Last <> "info.txt" Then pages.Add(file)
+        'Next
+        For i = 0 To IO.Directory.GetFiles(path).Count - 2
+            pages.Add(path + "\" + i.ToString() + ".png")
         Next
         For Each file In IO.Directory.GetFiles(path + "\results")
             Dim newResult As New result(file)
