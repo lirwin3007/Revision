@@ -95,6 +95,14 @@
         For Each tagname In assessments(assessmentName).tags
             lbxTagOverview.Items.Add(tagname)
         Next
+
+        cbxDefaultLineType.SelectedItem = assessments(getSelectedAssessment()).defaultQuestion.lineOrPage
+        cbxDefaultMarkSchemeType.SelectedItem = assessments(getSelectedAssessment()).defaultQuestion.markSchemeType
+        cbxDefaultQuestionType.SelectedItem = assessments(getSelectedAssessment()).defaultQuestion.questionType
+        tbxDefaultTitle.Text = assessments(getSelectedAssessment()).defaultQuestion.title
+        nudDefaultLines.Value = assessments(getSelectedAssessment()).defaultQuestion.linepagecount
+        nudDefaultMarks.Value = assessments(getSelectedAssessment()).defaultQuestion.marks
+
     End Sub
 
     Sub updatePublicationsGUI()
@@ -248,7 +256,7 @@
     End Sub
 
     Private Sub btnAddQuestion_Click(sender As Object, e As EventArgs) Handles btnAddQuestion.Click
-        assessments(getSelectedAssessment()).addNewQuestion(Nothing, Nothing, nudMarks.Minimum, getSelectedPath())
+        assessments(getSelectedAssessment()).addNewQuestion(getSelectedPath())
         updateQuestionsGUI()
     End Sub
 
@@ -535,6 +543,34 @@
     Private Sub checkedLbxTags_SelectedIndexChanged(sender As Object, e As EventArgs) Handles checkedLbxTags.SelectedIndexChanged
         updateResultsGraph()
     End Sub
+
+    Private Sub tbxDefaultTitle_TextChanged(sender As Object, e As EventArgs) Handles tbxDefaultTitle.TextChanged
+        assessments(getSelectedAssessment()).defaultQuestion.title = tbxDefaultTitle.Text
+    End Sub
+
+    Private Sub nudDefaultMarks_ValueChanged(sender As Object, e As EventArgs) Handles nudDefaultMarks.ValueChanged
+        If assessments.Count > 0 Then assessments(getSelectedAssessment()).defaultQuestion.marks = nudDefaultMarks.Value
+    End Sub
+
+    Private Sub nudDefaultLines_ValueChanged(sender As Object, e As EventArgs) Handles nudDefaultLines.ValueChanged
+        If assessments.Count > 0 Then assessments(getSelectedAssessment()).defaultQuestion.linepagecount = nudDefaultLines.Value
+    End Sub
+
+    Private Sub cbxDefaultLineType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxDefaultLineType.SelectedIndexChanged
+        If assessments.Count > 0 Then assessments(getSelectedAssessment()).defaultQuestion.lineOrPage = cbxDefaultLineType.SelectedItem
+    End Sub
+
+    Private Sub cbxDefaultQuestionType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxDefaultQuestionType.SelectedIndexChanged
+        If assessments.Count > 0 Then
+            assessments(getSelectedAssessment()).defaultQuestion.questionType = cbxDefaultQuestionType.SelectedItem
+        End If
+    End Sub
+
+    Private Sub cbxDefaultMarkSchemeType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxDefaultMarkSchemeType.SelectedIndexChanged
+        If assessments.Count > 0 Then
+            assessments(getSelectedAssessment()).defaultQuestion.markSchemeType = cbxDefaultMarkSchemeType.SelectedItem
+        End If
+    End Sub
 End Class
 
 Public Enum paperRatio
@@ -547,6 +583,7 @@ Public Class assessment
     Public resources As New Dictionary(Of Integer, resource)
     Public tags As New List(Of String)
     Public publications As New Dictionary(Of Integer, publication)
+    Public defaultQuestion As question
     'Public results As New Dictionary(Of Integer, question)
 
     Shared listOfAssessmentNames As New List(Of String)
@@ -555,6 +592,7 @@ Public Class assessment
         If Not listOfAssessmentNames.Contains(name) Then
             Me.name = name
             listOfAssessmentNames.Add(name)
+            Me.defaultQuestion = New question("", "", 1, Me.name + "\", 0)
 
             folderStructure.Nodes.Add(name, name, 0)
 
@@ -581,6 +619,8 @@ Public Class assessment
     Sub New(filepath As String, ByRef folderStructure As TreeView, fromFile As Boolean)
         name = filepath
         listOfAssessmentNames.Add(name)
+
+        Me.defaultQuestion = New question(Me.name + "\0.txt", New Dictionary(Of Integer, resource))
 
         folderStructure.Nodes.Add(name, name, 0)
 
@@ -612,15 +652,24 @@ Public Class assessment
         If tagString.Length > 0 Then tagString = Mid(tagString, 1, tagString.Length - 1)
         file.WriteLine(tagString)
         file.Close()
+        defaultQuestion.save()
     End Sub
 
-    Public Sub addNewQuestion(question, markScheme, marks, path)
+    Public Sub addNewQuestion(path As String, Optional question As String = Nothing, Optional markScheme As String = Nothing, Optional marks As Integer = Nothing)
         Dim counter As Integer = 0
         While questions.ContainsKey(counter)
             counter += 1
         End While
-        Dim newQuestion As New question(question, markScheme, marks, path, counter)
-        For Each subpath In path.split("\")
+
+        If question = Nothing Then question = defaultQuestion.question
+        If markScheme = Nothing Then markScheme = defaultQuestion.markScheme
+        If marks = Nothing Then marks = defaultQuestion.marks
+
+        Dim newQuestion As question = defaultQuestion.Copy()
+        newQuestion.path = path
+        newQuestion.ID = counter
+
+        For Each subpath In path.Split("\")
             If tags.Contains(subpath) Then newQuestion.tags.Add(subpath)
         Next
         questions.Add(newQuestion.ID, newQuestion)
@@ -788,6 +837,10 @@ Public Class question
         Me.ID = Mid(filepath.Split("\").Last, 1, filepath.Split("\").Last.IndexOf("."))
         fileReader.Close()
     End Sub
+
+    Public Function Copy() As question
+        Return DirectCast(Me.MemberwiseClone(), question)
+    End Function
 
     Public Overrides Function ToString() As String
         If Me.title <> Nothing Then

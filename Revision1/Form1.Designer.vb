@@ -52,14 +52,14 @@ Partial Class Form1
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.Label16 = New System.Windows.Forms.Label()
-        Me.NumericUpDown1 = New System.Windows.Forms.NumericUpDown()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
+        Me.nudDefaultMarks = New System.Windows.Forms.NumericUpDown()
+        Me.tbxDefaultTitle = New System.Windows.Forms.TextBox()
         Me.TableLayoutPanel40 = New System.Windows.Forms.TableLayoutPanel()
-        Me.NumericUpDown2 = New System.Windows.Forms.NumericUpDown()
-        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
+        Me.nudDefaultLines = New System.Windows.Forms.NumericUpDown()
+        Me.cbxDefaultLineType = New System.Windows.Forms.ComboBox()
         Me.Label17 = New System.Windows.Forms.Label()
-        Me.ComboBox2 = New System.Windows.Forms.ComboBox()
-        Me.ComboBox3 = New System.Windows.Forms.ComboBox()
+        Me.cbxDefaultQuestionType = New System.Windows.Forms.ComboBox()
+        Me.cbxDefaultMarkSchemeType = New System.Windows.Forms.ComboBox()
         Me.Label18 = New System.Windows.Forms.Label()
         Me.Questions = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
@@ -175,9 +175,9 @@ Partial Class Form1
         Me.btnAddTag.SuspendLayout()
         Me.TableLayoutPanel38.SuspendLayout()
         Me.TableLayoutPanel39.SuspendLayout()
-        CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudDefaultMarks, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel40.SuspendLayout()
-        CType(Me.NumericUpDown2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.nudDefaultLines, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Questions.SuspendLayout()
         Me.TableLayoutPanel5.SuspendLayout()
         Me.TableLayoutPanel7.SuspendLayout()
@@ -379,15 +379,15 @@ Partial Class Form1
         'TableLayoutPanel22
         '
         Me.TableLayoutPanel22.ColumnCount = 2
-        Me.TableLayoutPanel22.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 88.05602!))
-        Me.TableLayoutPanel22.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.94399!))
+        Me.TableLayoutPanel22.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70.0!))
+        Me.TableLayoutPanel22.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.0!))
         Me.TableLayoutPanel22.Controls.Add(Me.TableLayoutPanel23, 1, 0)
         Me.TableLayoutPanel22.Controls.Add(Me.TableLayoutPanel38, 0, 0)
         Me.TableLayoutPanel22.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel22.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel22.Name = "TableLayoutPanel22"
         Me.TableLayoutPanel22.RowCount = 1
-        Me.TableLayoutPanel22.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel22.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel22.Size = New System.Drawing.Size(1333, 829)
         Me.TableLayoutPanel22.TabIndex = 2
         '
@@ -399,13 +399,13 @@ Partial Class Form1
         Me.TableLayoutPanel23.Controls.Add(Me.lbxTagOverview, 0, 1)
         Me.TableLayoutPanel23.Controls.Add(Me.Label1, 0, 0)
         Me.TableLayoutPanel23.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel23.Location = New System.Drawing.Point(1176, 3)
+        Me.TableLayoutPanel23.Location = New System.Drawing.Point(936, 3)
         Me.TableLayoutPanel23.Name = "TableLayoutPanel23"
         Me.TableLayoutPanel23.RowCount = 3
         Me.TableLayoutPanel23.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.0!))
         Me.TableLayoutPanel23.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90.0!))
         Me.TableLayoutPanel23.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.0!))
-        Me.TableLayoutPanel23.Size = New System.Drawing.Size(154, 823)
+        Me.TableLayoutPanel23.Size = New System.Drawing.Size(394, 823)
         Me.TableLayoutPanel23.TabIndex = 1
         '
         'btnAddTag
@@ -420,15 +420,15 @@ Partial Class Form1
         Me.btnAddTag.Name = "btnAddTag"
         Me.btnAddTag.RowCount = 1
         Me.btnAddTag.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.btnAddTag.Size = New System.Drawing.Size(148, 36)
+        Me.btnAddTag.Size = New System.Drawing.Size(388, 36)
         Me.btnAddTag.TabIndex = 1
         '
         'btnRemoveTag
         '
         Me.btnRemoveTag.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.btnRemoveTag.Location = New System.Drawing.Point(77, 3)
+        Me.btnRemoveTag.Location = New System.Drawing.Point(197, 3)
         Me.btnRemoveTag.Name = "btnRemoveTag"
-        Me.btnRemoveTag.Size = New System.Drawing.Size(68, 30)
+        Me.btnRemoveTag.Size = New System.Drawing.Size(188, 30)
         Me.btnRemoveTag.TabIndex = 1
         Me.btnRemoveTag.Text = "Remove Tag"
         Me.btnRemoveTag.UseVisualStyleBackColor = True
@@ -438,7 +438,7 @@ Partial Class Form1
         Me.Button6.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Button6.Location = New System.Drawing.Point(3, 3)
         Me.Button6.Name = "Button6"
-        Me.Button6.Size = New System.Drawing.Size(68, 30)
+        Me.Button6.Size = New System.Drawing.Size(188, 30)
         Me.Button6.TabIndex = 0
         Me.Button6.Text = "Add Tag"
         Me.Button6.UseVisualStyleBackColor = True
@@ -449,7 +449,7 @@ Partial Class Form1
         Me.lbxTagOverview.FormattingEnabled = True
         Me.lbxTagOverview.Location = New System.Drawing.Point(3, 44)
         Me.lbxTagOverview.Name = "lbxTagOverview"
-        Me.lbxTagOverview.Size = New System.Drawing.Size(148, 734)
+        Me.lbxTagOverview.Size = New System.Drawing.Size(388, 734)
         Me.lbxTagOverview.TabIndex = 0
         '
         'Label1
@@ -459,7 +459,7 @@ Partial Class Form1
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(3, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(148, 41)
+        Me.Label1.Size = New System.Drawing.Size(388, 41)
         Me.Label1.TabIndex = 2
         Me.Label1.Text = "Tags"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.BottomCenter
@@ -476,7 +476,7 @@ Partial Class Form1
         Me.TableLayoutPanel38.RowCount = 2
         Me.TableLayoutPanel38.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
         Me.TableLayoutPanel38.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90.0!))
-        Me.TableLayoutPanel38.Size = New System.Drawing.Size(1167, 823)
+        Me.TableLayoutPanel38.Size = New System.Drawing.Size(927, 823)
         Me.TableLayoutPanel38.TabIndex = 2
         '
         'Label19
@@ -486,7 +486,7 @@ Partial Class Form1
         Me.Label19.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label19.Location = New System.Drawing.Point(3, 0)
         Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(1161, 82)
+        Me.Label19.Size = New System.Drawing.Size(921, 82)
         Me.Label19.TabIndex = 6
         Me.Label19.Text = "Defaults"
         Me.Label19.TextAlign = System.Drawing.ContentAlignment.BottomCenter
@@ -499,31 +499,31 @@ Partial Class Form1
         Me.TableLayoutPanel39.Controls.Add(Me.Label4, 0, 2)
         Me.TableLayoutPanel39.Controls.Add(Me.Label15, 0, 0)
         Me.TableLayoutPanel39.Controls.Add(Me.Label16, 0, 1)
-        Me.TableLayoutPanel39.Controls.Add(Me.NumericUpDown1, 1, 1)
-        Me.TableLayoutPanel39.Controls.Add(Me.TextBox2, 1, 0)
+        Me.TableLayoutPanel39.Controls.Add(Me.nudDefaultMarks, 1, 1)
+        Me.TableLayoutPanel39.Controls.Add(Me.tbxDefaultTitle, 1, 0)
         Me.TableLayoutPanel39.Controls.Add(Me.TableLayoutPanel40, 1, 2)
         Me.TableLayoutPanel39.Controls.Add(Me.Label17, 0, 3)
-        Me.TableLayoutPanel39.Controls.Add(Me.ComboBox2, 1, 3)
-        Me.TableLayoutPanel39.Controls.Add(Me.ComboBox3, 1, 4)
+        Me.TableLayoutPanel39.Controls.Add(Me.cbxDefaultQuestionType, 1, 3)
+        Me.TableLayoutPanel39.Controls.Add(Me.cbxDefaultMarkSchemeType, 1, 4)
         Me.TableLayoutPanel39.Controls.Add(Me.Label18, 0, 4)
         Me.TableLayoutPanel39.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel39.Location = New System.Drawing.Point(3, 85)
         Me.TableLayoutPanel39.Name = "TableLayoutPanel39"
-        Me.TableLayoutPanel39.RowCount = 5
-        Me.TableLayoutPanel39.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
-        Me.TableLayoutPanel39.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
-        Me.TableLayoutPanel39.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
-        Me.TableLayoutPanel39.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
-        Me.TableLayoutPanel39.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
-        Me.TableLayoutPanel39.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel39.Size = New System.Drawing.Size(1161, 735)
+        Me.TableLayoutPanel39.RowCount = 6
+        Me.TableLayoutPanel39.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.0!))
+        Me.TableLayoutPanel39.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.0!))
+        Me.TableLayoutPanel39.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.0!))
+        Me.TableLayoutPanel39.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.0!))
+        Me.TableLayoutPanel39.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.0!))
+        Me.TableLayoutPanel39.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 75.0!))
+        Me.TableLayoutPanel39.Size = New System.Drawing.Size(921, 735)
         Me.TableLayoutPanel39.TabIndex = 5
         '
         'Label4
         '
         Me.Label4.Anchor = System.Windows.Forms.AnchorStyles.Right
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(190, 361)
+        Me.Label4.Location = New System.Drawing.Point(130, 83)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(97, 13)
         Me.Label4.TabIndex = 4
@@ -534,7 +534,7 @@ Partial Class Form1
         '
         Me.Label15.Anchor = System.Windows.Forms.AnchorStyles.Right
         Me.Label15.AutoSize = True
-        Me.Label15.Location = New System.Drawing.Point(257, 67)
+        Me.Label15.Location = New System.Drawing.Point(197, 11)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(30, 13)
         Me.Label15.TabIndex = 0
@@ -545,104 +545,104 @@ Partial Class Form1
         '
         Me.Label16.Anchor = System.Windows.Forms.AnchorStyles.Right
         Me.Label16.AutoSize = True
-        Me.Label16.Location = New System.Drawing.Point(248, 214)
+        Me.Label16.Location = New System.Drawing.Point(188, 47)
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(39, 13)
         Me.Label16.TabIndex = 2
         Me.Label16.Text = "Marks:"
         Me.Label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
-        'NumericUpDown1
+        'nudDefaultMarks
         '
-        Me.NumericUpDown1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.NumericUpDown1.Location = New System.Drawing.Point(293, 210)
-        Me.NumericUpDown1.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
-        Me.NumericUpDown1.Name = "NumericUpDown1"
-        Me.NumericUpDown1.Size = New System.Drawing.Size(865, 20)
-        Me.NumericUpDown1.TabIndex = 1
-        Me.NumericUpDown1.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.nudDefaultMarks.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.nudDefaultMarks.Location = New System.Drawing.Point(233, 44)
+        Me.nudDefaultMarks.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.nudDefaultMarks.Name = "nudDefaultMarks"
+        Me.nudDefaultMarks.Size = New System.Drawing.Size(685, 20)
+        Me.nudDefaultMarks.TabIndex = 1
+        Me.nudDefaultMarks.Value = New Decimal(New Integer() {1, 0, 0, 0})
         '
-        'TextBox2
+        'tbxDefaultTitle
         '
-        Me.TextBox2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TextBox2.Location = New System.Drawing.Point(293, 63)
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(865, 20)
-        Me.TextBox2.TabIndex = 5
+        Me.tbxDefaultTitle.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.tbxDefaultTitle.Location = New System.Drawing.Point(233, 8)
+        Me.tbxDefaultTitle.Name = "tbxDefaultTitle"
+        Me.tbxDefaultTitle.Size = New System.Drawing.Size(685, 20)
+        Me.tbxDefaultTitle.TabIndex = 5
         '
         'TableLayoutPanel40
         '
         Me.TableLayoutPanel40.ColumnCount = 2
         Me.TableLayoutPanel40.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel40.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel40.Controls.Add(Me.NumericUpDown2, 0, 0)
-        Me.TableLayoutPanel40.Controls.Add(Me.ComboBox1, 1, 0)
+        Me.TableLayoutPanel40.Controls.Add(Me.nudDefaultLines, 0, 0)
+        Me.TableLayoutPanel40.Controls.Add(Me.cbxDefaultLineType, 1, 0)
         Me.TableLayoutPanel40.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel40.Location = New System.Drawing.Point(293, 297)
+        Me.TableLayoutPanel40.Location = New System.Drawing.Point(233, 75)
         Me.TableLayoutPanel40.Name = "TableLayoutPanel40"
         Me.TableLayoutPanel40.RowCount = 1
         Me.TableLayoutPanel40.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel40.Size = New System.Drawing.Size(865, 141)
+        Me.TableLayoutPanel40.Size = New System.Drawing.Size(685, 30)
         Me.TableLayoutPanel40.TabIndex = 6
         '
-        'NumericUpDown2
+        'nudDefaultLines
         '
-        Me.NumericUpDown2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.NumericUpDown2.Location = New System.Drawing.Point(3, 60)
-        Me.NumericUpDown2.Name = "NumericUpDown2"
-        Me.NumericUpDown2.Size = New System.Drawing.Size(426, 20)
-        Me.NumericUpDown2.TabIndex = 7
-        Me.NumericUpDown2.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.nudDefaultLines.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.nudDefaultLines.Location = New System.Drawing.Point(3, 5)
+        Me.nudDefaultLines.Name = "nudDefaultLines"
+        Me.nudDefaultLines.Size = New System.Drawing.Size(336, 20)
+        Me.nudDefaultLines.TabIndex = 7
+        Me.nudDefaultLines.Value = New Decimal(New Integer() {1, 0, 0, 0})
         '
-        'ComboBox1
+        'cbxDefaultLineType
         '
-        Me.ComboBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Items.AddRange(New Object() {"Lines", "Pages"})
-        Me.ComboBox1.Location = New System.Drawing.Point(435, 60)
-        Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(427, 21)
-        Me.ComboBox1.TabIndex = 8
+        Me.cbxDefaultLineType.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cbxDefaultLineType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbxDefaultLineType.FormattingEnabled = True
+        Me.cbxDefaultLineType.Items.AddRange(New Object() {"Lines", "Pages"})
+        Me.cbxDefaultLineType.Location = New System.Drawing.Point(345, 4)
+        Me.cbxDefaultLineType.Name = "cbxDefaultLineType"
+        Me.cbxDefaultLineType.Size = New System.Drawing.Size(337, 21)
+        Me.cbxDefaultLineType.TabIndex = 8
         '
         'Label17
         '
         Me.Label17.Anchor = System.Windows.Forms.AnchorStyles.Right
         Me.Label17.AutoSize = True
-        Me.Label17.Location = New System.Drawing.Point(208, 508)
+        Me.Label17.Location = New System.Drawing.Point(148, 119)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(79, 13)
         Me.Label17.TabIndex = 7
         Me.Label17.Text = "Question Type:"
         Me.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
-        'ComboBox2
+        'cbxDefaultQuestionType
         '
-        Me.ComboBox2.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.ComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ComboBox2.FormattingEnabled = True
-        Me.ComboBox2.Items.AddRange(New Object() {"Written", "Image"})
-        Me.ComboBox2.Location = New System.Drawing.Point(293, 504)
-        Me.ComboBox2.Name = "ComboBox2"
-        Me.ComboBox2.Size = New System.Drawing.Size(865, 21)
-        Me.ComboBox2.TabIndex = 9
+        Me.cbxDefaultQuestionType.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cbxDefaultQuestionType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbxDefaultQuestionType.FormattingEnabled = True
+        Me.cbxDefaultQuestionType.Items.AddRange(New Object() {"Written", "Image"})
+        Me.cbxDefaultQuestionType.Location = New System.Drawing.Point(233, 115)
+        Me.cbxDefaultQuestionType.Name = "cbxDefaultQuestionType"
+        Me.cbxDefaultQuestionType.Size = New System.Drawing.Size(685, 21)
+        Me.cbxDefaultQuestionType.TabIndex = 9
         '
-        'ComboBox3
+        'cbxDefaultMarkSchemeType
         '
-        Me.ComboBox3.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.ComboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ComboBox3.FormattingEnabled = True
-        Me.ComboBox3.Items.AddRange(New Object() {"Written", "Image"})
-        Me.ComboBox3.Location = New System.Drawing.Point(293, 651)
-        Me.ComboBox3.Name = "ComboBox3"
-        Me.ComboBox3.Size = New System.Drawing.Size(865, 21)
-        Me.ComboBox3.TabIndex = 10
+        Me.cbxDefaultMarkSchemeType.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cbxDefaultMarkSchemeType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbxDefaultMarkSchemeType.FormattingEnabled = True
+        Me.cbxDefaultMarkSchemeType.Items.AddRange(New Object() {"Written", "Image"})
+        Me.cbxDefaultMarkSchemeType.Location = New System.Drawing.Point(233, 151)
+        Me.cbxDefaultMarkSchemeType.Name = "cbxDefaultMarkSchemeType"
+        Me.cbxDefaultMarkSchemeType.Size = New System.Drawing.Size(685, 21)
+        Me.cbxDefaultMarkSchemeType.TabIndex = 10
         '
         'Label18
         '
         Me.Label18.Anchor = System.Windows.Forms.AnchorStyles.Right
         Me.Label18.AutoSize = True
-        Me.Label18.Location = New System.Drawing.Point(184, 655)
+        Me.Label18.Location = New System.Drawing.Point(124, 155)
         Me.Label18.Name = "Label18"
         Me.Label18.Size = New System.Drawing.Size(103, 13)
         Me.Label18.TabIndex = 8
@@ -1915,9 +1915,9 @@ Partial Class Form1
         Me.TableLayoutPanel38.PerformLayout()
         Me.TableLayoutPanel39.ResumeLayout(False)
         Me.TableLayoutPanel39.PerformLayout()
-        CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudDefaultMarks, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel40.ResumeLayout(False)
-        CType(Me.NumericUpDown2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.nudDefaultLines, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Questions.ResumeLayout(False)
         Me.TableLayoutPanel5.ResumeLayout(False)
         Me.TableLayoutPanel7.ResumeLayout(False)
@@ -2100,14 +2100,14 @@ Partial Class Form1
     Friend WithEvents Label4 As Label
     Friend WithEvents Label15 As Label
     Friend WithEvents Label16 As Label
-    Friend WithEvents NumericUpDown1 As NumericUpDown
-    Friend WithEvents TextBox2 As TextBox
+    Friend WithEvents nudDefaultMarks As NumericUpDown
+    Friend WithEvents tbxDefaultTitle As TextBox
     Friend WithEvents TableLayoutPanel40 As TableLayoutPanel
-    Friend WithEvents NumericUpDown2 As NumericUpDown
-    Friend WithEvents ComboBox1 As ComboBox
+    Friend WithEvents nudDefaultLines As NumericUpDown
+    Friend WithEvents cbxDefaultLineType As ComboBox
     Friend WithEvents Label17 As Label
-    Friend WithEvents ComboBox2 As ComboBox
-    Friend WithEvents ComboBox3 As ComboBox
+    Friend WithEvents cbxDefaultQuestionType As ComboBox
+    Friend WithEvents cbxDefaultMarkSchemeType As ComboBox
     Friend WithEvents Label18 As Label
     Friend WithEvents Results As TabPage
     Friend WithEvents TableLayoutPanel41 As TableLayoutPanel
