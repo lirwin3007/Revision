@@ -839,7 +839,10 @@ Public Class question
     End Sub
 
     Public Function Copy() As question
-        Return DirectCast(Me.MemberwiseClone(), question)
+        Dim myCopy As question = DirectCast(Me.MemberwiseClone(), question)
+        myCopy.resources = New List(Of resource)
+        myCopy.tags = New List(Of String)
+        Return myCopy
     End Function
 
     Public Overrides Function ToString() As String
