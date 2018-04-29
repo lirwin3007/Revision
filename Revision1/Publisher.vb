@@ -119,14 +119,14 @@
             Dim question As question = assessment.questions(questionKey)
             For Each tagName In listTags.CheckedItems
                 If question.tags.Contains(tagName) Then
-                    If question.marks > nudMinMark.Value And question.marks < nudMaxMark.Value Then
+                    If question.totalMarks > nudMinMark.Value And question.totalMarks < nudMaxMark.Value Then
                         result.Add(questionKey, question)
                     End If
                     Exit For
                 End If
             Next
             If question.tags.Count = 0 And checkIncludeUntagged.Checked Then
-                If question.marks > nudMinMark.Value And question.marks < nudMaxMark.Value Then
+                If question.totalMarks > nudMinMark.Value And question.totalMarks < nudMaxMark.Value Then
                     result.Add(questionKey, question)
                 End If
             End If

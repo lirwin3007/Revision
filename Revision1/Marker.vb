@@ -28,9 +28,10 @@
             Dim newTabPage As New TabPage
 
             Dim tableLayout As New TableLayoutPanel
-            tableLayout.RowCount = 2
+            tableLayout.RowCount = 3
             tableLayout.ColumnCount = 1
-            tableLayout.RowStyles.Add(New ColumnStyle(SizeType.Percent, 90))
+            tableLayout.RowStyles.Add(New ColumnStyle(SizeType.Percent, 85))
+            tableLayout.RowStyles.Add(New ColumnStyle(SizeType.Percent, 5))
             tableLayout.RowStyles.Add(New ColumnStyle(SizeType.Percent, 10))
             tableLayout.Dock = DockStyle.Fill
 
@@ -42,7 +43,7 @@
             markContainer.Dock = DockStyle.Fill
             Dim trackbar As New TrackBar
             trackbar.Minimum = 0
-            trackbar.Maximum = questions(testToMark.questionIDs(counter)).marks
+            trackbar.Maximum = questions(testToMark.questionIDs(counter)).totalMarks
             trackbar.Dock = DockStyle.Fill
             trackbar.Value = trackbar.Maximum
             AddHandler trackbar.ValueChanged, New EventHandler(AddressOf trackbarChange)
@@ -53,19 +54,28 @@
             markContainer.Controls.Add(trackbar)
             markContainer.Controls.Add(label)
 
+            Dim scrollBar As New HScrollBar
+            scrollBar.Maximum = questions(testToMark.questionIDs(counter)).questions.Count - 1
+            scrollBar.Minimum = 0
+            scrollBar.Value = 0
+            scrollBar.LargeChange = 1
+            scrollBar.Dock = DockStyle.Fill
+            AddHandler scrollBar.ValueChanged, New EventHandler(AddressOf scrollBarChange)
+
             Dim markscheme As Object
-            If questions(testToMark.questionIDs(counter)).markSchemeType = "Image" Then
+            If questions(testToMark.questionIDs(counter)).markSchemeTypes(scrollBar.Value) = "Image" Then
                 markscheme = New PictureBox
                 markscheme.Dock = DockStyle.Fill
                 markscheme.SizeMode = PictureBoxSizeMode.Zoom
-                markscheme.ImageLocation = questions(testToMark.questionIDs(counter)).markSchemeImageLocation
+                markscheme.ImageLocation = questions(testToMark.questionIDs(counter)).markSchemes(scrollBar.Value)
             Else
                 markscheme = New Label
                 markscheme.Dock = DockStyle.Fill
-                markscheme.text = questions(testToMark.questionIDs(counter)).markScheme
+                markscheme.text = questions(testToMark.questionIDs(counter)).markSchemes(scrollBar.Value)
             End If
 
             tableLayout.Controls.Add(markscheme)
+            tableLayout.Controls.Add(scrollBar)
             tableLayout.Controls.Add(markContainer)
 
             newTabPage.Controls.Add(tableLayout)
@@ -79,6 +89,15 @@
     Private Sub trackbarChange(sender As Object, e As EventArgs)
         Dim controls = sender.parent.controls
         CType(controls(1), Label).Text = sender.value.ToString() + "/" + sender.maximum.ToString()
+    End Sub
+
+    Private Sub scrollBarChange(sender As Object, e As EventArgs)
+        Dim controls = sender.parent.controls
+        If questions(testToMark.questionIDs(CType(sender.parent.parent.parent, TabControl).SelectedIndex)).markSchemeTypes(sender.Value) = "Image" Then
+            CType(controls(0), PictureBox).ImageLocation = questions(testToMark.questionIDs(CType(sender.parent.parent.parent, TabControl).SelectedIndex)).markSchemes(sender.Value)
+        Else
+            CType(controls(0), Label).Text = questions(testToMark.questionIDs(CType(sender.parent.parent.parent, TabControl).SelectedIndex)).markSchemes(sender.Value)
+        End If
     End Sub
 
     Private Sub buttonPrevious_Click(sender As Object, e As EventArgs) Handles buttonPrevious.Click

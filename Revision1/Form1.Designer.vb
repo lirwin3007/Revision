@@ -24,9 +24,9 @@ Partial Class Form1
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
-        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea3 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend3 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series3 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.folderStructure = New System.Windows.Forms.TreeView()
@@ -71,12 +71,7 @@ Partial Class Form1
         Me.listboxQuestions = New System.Windows.Forms.ListBox()
         Me.TableLayoutPanel6 = New System.Windows.Forms.TableLayoutPanel()
         Me.TableLayoutPanel24 = New System.Windows.Forms.TableLayoutPanel()
-        Me.TableLayoutPanel26 = New System.Windows.Forms.TableLayoutPanel()
-        Me.TableLayoutPanel27 = New System.Windows.Forms.TableLayoutPanel()
-        Me.btnRemoveTag2 = New System.Windows.Forms.Button()
-        Me.btnAddNewTag = New System.Windows.Forms.Button()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.lbxTags = New System.Windows.Forms.CheckedListBox()
+        Me.TableLayoutPanel44 = New System.Windows.Forms.TableLayoutPanel()
         Me.TableLayoutPanel25 = New System.Windows.Forms.TableLayoutPanel()
         Me.TableLayoutPanel9 = New System.Windows.Forms.TableLayoutPanel()
         Me.tabQuestionType = New System.Windows.Forms.TabControl()
@@ -100,6 +95,18 @@ Partial Class Form1
         Me.btnLoadMarkSchemeImage = New System.Windows.Forms.Button()
         Me.picMarkScheme = New System.Windows.Forms.PictureBox()
         Me.Label6 = New System.Windows.Forms.Label()
+        Me.TableLayoutPanel45 = New System.Windows.Forms.TableLayoutPanel()
+        Me.TableLayoutPanel46 = New System.Windows.Forms.TableLayoutPanel()
+        Me.btnRemoveQuestionPart = New System.Windows.Forms.Button()
+        Me.btnAddQuestionPart = New System.Windows.Forms.Button()
+        Me.Label20 = New System.Windows.Forms.Label()
+        Me.listQuestionParts = New System.Windows.Forms.ListBox()
+        Me.TableLayoutPanel26 = New System.Windows.Forms.TableLayoutPanel()
+        Me.TableLayoutPanel27 = New System.Windows.Forms.TableLayoutPanel()
+        Me.btnRemoveTag2 = New System.Windows.Forms.Button()
+        Me.btnAddNewTag = New System.Windows.Forms.Button()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.lbxTags = New System.Windows.Forms.CheckedListBox()
         Me.TableLayoutPanel11 = New System.Windows.Forms.TableLayoutPanel()
         Me.TableLayoutPanel12 = New System.Windows.Forms.TableLayoutPanel()
         Me.Label12 = New System.Windows.Forms.Label()
@@ -184,8 +191,7 @@ Partial Class Form1
         Me.TableLayoutPanel8.SuspendLayout()
         Me.TableLayoutPanel6.SuspendLayout()
         Me.TableLayoutPanel24.SuspendLayout()
-        Me.TableLayoutPanel26.SuspendLayout()
-        Me.TableLayoutPanel27.SuspendLayout()
+        Me.TableLayoutPanel44.SuspendLayout()
         Me.TableLayoutPanel25.SuspendLayout()
         Me.TableLayoutPanel9.SuspendLayout()
         Me.tabQuestionType.SuspendLayout()
@@ -201,6 +207,10 @@ Partial Class Form1
         Me.TableLayoutPanel31.SuspendLayout()
         Me.TableLayoutPanel32.SuspendLayout()
         CType(Me.picMarkScheme, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TableLayoutPanel45.SuspendLayout()
+        Me.TableLayoutPanel46.SuspendLayout()
+        Me.TableLayoutPanel26.SuspendLayout()
+        Me.TableLayoutPanel27.SuspendLayout()
         Me.TableLayoutPanel11.SuspendLayout()
         Me.TableLayoutPanel12.SuspendLayout()
         CType(Me.nudMarks, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -555,6 +565,7 @@ Partial Class Form1
         'nudDefaultMarks
         '
         Me.nudDefaultMarks.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.nudDefaultMarks.Enabled = False
         Me.nudDefaultMarks.Location = New System.Drawing.Point(233, 44)
         Me.nudDefaultMarks.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.nudDefaultMarks.Name = "nudDefaultMarks"
@@ -662,11 +673,13 @@ Partial Class Form1
         '
         'TableLayoutPanel5
         '
-        Me.TableLayoutPanel5.ColumnCount = 2
-        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40.0!))
+        Me.TableLayoutPanel5.ColumnCount = 3
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15.0!))
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60.0!))
         Me.TableLayoutPanel5.Controls.Add(Me.TableLayoutPanel7, 0, 0)
-        Me.TableLayoutPanel5.Controls.Add(Me.TableLayoutPanel6, 1, 0)
+        Me.TableLayoutPanel5.Controls.Add(Me.TableLayoutPanel45, 1, 0)
+        Me.TableLayoutPanel5.Controls.Add(Me.TableLayoutPanel6, 2, 0)
         Me.TableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel5.Location = New System.Drawing.Point(3, 3)
         Me.TableLayoutPanel5.Name = "TableLayoutPanel5"
@@ -687,7 +700,7 @@ Partial Class Form1
         Me.TableLayoutPanel7.RowCount = 2
         Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 95.0!))
         Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.0!))
-        Me.TableLayoutPanel7.Size = New System.Drawing.Size(524, 817)
+        Me.TableLayoutPanel7.Size = New System.Drawing.Size(325, 817)
         Me.TableLayoutPanel7.TabIndex = 2
         '
         'TableLayoutPanel8
@@ -704,15 +717,15 @@ Partial Class Form1
         Me.TableLayoutPanel8.Name = "TableLayoutPanel8"
         Me.TableLayoutPanel8.RowCount = 1
         Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel8.Size = New System.Drawing.Size(518, 35)
+        Me.TableLayoutPanel8.Size = New System.Drawing.Size(319, 35)
         Me.TableLayoutPanel8.TabIndex = 0
         '
         'btnPreviewQuestion
         '
         Me.btnPreviewQuestion.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.btnPreviewQuestion.Location = New System.Drawing.Point(347, 3)
+        Me.btnPreviewQuestion.Location = New System.Drawing.Point(215, 3)
         Me.btnPreviewQuestion.Name = "btnPreviewQuestion"
-        Me.btnPreviewQuestion.Size = New System.Drawing.Size(168, 29)
+        Me.btnPreviewQuestion.Size = New System.Drawing.Size(101, 29)
         Me.btnPreviewQuestion.TabIndex = 2
         Me.btnPreviewQuestion.Text = "Preview Question"
         Me.btnPreviewQuestion.UseVisualStyleBackColor = True
@@ -720,9 +733,9 @@ Partial Class Form1
         'btnRemoveQuestion
         '
         Me.btnRemoveQuestion.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.btnRemoveQuestion.Location = New System.Drawing.Point(175, 3)
+        Me.btnRemoveQuestion.Location = New System.Drawing.Point(109, 3)
         Me.btnRemoveQuestion.Name = "btnRemoveQuestion"
-        Me.btnRemoveQuestion.Size = New System.Drawing.Size(166, 29)
+        Me.btnRemoveQuestion.Size = New System.Drawing.Size(100, 29)
         Me.btnRemoveQuestion.TabIndex = 1
         Me.btnRemoveQuestion.Text = "Remove Question"
         Me.btnRemoveQuestion.UseVisualStyleBackColor = True
@@ -732,7 +745,7 @@ Partial Class Form1
         Me.btnAddQuestion.Dock = System.Windows.Forms.DockStyle.Fill
         Me.btnAddQuestion.Location = New System.Drawing.Point(3, 3)
         Me.btnAddQuestion.Name = "btnAddQuestion"
-        Me.btnAddQuestion.Size = New System.Drawing.Size(166, 29)
+        Me.btnAddQuestion.Size = New System.Drawing.Size(100, 29)
         Me.btnAddQuestion.TabIndex = 0
         Me.btnAddQuestion.Text = "Add Question"
         Me.btnAddQuestion.UseVisualStyleBackColor = True
@@ -743,7 +756,7 @@ Partial Class Form1
         Me.listboxQuestions.FormattingEnabled = True
         Me.listboxQuestions.Location = New System.Drawing.Point(3, 3)
         Me.listboxQuestions.Name = "listboxQuestions"
-        Me.listboxQuestions.Size = New System.Drawing.Size(518, 770)
+        Me.listboxQuestions.Size = New System.Drawing.Size(319, 770)
         Me.listboxQuestions.TabIndex = 1
         '
         'TableLayoutPanel6
@@ -766,8 +779,8 @@ Partial Class Form1
         Me.TableLayoutPanel24.ColumnCount = 2
         Me.TableLayoutPanel24.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70.0!))
         Me.TableLayoutPanel24.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.0!))
+        Me.TableLayoutPanel24.Controls.Add(Me.TableLayoutPanel44, 0, 0)
         Me.TableLayoutPanel24.Controls.Add(Me.TableLayoutPanel26, 1, 0)
-        Me.TableLayoutPanel24.Controls.Add(Me.TableLayoutPanel25, 0, 0)
         Me.TableLayoutPanel24.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel24.Location = New System.Drawing.Point(3, 248)
         Me.TableLayoutPanel24.Name = "TableLayoutPanel24"
@@ -775,6 +788,366 @@ Partial Class Form1
         Me.TableLayoutPanel24.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel24.Size = New System.Drawing.Size(785, 566)
         Me.TableLayoutPanel24.TabIndex = 1
+        '
+        'TableLayoutPanel44
+        '
+        Me.TableLayoutPanel44.ColumnCount = 1
+        Me.TableLayoutPanel44.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel44.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel44.Controls.Add(Me.TableLayoutPanel25, 0, 0)
+        Me.TableLayoutPanel44.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel44.Location = New System.Drawing.Point(3, 3)
+        Me.TableLayoutPanel44.Name = "TableLayoutPanel44"
+        Me.TableLayoutPanel44.RowCount = 1
+        Me.TableLayoutPanel44.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel44.Size = New System.Drawing.Size(543, 560)
+        Me.TableLayoutPanel44.TabIndex = 4
+        '
+        'TableLayoutPanel25
+        '
+        Me.TableLayoutPanel25.ColumnCount = 1
+        Me.TableLayoutPanel25.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel25.Controls.Add(Me.TableLayoutPanel9, 0, 0)
+        Me.TableLayoutPanel25.Controls.Add(Me.TableLayoutPanel10, 0, 1)
+        Me.TableLayoutPanel25.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel25.Location = New System.Drawing.Point(3, 3)
+        Me.TableLayoutPanel25.Name = "TableLayoutPanel25"
+        Me.TableLayoutPanel25.RowCount = 2
+        Me.TableLayoutPanel25.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 47.0!))
+        Me.TableLayoutPanel25.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 47.0!))
+        Me.TableLayoutPanel25.Size = New System.Drawing.Size(537, 554)
+        Me.TableLayoutPanel25.TabIndex = 0
+        '
+        'TableLayoutPanel9
+        '
+        Me.TableLayoutPanel9.ColumnCount = 1
+        Me.TableLayoutPanel9.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel9.Controls.Add(Me.tabQuestionType, 0, 1)
+        Me.TableLayoutPanel9.Controls.Add(Me.Label3, 0, 0)
+        Me.TableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel9.Location = New System.Drawing.Point(3, 3)
+        Me.TableLayoutPanel9.Name = "TableLayoutPanel9"
+        Me.TableLayoutPanel9.RowCount = 2
+        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
+        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90.0!))
+        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel9.Size = New System.Drawing.Size(531, 271)
+        Me.TableLayoutPanel9.TabIndex = 2
+        '
+        'tabQuestionType
+        '
+        Me.tabQuestionType.Controls.Add(Me.Written)
+        Me.tabQuestionType.Controls.Add(Me.Image)
+        Me.tabQuestionType.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.tabQuestionType.Location = New System.Drawing.Point(3, 30)
+        Me.tabQuestionType.Name = "tabQuestionType"
+        Me.tabQuestionType.SelectedIndex = 0
+        Me.tabQuestionType.Size = New System.Drawing.Size(525, 238)
+        Me.tabQuestionType.TabIndex = 4
+        '
+        'Written
+        '
+        Me.Written.Controls.Add(Me.tbxQuestion)
+        Me.Written.Location = New System.Drawing.Point(4, 22)
+        Me.Written.Name = "Written"
+        Me.Written.Padding = New System.Windows.Forms.Padding(3)
+        Me.Written.Size = New System.Drawing.Size(517, 212)
+        Me.Written.TabIndex = 0
+        Me.Written.Text = "Written"
+        Me.Written.UseVisualStyleBackColor = True
+        '
+        'tbxQuestion
+        '
+        Me.tbxQuestion.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.tbxQuestion.Location = New System.Drawing.Point(3, 3)
+        Me.tbxQuestion.Name = "tbxQuestion"
+        Me.tbxQuestion.Size = New System.Drawing.Size(511, 206)
+        Me.tbxQuestion.TabIndex = 2
+        Me.tbxQuestion.Text = ""
+        '
+        'Image
+        '
+        Me.Image.Controls.Add(Me.TableLayoutPanel29)
+        Me.Image.Location = New System.Drawing.Point(4, 22)
+        Me.Image.Name = "Image"
+        Me.Image.Padding = New System.Windows.Forms.Padding(3)
+        Me.Image.Size = New System.Drawing.Size(409, 212)
+        Me.Image.TabIndex = 1
+        Me.Image.Text = "Image"
+        Me.Image.UseVisualStyleBackColor = True
+        '
+        'TableLayoutPanel29
+        '
+        Me.TableLayoutPanel29.ColumnCount = 1
+        Me.TableLayoutPanel29.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel29.Controls.Add(Me.TableLayoutPanel30, 0, 1)
+        Me.TableLayoutPanel29.Controls.Add(Me.picQuestion, 0, 0)
+        Me.TableLayoutPanel29.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel29.Location = New System.Drawing.Point(3, 3)
+        Me.TableLayoutPanel29.Name = "TableLayoutPanel29"
+        Me.TableLayoutPanel29.RowCount = 2
+        Me.TableLayoutPanel29.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80.0!))
+        Me.TableLayoutPanel29.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
+        Me.TableLayoutPanel29.Size = New System.Drawing.Size(403, 206)
+        Me.TableLayoutPanel29.TabIndex = 0
+        '
+        'TableLayoutPanel30
+        '
+        Me.TableLayoutPanel30.ColumnCount = 2
+        Me.TableLayoutPanel30.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel30.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel30.Controls.Add(Me.btnScreenshotImageQuestion, 1, 0)
+        Me.TableLayoutPanel30.Controls.Add(Me.btnLoadQuestionImage, 0, 0)
+        Me.TableLayoutPanel30.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel30.Location = New System.Drawing.Point(3, 167)
+        Me.TableLayoutPanel30.Name = "TableLayoutPanel30"
+        Me.TableLayoutPanel30.RowCount = 1
+        Me.TableLayoutPanel30.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel30.Size = New System.Drawing.Size(397, 36)
+        Me.TableLayoutPanel30.TabIndex = 0
+        '
+        'btnScreenshotImageQuestion
+        '
+        Me.btnScreenshotImageQuestion.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.btnScreenshotImageQuestion.Location = New System.Drawing.Point(201, 3)
+        Me.btnScreenshotImageQuestion.Name = "btnScreenshotImageQuestion"
+        Me.btnScreenshotImageQuestion.Size = New System.Drawing.Size(193, 30)
+        Me.btnScreenshotImageQuestion.TabIndex = 1
+        Me.btnScreenshotImageQuestion.Text = "Take Screenshot"
+        Me.btnScreenshotImageQuestion.UseVisualStyleBackColor = True
+        '
+        'btnLoadQuestionImage
+        '
+        Me.btnLoadQuestionImage.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.btnLoadQuestionImage.Location = New System.Drawing.Point(3, 3)
+        Me.btnLoadQuestionImage.Name = "btnLoadQuestionImage"
+        Me.btnLoadQuestionImage.Size = New System.Drawing.Size(192, 30)
+        Me.btnLoadQuestionImage.TabIndex = 0
+        Me.btnLoadQuestionImage.Text = "Load Image"
+        Me.btnLoadQuestionImage.UseVisualStyleBackColor = True
+        '
+        'picQuestion
+        '
+        Me.picQuestion.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.picQuestion.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.picQuestion.Location = New System.Drawing.Point(3, 3)
+        Me.picQuestion.Name = "picQuestion"
+        Me.picQuestion.Size = New System.Drawing.Size(397, 158)
+        Me.picQuestion.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.picQuestion.TabIndex = 1
+        Me.picQuestion.TabStop = False
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label3.Location = New System.Drawing.Point(3, 0)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(525, 27)
+        Me.Label3.TabIndex = 0
+        Me.Label3.Text = "Question"
+        Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'TableLayoutPanel10
+        '
+        Me.TableLayoutPanel10.ColumnCount = 1
+        Me.TableLayoutPanel10.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel10.Controls.Add(Me.tabMarkSchemeType, 0, 1)
+        Me.TableLayoutPanel10.Controls.Add(Me.Label6, 0, 0)
+        Me.TableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel10.Location = New System.Drawing.Point(3, 280)
+        Me.TableLayoutPanel10.Name = "TableLayoutPanel10"
+        Me.TableLayoutPanel10.RowCount = 2
+        Me.TableLayoutPanel10.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
+        Me.TableLayoutPanel10.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90.0!))
+        Me.TableLayoutPanel10.Size = New System.Drawing.Size(531, 271)
+        Me.TableLayoutPanel10.TabIndex = 1
+        '
+        'tabMarkSchemeType
+        '
+        Me.tabMarkSchemeType.Controls.Add(Me.Written2)
+        Me.tabMarkSchemeType.Controls.Add(Me.Image2)
+        Me.tabMarkSchemeType.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.tabMarkSchemeType.Location = New System.Drawing.Point(3, 30)
+        Me.tabMarkSchemeType.Name = "tabMarkSchemeType"
+        Me.tabMarkSchemeType.SelectedIndex = 0
+        Me.tabMarkSchemeType.Size = New System.Drawing.Size(525, 238)
+        Me.tabMarkSchemeType.TabIndex = 6
+        '
+        'Written2
+        '
+        Me.Written2.Controls.Add(Me.tbxMarkScheme)
+        Me.Written2.Location = New System.Drawing.Point(4, 22)
+        Me.Written2.Name = "Written2"
+        Me.Written2.Padding = New System.Windows.Forms.Padding(3)
+        Me.Written2.Size = New System.Drawing.Size(517, 212)
+        Me.Written2.TabIndex = 0
+        Me.Written2.Text = "Written"
+        Me.Written2.UseVisualStyleBackColor = True
+        '
+        'tbxMarkScheme
+        '
+        Me.tbxMarkScheme.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.tbxMarkScheme.Location = New System.Drawing.Point(3, 3)
+        Me.tbxMarkScheme.Name = "tbxMarkScheme"
+        Me.tbxMarkScheme.Size = New System.Drawing.Size(511, 206)
+        Me.tbxMarkScheme.TabIndex = 3
+        Me.tbxMarkScheme.Text = ""
+        '
+        'Image2
+        '
+        Me.Image2.Controls.Add(Me.TableLayoutPanel31)
+        Me.Image2.Location = New System.Drawing.Point(4, 22)
+        Me.Image2.Name = "Image2"
+        Me.Image2.Padding = New System.Windows.Forms.Padding(3)
+        Me.Image2.Size = New System.Drawing.Size(409, 212)
+        Me.Image2.TabIndex = 1
+        Me.Image2.Text = "Image"
+        Me.Image2.UseVisualStyleBackColor = True
+        '
+        'TableLayoutPanel31
+        '
+        Me.TableLayoutPanel31.ColumnCount = 1
+        Me.TableLayoutPanel31.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel31.Controls.Add(Me.TableLayoutPanel32, 0, 1)
+        Me.TableLayoutPanel31.Controls.Add(Me.picMarkScheme, 0, 0)
+        Me.TableLayoutPanel31.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel31.Location = New System.Drawing.Point(3, 3)
+        Me.TableLayoutPanel31.Name = "TableLayoutPanel31"
+        Me.TableLayoutPanel31.RowCount = 2
+        Me.TableLayoutPanel31.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80.0!))
+        Me.TableLayoutPanel31.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
+        Me.TableLayoutPanel31.Size = New System.Drawing.Size(403, 206)
+        Me.TableLayoutPanel31.TabIndex = 0
+        '
+        'TableLayoutPanel32
+        '
+        Me.TableLayoutPanel32.ColumnCount = 2
+        Me.TableLayoutPanel32.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel32.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel32.Controls.Add(Me.btnMarkSchemeScreenshot, 1, 0)
+        Me.TableLayoutPanel32.Controls.Add(Me.btnLoadMarkSchemeImage, 0, 0)
+        Me.TableLayoutPanel32.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel32.Location = New System.Drawing.Point(3, 167)
+        Me.TableLayoutPanel32.Name = "TableLayoutPanel32"
+        Me.TableLayoutPanel32.RowCount = 1
+        Me.TableLayoutPanel32.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel32.Size = New System.Drawing.Size(397, 36)
+        Me.TableLayoutPanel32.TabIndex = 0
+        '
+        'btnMarkSchemeScreenshot
+        '
+        Me.btnMarkSchemeScreenshot.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.btnMarkSchemeScreenshot.Location = New System.Drawing.Point(201, 3)
+        Me.btnMarkSchemeScreenshot.Name = "btnMarkSchemeScreenshot"
+        Me.btnMarkSchemeScreenshot.Size = New System.Drawing.Size(193, 30)
+        Me.btnMarkSchemeScreenshot.TabIndex = 1
+        Me.btnMarkSchemeScreenshot.Text = "Take Screenshot"
+        Me.btnMarkSchemeScreenshot.UseVisualStyleBackColor = True
+        '
+        'btnLoadMarkSchemeImage
+        '
+        Me.btnLoadMarkSchemeImage.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.btnLoadMarkSchemeImage.Location = New System.Drawing.Point(3, 3)
+        Me.btnLoadMarkSchemeImage.Name = "btnLoadMarkSchemeImage"
+        Me.btnLoadMarkSchemeImage.Size = New System.Drawing.Size(192, 30)
+        Me.btnLoadMarkSchemeImage.TabIndex = 0
+        Me.btnLoadMarkSchemeImage.Text = "Load Image"
+        Me.btnLoadMarkSchemeImage.UseVisualStyleBackColor = True
+        '
+        'picMarkScheme
+        '
+        Me.picMarkScheme.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.picMarkScheme.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.picMarkScheme.Location = New System.Drawing.Point(3, 3)
+        Me.picMarkScheme.Name = "picMarkScheme"
+        Me.picMarkScheme.Size = New System.Drawing.Size(397, 158)
+        Me.picMarkScheme.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.picMarkScheme.TabIndex = 1
+        Me.picMarkScheme.TabStop = False
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label6.Location = New System.Drawing.Point(3, 0)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(525, 27)
+        Me.Label6.TabIndex = 0
+        Me.Label6.Text = "Mark Scheme"
+        Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'TableLayoutPanel45
+        '
+        Me.TableLayoutPanel45.ColumnCount = 1
+        Me.TableLayoutPanel45.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel45.Controls.Add(Me.TableLayoutPanel46, 0, 2)
+        Me.TableLayoutPanel45.Controls.Add(Me.Label20, 0, 0)
+        Me.TableLayoutPanel45.Controls.Add(Me.listQuestionParts, 0, 1)
+        Me.TableLayoutPanel45.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel45.Location = New System.Drawing.Point(334, 3)
+        Me.TableLayoutPanel45.Name = "TableLayoutPanel45"
+        Me.TableLayoutPanel45.RowCount = 3
+        Me.TableLayoutPanel45.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.0!))
+        Me.TableLayoutPanel45.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90.0!))
+        Me.TableLayoutPanel45.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.0!))
+        Me.TableLayoutPanel45.Size = New System.Drawing.Size(193, 817)
+        Me.TableLayoutPanel45.TabIndex = 1
+        '
+        'TableLayoutPanel46
+        '
+        Me.TableLayoutPanel46.ColumnCount = 2
+        Me.TableLayoutPanel46.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel46.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel46.Controls.Add(Me.btnRemoveQuestionPart, 1, 0)
+        Me.TableLayoutPanel46.Controls.Add(Me.btnAddQuestionPart, 0, 0)
+        Me.TableLayoutPanel46.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel46.Location = New System.Drawing.Point(3, 778)
+        Me.TableLayoutPanel46.Name = "TableLayoutPanel46"
+        Me.TableLayoutPanel46.RowCount = 1
+        Me.TableLayoutPanel46.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel46.Size = New System.Drawing.Size(187, 36)
+        Me.TableLayoutPanel46.TabIndex = 2
+        '
+        'btnRemoveQuestionPart
+        '
+        Me.btnRemoveQuestionPart.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.btnRemoveQuestionPart.Location = New System.Drawing.Point(96, 3)
+        Me.btnRemoveQuestionPart.Name = "btnRemoveQuestionPart"
+        Me.btnRemoveQuestionPart.Size = New System.Drawing.Size(88, 30)
+        Me.btnRemoveQuestionPart.TabIndex = 1
+        Me.btnRemoveQuestionPart.Text = "Remove"
+        Me.btnRemoveQuestionPart.UseVisualStyleBackColor = True
+        '
+        'btnAddQuestionPart
+        '
+        Me.btnAddQuestionPart.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.btnAddQuestionPart.Location = New System.Drawing.Point(3, 3)
+        Me.btnAddQuestionPart.Name = "btnAddQuestionPart"
+        Me.btnAddQuestionPart.Size = New System.Drawing.Size(87, 30)
+        Me.btnAddQuestionPart.TabIndex = 0
+        Me.btnAddQuestionPart.Text = "Add"
+        Me.btnAddQuestionPart.UseVisualStyleBackColor = True
+        '
+        'Label20
+        '
+        Me.Label20.AutoSize = True
+        Me.Label20.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Label20.Location = New System.Drawing.Point(3, 0)
+        Me.Label20.Name = "Label20"
+        Me.Label20.Size = New System.Drawing.Size(187, 40)
+        Me.Label20.TabIndex = 1
+        Me.Label20.Text = "Question Part"
+        Me.Label20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'listQuestionParts
+        '
+        Me.listQuestionParts.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.listQuestionParts.FormattingEnabled = True
+        Me.listQuestionParts.Location = New System.Drawing.Point(3, 43)
+        Me.listQuestionParts.Name = "listQuestionParts"
+        Me.listQuestionParts.Size = New System.Drawing.Size(187, 729)
+        Me.listQuestionParts.TabIndex = 3
         '
         'TableLayoutPanel26
         '
@@ -849,279 +1222,6 @@ Partial Class Form1
         Me.lbxTags.Name = "lbxTags"
         Me.lbxTags.Size = New System.Drawing.Size(224, 470)
         Me.lbxTags.TabIndex = 3
-        '
-        'TableLayoutPanel25
-        '
-        Me.TableLayoutPanel25.ColumnCount = 1
-        Me.TableLayoutPanel25.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel25.Controls.Add(Me.TableLayoutPanel9, 0, 0)
-        Me.TableLayoutPanel25.Controls.Add(Me.TableLayoutPanel10, 0, 1)
-        Me.TableLayoutPanel25.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel25.Location = New System.Drawing.Point(3, 3)
-        Me.TableLayoutPanel25.Name = "TableLayoutPanel25"
-        Me.TableLayoutPanel25.RowCount = 2
-        Me.TableLayoutPanel25.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel25.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel25.Size = New System.Drawing.Size(543, 560)
-        Me.TableLayoutPanel25.TabIndex = 0
-        '
-        'TableLayoutPanel9
-        '
-        Me.TableLayoutPanel9.ColumnCount = 1
-        Me.TableLayoutPanel9.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel9.Controls.Add(Me.tabQuestionType, 0, 1)
-        Me.TableLayoutPanel9.Controls.Add(Me.Label3, 0, 0)
-        Me.TableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel9.Location = New System.Drawing.Point(3, 3)
-        Me.TableLayoutPanel9.Name = "TableLayoutPanel9"
-        Me.TableLayoutPanel9.RowCount = 2
-        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel9.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90.0!))
-        Me.TableLayoutPanel9.Size = New System.Drawing.Size(537, 274)
-        Me.TableLayoutPanel9.TabIndex = 2
-        '
-        'tabQuestionType
-        '
-        Me.tabQuestionType.Controls.Add(Me.Written)
-        Me.tabQuestionType.Controls.Add(Me.Image)
-        Me.tabQuestionType.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.tabQuestionType.Location = New System.Drawing.Point(3, 30)
-        Me.tabQuestionType.Name = "tabQuestionType"
-        Me.tabQuestionType.SelectedIndex = 0
-        Me.tabQuestionType.Size = New System.Drawing.Size(531, 241)
-        Me.tabQuestionType.TabIndex = 4
-        '
-        'Written
-        '
-        Me.Written.Controls.Add(Me.tbxQuestion)
-        Me.Written.Location = New System.Drawing.Point(4, 22)
-        Me.Written.Name = "Written"
-        Me.Written.Padding = New System.Windows.Forms.Padding(3)
-        Me.Written.Size = New System.Drawing.Size(523, 215)
-        Me.Written.TabIndex = 0
-        Me.Written.Text = "Written"
-        Me.Written.UseVisualStyleBackColor = True
-        '
-        'tbxQuestion
-        '
-        Me.tbxQuestion.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.tbxQuestion.Location = New System.Drawing.Point(3, 3)
-        Me.tbxQuestion.Name = "tbxQuestion"
-        Me.tbxQuestion.Size = New System.Drawing.Size(517, 209)
-        Me.tbxQuestion.TabIndex = 2
-        Me.tbxQuestion.Text = ""
-        '
-        'Image
-        '
-        Me.Image.Controls.Add(Me.TableLayoutPanel29)
-        Me.Image.Location = New System.Drawing.Point(4, 22)
-        Me.Image.Name = "Image"
-        Me.Image.Padding = New System.Windows.Forms.Padding(3)
-        Me.Image.Size = New System.Drawing.Size(523, 215)
-        Me.Image.TabIndex = 1
-        Me.Image.Text = "Image"
-        Me.Image.UseVisualStyleBackColor = True
-        '
-        'TableLayoutPanel29
-        '
-        Me.TableLayoutPanel29.ColumnCount = 1
-        Me.TableLayoutPanel29.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel29.Controls.Add(Me.TableLayoutPanel30, 0, 1)
-        Me.TableLayoutPanel29.Controls.Add(Me.picQuestion, 0, 0)
-        Me.TableLayoutPanel29.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel29.Location = New System.Drawing.Point(3, 3)
-        Me.TableLayoutPanel29.Name = "TableLayoutPanel29"
-        Me.TableLayoutPanel29.RowCount = 2
-        Me.TableLayoutPanel29.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80.0!))
-        Me.TableLayoutPanel29.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
-        Me.TableLayoutPanel29.Size = New System.Drawing.Size(517, 209)
-        Me.TableLayoutPanel29.TabIndex = 0
-        '
-        'TableLayoutPanel30
-        '
-        Me.TableLayoutPanel30.ColumnCount = 2
-        Me.TableLayoutPanel30.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel30.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel30.Controls.Add(Me.btnScreenshotImageQuestion, 1, 0)
-        Me.TableLayoutPanel30.Controls.Add(Me.btnLoadQuestionImage, 0, 0)
-        Me.TableLayoutPanel30.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel30.Location = New System.Drawing.Point(3, 170)
-        Me.TableLayoutPanel30.Name = "TableLayoutPanel30"
-        Me.TableLayoutPanel30.RowCount = 1
-        Me.TableLayoutPanel30.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel30.Size = New System.Drawing.Size(511, 36)
-        Me.TableLayoutPanel30.TabIndex = 0
-        '
-        'btnScreenshotImageQuestion
-        '
-        Me.btnScreenshotImageQuestion.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.btnScreenshotImageQuestion.Location = New System.Drawing.Point(258, 3)
-        Me.btnScreenshotImageQuestion.Name = "btnScreenshotImageQuestion"
-        Me.btnScreenshotImageQuestion.Size = New System.Drawing.Size(250, 30)
-        Me.btnScreenshotImageQuestion.TabIndex = 1
-        Me.btnScreenshotImageQuestion.Text = "Take Screenshot"
-        Me.btnScreenshotImageQuestion.UseVisualStyleBackColor = True
-        '
-        'btnLoadQuestionImage
-        '
-        Me.btnLoadQuestionImage.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.btnLoadQuestionImage.Location = New System.Drawing.Point(3, 3)
-        Me.btnLoadQuestionImage.Name = "btnLoadQuestionImage"
-        Me.btnLoadQuestionImage.Size = New System.Drawing.Size(249, 30)
-        Me.btnLoadQuestionImage.TabIndex = 0
-        Me.btnLoadQuestionImage.Text = "Load Image"
-        Me.btnLoadQuestionImage.UseVisualStyleBackColor = True
-        '
-        'picQuestion
-        '
-        Me.picQuestion.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.picQuestion.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.picQuestion.Location = New System.Drawing.Point(3, 3)
-        Me.picQuestion.Name = "picQuestion"
-        Me.picQuestion.Size = New System.Drawing.Size(511, 161)
-        Me.picQuestion.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.picQuestion.TabIndex = 1
-        Me.picQuestion.TabStop = False
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label3.Location = New System.Drawing.Point(3, 0)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(531, 27)
-        Me.Label3.TabIndex = 0
-        Me.Label3.Text = "Question"
-        Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'TableLayoutPanel10
-        '
-        Me.TableLayoutPanel10.ColumnCount = 1
-        Me.TableLayoutPanel10.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel10.Controls.Add(Me.tabMarkSchemeType, 0, 1)
-        Me.TableLayoutPanel10.Controls.Add(Me.Label6, 0, 0)
-        Me.TableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel10.Location = New System.Drawing.Point(3, 283)
-        Me.TableLayoutPanel10.Name = "TableLayoutPanel10"
-        Me.TableLayoutPanel10.RowCount = 2
-        Me.TableLayoutPanel10.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel10.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90.0!))
-        Me.TableLayoutPanel10.Size = New System.Drawing.Size(537, 274)
-        Me.TableLayoutPanel10.TabIndex = 1
-        '
-        'tabMarkSchemeType
-        '
-        Me.tabMarkSchemeType.Controls.Add(Me.Written2)
-        Me.tabMarkSchemeType.Controls.Add(Me.Image2)
-        Me.tabMarkSchemeType.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.tabMarkSchemeType.Location = New System.Drawing.Point(3, 30)
-        Me.tabMarkSchemeType.Name = "tabMarkSchemeType"
-        Me.tabMarkSchemeType.SelectedIndex = 0
-        Me.tabMarkSchemeType.Size = New System.Drawing.Size(531, 241)
-        Me.tabMarkSchemeType.TabIndex = 6
-        '
-        'Written2
-        '
-        Me.Written2.Controls.Add(Me.tbxMarkScheme)
-        Me.Written2.Location = New System.Drawing.Point(4, 22)
-        Me.Written2.Name = "Written2"
-        Me.Written2.Padding = New System.Windows.Forms.Padding(3)
-        Me.Written2.Size = New System.Drawing.Size(523, 215)
-        Me.Written2.TabIndex = 0
-        Me.Written2.Text = "Written"
-        Me.Written2.UseVisualStyleBackColor = True
-        '
-        'tbxMarkScheme
-        '
-        Me.tbxMarkScheme.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.tbxMarkScheme.Location = New System.Drawing.Point(3, 3)
-        Me.tbxMarkScheme.Name = "tbxMarkScheme"
-        Me.tbxMarkScheme.Size = New System.Drawing.Size(517, 209)
-        Me.tbxMarkScheme.TabIndex = 3
-        Me.tbxMarkScheme.Text = ""
-        '
-        'Image2
-        '
-        Me.Image2.Controls.Add(Me.TableLayoutPanel31)
-        Me.Image2.Location = New System.Drawing.Point(4, 22)
-        Me.Image2.Name = "Image2"
-        Me.Image2.Padding = New System.Windows.Forms.Padding(3)
-        Me.Image2.Size = New System.Drawing.Size(523, 215)
-        Me.Image2.TabIndex = 1
-        Me.Image2.Text = "Image"
-        Me.Image2.UseVisualStyleBackColor = True
-        '
-        'TableLayoutPanel31
-        '
-        Me.TableLayoutPanel31.ColumnCount = 1
-        Me.TableLayoutPanel31.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel31.Controls.Add(Me.TableLayoutPanel32, 0, 1)
-        Me.TableLayoutPanel31.Controls.Add(Me.picMarkScheme, 0, 0)
-        Me.TableLayoutPanel31.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel31.Location = New System.Drawing.Point(3, 3)
-        Me.TableLayoutPanel31.Name = "TableLayoutPanel31"
-        Me.TableLayoutPanel31.RowCount = 2
-        Me.TableLayoutPanel31.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80.0!))
-        Me.TableLayoutPanel31.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
-        Me.TableLayoutPanel31.Size = New System.Drawing.Size(517, 209)
-        Me.TableLayoutPanel31.TabIndex = 0
-        '
-        'TableLayoutPanel32
-        '
-        Me.TableLayoutPanel32.ColumnCount = 2
-        Me.TableLayoutPanel32.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel32.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel32.Controls.Add(Me.btnMarkSchemeScreenshot, 1, 0)
-        Me.TableLayoutPanel32.Controls.Add(Me.btnLoadMarkSchemeImage, 0, 0)
-        Me.TableLayoutPanel32.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel32.Location = New System.Drawing.Point(3, 170)
-        Me.TableLayoutPanel32.Name = "TableLayoutPanel32"
-        Me.TableLayoutPanel32.RowCount = 1
-        Me.TableLayoutPanel32.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel32.Size = New System.Drawing.Size(511, 36)
-        Me.TableLayoutPanel32.TabIndex = 0
-        '
-        'btnMarkSchemeScreenshot
-        '
-        Me.btnMarkSchemeScreenshot.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.btnMarkSchemeScreenshot.Location = New System.Drawing.Point(258, 3)
-        Me.btnMarkSchemeScreenshot.Name = "btnMarkSchemeScreenshot"
-        Me.btnMarkSchemeScreenshot.Size = New System.Drawing.Size(250, 30)
-        Me.btnMarkSchemeScreenshot.TabIndex = 1
-        Me.btnMarkSchemeScreenshot.Text = "Take Screenshot"
-        Me.btnMarkSchemeScreenshot.UseVisualStyleBackColor = True
-        '
-        'btnLoadMarkSchemeImage
-        '
-        Me.btnLoadMarkSchemeImage.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.btnLoadMarkSchemeImage.Location = New System.Drawing.Point(3, 3)
-        Me.btnLoadMarkSchemeImage.Name = "btnLoadMarkSchemeImage"
-        Me.btnLoadMarkSchemeImage.Size = New System.Drawing.Size(249, 30)
-        Me.btnLoadMarkSchemeImage.TabIndex = 0
-        Me.btnLoadMarkSchemeImage.Text = "Load Image"
-        Me.btnLoadMarkSchemeImage.UseVisualStyleBackColor = True
-        '
-        'picMarkScheme
-        '
-        Me.picMarkScheme.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.picMarkScheme.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.picMarkScheme.Location = New System.Drawing.Point(3, 3)
-        Me.picMarkScheme.Name = "picMarkScheme"
-        Me.picMarkScheme.Size = New System.Drawing.Size(511, 161)
-        Me.picMarkScheme.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.picMarkScheme.TabIndex = 1
-        Me.picMarkScheme.TabStop = False
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Label6.Location = New System.Drawing.Point(3, 0)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(531, 27)
-        Me.Label6.TabIndex = 0
-        Me.Label6.Text = "Mark Scheme"
-        Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'TableLayoutPanel11
         '
@@ -1203,6 +1303,7 @@ Partial Class Form1
         '
         Me.nudMarks.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.nudMarks.Location = New System.Drawing.Point(99, 59)
+        Me.nudMarks.Maximum = New Decimal(New Integer() {999999, 0, 0, 0})
         Me.nudMarks.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.nudMarks.Name = "nudMarks"
         Me.nudMarks.Size = New System.Drawing.Size(284, 20)
@@ -1795,17 +1896,17 @@ Partial Class Form1
         '
         'resultChart
         '
-        ChartArea1.Name = "ChartArea1"
-        Me.resultChart.ChartAreas.Add(ChartArea1)
+        ChartArea3.Name = "ChartArea1"
+        Me.resultChart.ChartAreas.Add(ChartArea3)
         Me.resultChart.Dock = System.Windows.Forms.DockStyle.Fill
-        Legend1.Name = "Legend1"
-        Me.resultChart.Legends.Add(Legend1)
+        Legend3.Name = "Legend1"
+        Me.resultChart.Legends.Add(Legend3)
         Me.resultChart.Location = New System.Drawing.Point(269, 3)
         Me.resultChart.Name = "resultChart"
-        Series1.ChartArea = "ChartArea1"
-        Series1.Legend = "Legend1"
-        Series1.Name = "Series1"
-        Me.resultChart.Series.Add(Series1)
+        Series3.ChartArea = "ChartArea1"
+        Series3.Legend = "Legend1"
+        Series3.Name = "Series1"
+        Me.resultChart.Series.Add(Series3)
         Me.resultChart.Size = New System.Drawing.Size(1061, 823)
         Me.resultChart.TabIndex = 1
         Me.resultChart.Text = "Chart1"
@@ -1924,9 +2025,7 @@ Partial Class Form1
         Me.TableLayoutPanel8.ResumeLayout(False)
         Me.TableLayoutPanel6.ResumeLayout(False)
         Me.TableLayoutPanel24.ResumeLayout(False)
-        Me.TableLayoutPanel26.ResumeLayout(False)
-        Me.TableLayoutPanel26.PerformLayout()
-        Me.TableLayoutPanel27.ResumeLayout(False)
+        Me.TableLayoutPanel44.ResumeLayout(False)
         Me.TableLayoutPanel25.ResumeLayout(False)
         Me.TableLayoutPanel9.ResumeLayout(False)
         Me.TableLayoutPanel9.PerformLayout()
@@ -1944,6 +2043,12 @@ Partial Class Form1
         Me.TableLayoutPanel31.ResumeLayout(False)
         Me.TableLayoutPanel32.ResumeLayout(False)
         CType(Me.picMarkScheme, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TableLayoutPanel45.ResumeLayout(False)
+        Me.TableLayoutPanel45.PerformLayout()
+        Me.TableLayoutPanel46.ResumeLayout(False)
+        Me.TableLayoutPanel26.ResumeLayout(False)
+        Me.TableLayoutPanel26.PerformLayout()
+        Me.TableLayoutPanel27.ResumeLayout(False)
         Me.TableLayoutPanel11.ResumeLayout(False)
         Me.TableLayoutPanel12.ResumeLayout(False)
         Me.TableLayoutPanel12.PerformLayout()
@@ -2118,4 +2223,11 @@ Partial Class Form1
     Friend WithEvents btnTagsDeselectAll As Button
     Friend WithEvents btnTagsSelectAlll As Button
     Friend WithEvents resultChart As DataVisualization.Charting.Chart
+    Friend WithEvents TableLayoutPanel44 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel45 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel46 As TableLayoutPanel
+    Friend WithEvents btnRemoveQuestionPart As Button
+    Friend WithEvents btnAddQuestionPart As Button
+    Friend WithEvents Label20 As Label
+    Friend WithEvents listQuestionParts As ListBox
 End Class

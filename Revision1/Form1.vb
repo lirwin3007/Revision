@@ -64,27 +64,38 @@
             End If
             lbxTags.Items.Add(tagName, checked)
         Next
+
+        If listboxQuestions.Items.Count > 0 Then
+            listQuestionParts.Items.Clear()
+            For counter = 1 To assessments(assessmentName).questions(listboxQuestions.SelectedItem.ID).questions.Count
+                listQuestionParts.Items.Add(counter)
+            Next
+            If listQuestionParts.Items.Count > 0 Then listQuestionParts.SelectedIndex = 0
+        End If
+
         If listboxQuestions.SelectedIndex <> -1 Then
             TextBox1.Text = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).title
-            cbxLinePage.SelectedItem = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).lineOrPage
-            nudSpace.Value = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).linepagecount
-            cbxQuestionType.SelectedItem = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).questionType
-            cbxMarksSchemeType.SelectedItem = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).markSchemeType
+            cbxLinePage.SelectedItem = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).lineOrPages(listQuestionParts.SelectedIndex)
+            nudSpace.Value = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).linepagecounts(listQuestionParts.SelectedIndex)
+            cbxQuestionType.SelectedItem = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).questionTypes(listQuestionParts.SelectedIndex)
+            cbxMarksSchemeType.SelectedItem = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).markSchemeTypes(listQuestionParts.SelectedIndex)
             If cbxQuestionType.SelectedItem = "Written" Then
                 tabQuestionType.SelectedIndex = 0
             Else
                 tabQuestionType.SelectedIndex = 1
+                picQuestion.ImageLocation = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).questions(listQuestionParts.SelectedIndex)
             End If
             If cbxMarksSchemeType.SelectedItem = "Written" Then
                 tabMarkSchemeType.SelectedIndex = 0
             Else
                 tabMarkSchemeType.SelectedIndex = 1
+                picMarkScheme.ImageLocation = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).markSchemes(listQuestionParts.SelectedIndex)
             End If
-            If assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).questionImageLocation <> Nothing Then
-                picQuestion.ImageLocation = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).questionImageLocation
+            If assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).questionTypes(listQuestionParts.SelectedIndex) = "Image" Then
+                picQuestion.ImageLocation = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).questions(listQuestionParts.SelectedIndex)
             End If
-            If assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).markSchemeImageLocation <> Nothing Then
-                picMarkScheme.ImageLocation = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).markSchemeImageLocation
+            If assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).questionTypes(listQuestionParts.SelectedIndex) = "Image" Then
+                picMarkScheme.ImageLocation = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).markSchemes(listQuestionParts.SelectedIndex)
             End If
         End If
     End Sub
@@ -96,12 +107,12 @@
             lbxTagOverview.Items.Add(tagname)
         Next
 
-        cbxDefaultLineType.SelectedItem = assessments(getSelectedAssessment()).defaultQuestion.lineOrPage
-        cbxDefaultMarkSchemeType.SelectedItem = assessments(getSelectedAssessment()).defaultQuestion.markSchemeType
-        cbxDefaultQuestionType.SelectedItem = assessments(getSelectedAssessment()).defaultQuestion.questionType
+        cbxDefaultLineType.SelectedItem = assessments(getSelectedAssessment()).defaultQuestion.lineOrPages(0)
+        cbxDefaultMarkSchemeType.SelectedItem = assessments(getSelectedAssessment()).defaultQuestion.markSchemeTypes(0)
+        cbxDefaultQuestionType.SelectedItem = assessments(getSelectedAssessment()).defaultQuestion.questionTypes(0)
         tbxDefaultTitle.Text = assessments(getSelectedAssessment()).defaultQuestion.title
-        nudDefaultLines.Value = assessments(getSelectedAssessment()).defaultQuestion.linepagecount
-        nudDefaultMarks.Value = assessments(getSelectedAssessment()).defaultQuestion.marks
+        nudDefaultLines.Value = assessments(getSelectedAssessment()).defaultQuestion.linepagecounts(0)
+        nudDefaultMarks.Value = assessments(getSelectedAssessment()).defaultQuestion.totalMarks
 
     End Sub
 
@@ -138,10 +149,10 @@
                         For Each tagName In question.tags
                             If Not tagSums.ContainsKey(tagName) Then
                                 tagSums.Add(tagName, score.Value)
-                                tagCounts.Add(tagName, question.marks)
+                                tagCounts.Add(tagName, question.totalMarks)
                             Else
                                 tagSums(tagName) += score.Value
-                                tagCounts(tagName) += question.marks
+                                tagCounts(tagName) += question.totalMarks
                             End If
                         Next
                     Next
@@ -264,9 +275,19 @@
         picQuestion.Image = Nothing
         picMarkScheme.Image = Nothing
         If getSelectedAssessment() Is Nothing Then Exit Sub
-        tbxQuestion.Text = CType(listboxQuestions.SelectedItem, question).question
-        tbxMarkScheme.Text = CType(listboxQuestions.SelectedItem, question).markScheme
-        nudMarks.Value = CType(listboxQuestions.SelectedItem, question).marks
+
+        If listboxQuestions.Items.Count > 0 Then
+            listQuestionParts.Items.Clear()
+            For counter = 1 To assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).questions.Count
+                listQuestionParts.Items.Add(counter)
+            Next
+
+            If listQuestionParts.Items.Count > 0 Then listQuestionParts.SelectedIndex = 0
+        End If
+
+        tbxQuestion.Text = CType(listboxQuestions.SelectedItem, question).questions.Item(listQuestionParts.SelectedItem - 1)
+        tbxMarkScheme.Text = CType(listboxQuestions.SelectedItem, question).markSchemes.Item(listQuestionParts.SelectedItem - 1)
+        nudMarks.Value = CType(listboxQuestions.SelectedItem, question).markss.Item(listQuestionParts.SelectedItem - 1)
         listResources.Items.Clear()
         listIncludedResources.Items.Clear()
         For Each resource In assessments(getSelectedAssessment()).resources
@@ -288,10 +309,10 @@
             lbxTags.Items.Add(tagName, checked)
         Next
         TextBox1.Text = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).title
-        cbxLinePage.SelectedItem = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).lineOrPage
-        nudSpace.Value = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).linepagecount
-        cbxQuestionType.SelectedItem = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).questionType
-        cbxMarksSchemeType.SelectedItem = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).markSchemeType
+        cbxLinePage.SelectedItem = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).lineOrPages(listQuestionParts.SelectedIndex)
+        nudSpace.Value = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).linepagecounts(listQuestionParts.SelectedIndex)
+        cbxQuestionType.SelectedItem = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).questionTypes(listQuestionParts.SelectedIndex)
+        cbxMarksSchemeType.SelectedItem = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).markSchemeTypes(listQuestionParts.SelectedIndex)
         If cbxQuestionType.SelectedItem = "Written" Then
             tabQuestionType.SelectedIndex = 0
         Else
@@ -302,17 +323,17 @@
         Else
             tabMarkSchemeType.SelectedIndex = 1
         End If
-        If assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).questionImageLocation <> Nothing Then
-            picQuestion.ImageLocation = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).questionImageLocation
+        If assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).questionTypes(listQuestionParts.SelectedIndex) = "Image" Then
+            picQuestion.ImageLocation = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).questions(listQuestionParts.SelectedIndex)
         End If
-        If assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).markSchemeImageLocation <> Nothing Then
-            picMarkScheme.ImageLocation = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).markSchemeImageLocation
+        If assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).markSchemeTypes(listQuestionParts.SelectedIndex) = "Image" Then
+            picMarkScheme.ImageLocation = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).markSchemes(listQuestionParts.SelectedIndex)
         End If
     End Sub
 
     Private Sub nudMarks_ValueChanged(sender As Object, e As EventArgs) Handles nudMarks.ValueChanged
         If getSelectedAssessment() Is Nothing Then Exit Sub
-        assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).marks = nudMarks.Value
+        assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).markss(listQuestionParts.SelectedIndex) = nudMarks.Value
     End Sub
 
     Private Sub Form1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
@@ -374,17 +395,17 @@
 
     Private Sub nudSpace_ValueChanged(sender As Object, e As EventArgs) Handles nudSpace.ValueChanged
         If getSelectedAssessment() Is Nothing Then Exit Sub
-        assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).linepagecount = nudSpace.Value
+        assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).linepagecounts(listQuestionParts.SelectedIndex) = nudSpace.Value
     End Sub
 
     Private Sub cbxLinePage_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxLinePage.SelectedIndexChanged
         If getSelectedAssessment() Is Nothing Then Exit Sub
-        assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).lineOrPage = cbxLinePage.SelectedItem
+        assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).lineOrPages(listQuestionParts.SelectedIndex) = cbxLinePage.SelectedItem
     End Sub
 
     Private Sub cbxQuestionType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxQuestionType.SelectedIndexChanged
         If getSelectedAssessment() Is Nothing Then Exit Sub
-        assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).questionType = cbxQuestionType.SelectedItem
+        assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).questionTypes(listQuestionParts.SelectedIndex) = cbxQuestionType.SelectedItem
         If cbxQuestionType.SelectedItem = "Written" Then
             tabQuestionType.SelectedIndex = 0
         Else
@@ -394,7 +415,7 @@
 
     Private Sub cbxMarksSchemeType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxMarksSchemeType.SelectedIndexChanged
         If getSelectedAssessment() Is Nothing Then Exit Sub
-        assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).markSchemeType = cbxMarksSchemeType.SelectedItem
+        assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).markSchemeTypes(listQuestionParts.SelectedIndex) = cbxMarksSchemeType.SelectedItem
         If cbxMarksSchemeType.SelectedItem = "Written" Then
             tabMarkSchemeType.SelectedIndex = 0
         Else
@@ -404,15 +425,15 @@
 
     Private Sub btnLoadQuestionImage_Click(sender As Object, e As EventArgs) Handles btnLoadQuestionImage.Click
         If openFileImage.ShowDialog() = DialogResult.OK Then
-            assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).questionImageLocation = openFileImage.FileName
-            picQuestion.ImageLocation = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).questionImageLocation
+            assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).questions(listQuestionParts.SelectedIndex) = openFileImage.FileName
+            picQuestion.ImageLocation = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).questions(listQuestionParts.SelectedIndex)
         End If
     End Sub
 
     Private Sub btnLoadMarkSchemeImage_Click(sender As Object, e As EventArgs) Handles btnLoadMarkSchemeImage.Click
         If openFileImage.ShowDialog() = DialogResult.OK Then
-            assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).markSchemeImageLocation = openFileImage.FileName
-            picMarkScheme.ImageLocation = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).markSchemeImageLocation
+            assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).markSchemes(listQuestionParts.SelectedIndex) = openFileImage.FileName
+            picMarkScheme.ImageLocation = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).markSchemes(listQuestionParts.SelectedIndex)
         End If
     End Sub
 
@@ -428,12 +449,12 @@
 
     Private Sub tbxQuestion_TextChanged_1(sender As Object, e As EventArgs) Handles tbxQuestion.TextChanged
         If getSelectedAssessment() Is Nothing Then Exit Sub
-        assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).question = tbxQuestion.Text
+        assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).questions(listQuestionParts.SelectedItem - 1) = tbxQuestion.Text
     End Sub
 
     Private Sub tbxMarkScheme_TextChanged_1(sender As Object, e As EventArgs) Handles tbxMarkScheme.TextChanged
         If getSelectedAssessment() Is Nothing Then Exit Sub
-        assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).markScheme = tbxMarkScheme.Text
+        assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).markSchemes(listQuestionParts.SelectedItem - 1) = tbxMarkScheme.Text
     End Sub
 
     Private Sub buttonDeleteFolder_Click(sender As Object, e As EventArgs) Handles buttonDeleteFolder.Click
@@ -549,27 +570,70 @@
     End Sub
 
     Private Sub nudDefaultMarks_ValueChanged(sender As Object, e As EventArgs) Handles nudDefaultMarks.ValueChanged
-        If assessments.Count > 0 Then assessments(getSelectedAssessment()).defaultQuestion.marks = nudDefaultMarks.Value
+        'If assessments.Count > 0 Then assessments(getSelectedAssessment()).defaultQuestion.marks = nudDefaultMarks.Value
     End Sub
 
     Private Sub nudDefaultLines_ValueChanged(sender As Object, e As EventArgs) Handles nudDefaultLines.ValueChanged
-        If assessments.Count > 0 Then assessments(getSelectedAssessment()).defaultQuestion.linepagecount = nudDefaultLines.Value
+        If assessments.Count > 0 Then assessments(getSelectedAssessment()).defaultQuestion.linepagecounts(0) = nudDefaultLines.Value
     End Sub
 
     Private Sub cbxDefaultLineType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxDefaultLineType.SelectedIndexChanged
-        If assessments.Count > 0 Then assessments(getSelectedAssessment()).defaultQuestion.lineOrPage = cbxDefaultLineType.SelectedItem
+        If assessments.Count > 0 Then assessments(getSelectedAssessment()).defaultQuestion.lineOrPages(0) = cbxDefaultLineType.SelectedItem
     End Sub
 
     Private Sub cbxDefaultQuestionType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxDefaultQuestionType.SelectedIndexChanged
         If assessments.Count > 0 Then
-            assessments(getSelectedAssessment()).defaultQuestion.questionType = cbxDefaultQuestionType.SelectedItem
+            assessments(getSelectedAssessment()).defaultQuestion.questionTypes(0) = cbxDefaultQuestionType.SelectedItem
         End If
     End Sub
 
     Private Sub cbxDefaultMarkSchemeType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbxDefaultMarkSchemeType.SelectedIndexChanged
         If assessments.Count > 0 Then
-            assessments(getSelectedAssessment()).defaultQuestion.markSchemeType = cbxDefaultMarkSchemeType.SelectedItem
+            assessments(getSelectedAssessment()).defaultQuestion.markSchemeTypes(0) = cbxDefaultMarkSchemeType.SelectedItem
         End If
+    End Sub
+
+    Private Sub btnAddQuestionPart_Click(sender As Object, e As EventArgs) Handles btnAddQuestionPart.Click
+        assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).addNewPart(assessments(getSelectedAssessment()).defaultQuestion)
+        updateQuestionsGUI()
+    End Sub
+
+    Private Sub btnRemoveQuestionPart_Click(sender As Object, e As EventArgs) Handles btnRemoveQuestionPart.Click
+        If listQuestionParts.SelectedIndex <> -1 Then
+            assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).questions.RemoveAt(listQuestionParts.SelectedItem)
+            updateQuestionsGUI()
+        End If
+    End Sub
+
+    Private Sub listQuestionParts_SelectedIndexChanged(sender As Object, e As EventArgs) Handles listQuestionParts.SelectedIndexChanged
+        picQuestion.Image = Nothing
+        picMarkScheme.Image = Nothing
+        If getSelectedAssessment() Is Nothing Then Exit Sub
+
+        tbxQuestion.Text = CType(listboxQuestions.SelectedItem, question).questions.Item(listQuestionParts.SelectedIndex)
+        tbxMarkScheme.Text = CType(listboxQuestions.SelectedItem, question).markSchemes.Item(listQuestionParts.SelectedIndex)
+        nudMarks.Value = CType(listboxQuestions.SelectedItem, question).markss.Item(listQuestionParts.SelectedIndex)
+        cbxLinePage.SelectedItem = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).lineOrPages(listQuestionParts.SelectedIndex)
+        nudSpace.Value = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).linepagecounts(listQuestionParts.SelectedIndex)
+        cbxQuestionType.SelectedItem = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).questionTypes(listQuestionParts.SelectedIndex)
+        cbxMarksSchemeType.SelectedItem = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).markSchemeTypes(listQuestionParts.SelectedIndex)
+        If cbxQuestionType.SelectedItem = "Written" Then
+            tabQuestionType.SelectedIndex = 0
+        Else
+            tabQuestionType.SelectedIndex = 1
+        End If
+        If cbxMarksSchemeType.SelectedItem = "Written" Then
+            tabMarkSchemeType.SelectedIndex = 0
+        Else
+            tabMarkSchemeType.SelectedIndex = 1
+        End If
+        If assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).questionTypes(listQuestionParts.SelectedIndex) = "Image" Then
+            picQuestion.ImageLocation = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).questions(listQuestionParts.SelectedIndex)
+        End If
+        If assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).markSchemeTypes(listQuestionParts.SelectedIndex) = "Image" Then
+            picMarkScheme.ImageLocation = assessments(getSelectedAssessment()).questions(listboxQuestions.SelectedItem.ID).markSchemes(listQuestionParts.SelectedIndex)
+        End If
+
     End Sub
 End Class
 
@@ -592,7 +656,7 @@ Public Class assessment
         If Not listOfAssessmentNames.Contains(name) Then
             Me.name = name
             listOfAssessmentNames.Add(name)
-            Me.defaultQuestion = New question("", "", 1, Me.name + "\", 0)
+            Me.defaultQuestion = New question(New List(Of String)({""}), New List(Of String)({""}), New List(Of Integer)({1}), Me.name + "\", 0)
 
             folderStructure.Nodes.Add(name, name, 0)
 
@@ -655,19 +719,22 @@ Public Class assessment
         defaultQuestion.save()
     End Sub
 
-    Public Sub addNewQuestion(path As String, Optional question As String = Nothing, Optional markScheme As String = Nothing, Optional marks As Integer = Nothing)
+    Public Sub addNewQuestion(path As String, Optional question As List(Of String) = Nothing, Optional markScheme As List(Of String) = Nothing, Optional marks As List(Of Integer) = Nothing)
         Dim counter As Integer = 0
         While questions.ContainsKey(counter)
             counter += 1
         End While
 
-        If question = Nothing Then question = defaultQuestion.question
-        If markScheme = Nothing Then markScheme = defaultQuestion.markScheme
-        If marks = Nothing Then marks = defaultQuestion.marks
+        If question Is Nothing Then question = defaultQuestion.questions
+        If markScheme Is Nothing Then markScheme = defaultQuestion.markSchemes
+        If marks Is Nothing Then marks = defaultQuestion.markss
 
         Dim newQuestion As question = defaultQuestion.Copy()
         newQuestion.path = path
         newQuestion.ID = counter
+        newQuestion.questions = question
+        newQuestion.markSchemes = markScheme
+        newQuestion.markss = marks
 
         For Each subpath In path.Split("\")
             If tags.Contains(subpath) Then newQuestion.tags.Add(subpath)
@@ -782,43 +849,63 @@ Public Class assessment
 End Class
 
 Public Class question
-    Public question As String
-    Public markScheme As String
-    Public marks As Integer
+    Public questions As New List(Of String)
+    Public markSchemes As New List(Of String)
+    Public markss As New List(Of Integer)
     Public path As String
     Public ID As Integer
     Public resources As New List(Of resource)
     Public tags As New List(Of String)
     Public title As String
-    Public lineOrPage As String
-    Public linepagecount As Integer
-    Public questionType As String
-    Public markSchemeType As String
-    Public questionImageLocation As String
-    Public markSchemeImageLocation As String
+    Public lineOrPages As New List(Of String)
+    Public linepagecounts As New List(Of Integer)
+    Public questionTypes As New List(Of String)
+    Public markSchemeTypes As New List(Of String)
+    'Public questionImageLocation As String
+    'Public markSchemeImageLocation As String
 
-    Sub New(question, markScheme, marks, path, ID)
-        Me.question = question
-        Me.markScheme = markScheme
-        Me.marks = marks
+    Public ReadOnly Property totalMarks As Integer
+        Get
+            Dim counter As Integer = 0
+            For Each mark In markss
+                counter += mark
+            Next
+            Return counter
+        End Get
+    End Property
+
+    Sub New(question As List(Of String), markScheme As List(Of String), marks As List(Of Integer), path As String, ID As Integer)
+        Me.questions = question
+        Me.markSchemes = markScheme
+        Me.markss = marks
         Me.path = path
         Me.ID = ID
-        Me.title = "New Question in " + path
-        Me.lineOrPage = "Lines"
-        Me.linepagecount = marks
-        Me.questionType = "Written"
-        Me.markSchemeType = "Written"
-        Me.questionImageLocation = Nothing
-        Me.markSchemeImageLocation = Nothing
+        Me.title = "question in " + path
+        Me.lineOrPages = New List(Of String)({"Lines"})
+        Me.linepagecounts = New List(Of Integer)({1})
+        Me.questionTypes = New List(Of String)({"Written"})
+        Me.markSchemeTypes = New List(Of String)({"Written"})
+        'Me.questionImageLocation = Nothing
+        'Me.markSchemeImageLocation = Nothing
     End Sub
 
     Sub New(filepath As String, resources As Dictionary(Of Integer, resource))
         Dim fileReader As IO.StreamReader
         fileReader = My.Computer.FileSystem.OpenTextFileReader(filepath)
         Dim lines() As String = fileReader.ReadToEnd().Split("¬")
-        question = lines(0)
-        markScheme = lines(1)
-        marks = Int(lines(2))
+
+        For Each questionString In lines(0).Split(",")
+            Me.questions.Add(questionString)
+        Next
+
+        For Each markSchemeString In lines(1).Split(",")
+            Me.markSchemes.Add(markSchemeString)
+        Next
+
+        For Each markString In lines(2).Split(",")
+            Me.markss.Add(Int(markString))
+        Next
+
         For Each resourceID In lines(3).Split(",")
             If IsNumeric(resourceID) Then Me.resources.Add(resources(Int(resourceID)))
         Next
@@ -827,12 +914,25 @@ Public Class question
             If tag <> "" Then Me.tags.Add(tag)
         Next
         title = lines(5).Trim({Chr(13), Chr(10)})
-        lineOrPage = lines(6).Trim({Chr(13), Chr(10)})
-        linepagecount = Int(lines(7))
-        questionType = lines(8).Trim({Chr(13), Chr(10)})
-        markSchemeType = lines(9).Trim({Chr(13), Chr(10)})
-        questionImageLocation = lines(10).Trim({Chr(13), Chr(10)})
-        markSchemeImageLocation = lines(11).Trim({Chr(13), Chr(10)})
+
+        For Each linepagestring In lines(6).Trim({Chr(13), Chr(10)}).Split(",")
+            Me.lineOrPages.Add(linepagestring)
+        Next
+
+        For Each linepagecountstring In lines(7).Split(",")
+            Me.linepagecounts.Add(Int(linepagecountstring))
+        Next
+
+        For Each questiontypestring In lines(8).Split(",")
+            Me.questionTypes.Add(questiontypestring)
+        Next
+
+        For Each markSchemetypeString In lines(9).Split(",")
+            Me.markSchemeTypes.Add(markSchemetypeString)
+        Next
+
+        'questionImageLocation = lines(10).Trim({Chr(13), Chr(10)})
+        'markSchemeImageLocation = lines(11).Trim({Chr(13), Chr(10)})
         path = Mid(filepath, 1, filepath.LastIndexOf("\") + 1)
         Me.ID = Mid(filepath.Split("\").Last, 1, filepath.Split("\").Last.IndexOf("."))
         fileReader.Close()
@@ -847,30 +947,88 @@ Public Class question
 
     Public Overrides Function ToString() As String
         If Me.title <> Nothing Then
-            Return Me.title
+            Return Me.totalMarks.ToString() + " Mark " + Me.title
         Else
             Return "Untitled Question"
         End If
     End Function
 
+    Sub addNewPart(defaultQuestion As question)
+        Me.questions.Add("")
+        Me.markSchemes.Add("")
+        Me.markss.Add(1)
+        Me.lineOrPages.Add(defaultQuestion.lineOrPages(0))
+        Me.linepagecounts.Add(defaultQuestion.linepagecounts(0))
+        Me.questionTypes.Add(defaultQuestion.questionTypes(0))
+        Me.markSchemeTypes.Add(defaultQuestion.markSchemeTypes(0))
+    End Sub
+
     Sub save()
         Dim file As IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(path + ID.ToString() + ".txt", False)
-        file.Write(question + "¬" + markScheme + "¬" + marks.ToString() + "¬")
+
+        Dim questionString As String = ""
+        For Each questionsString In questions
+            questionString += questionsString + ","
+        Next
+        If questionString.Length > 0 Then questionString = Mid(questionString, 1, questionString.Length - 1)
+        file.Write(questionString + "¬")
+
+        Dim markSchemeString As String = ""
+        For Each markSchemesString In markSchemes
+            markSchemeString += markSchemesString + ","
+        Next
+        If markSchemeString.Length > 0 Then markSchemeString = Mid(markSchemeString, 1, markSchemeString.Length - 1)
+        file.Write(markSchemeString + "¬")
+
+        Dim marksString As String = ""
+        For Each markValue In markss
+            marksString += markValue.ToString + ","
+        Next
+        If marksString.Length > 0 Then marksString = Mid(marksString, 1, marksString.Length - 1)
+        file.Write(marksString + "¬")
+
         Dim resourceString As String = ""
         For Each resource In resources
             resourceString += resource.ID.ToString + ","
         Next
         If resourceString.Length > 0 Then resourceString = Mid(resourceString, 1, resourceString.Length - 1)
         file.Write(resourceString + "¬")
+
         Dim tagString As String = ""
         For Each tag In tags
             tagString += tag + ","
         Next
         If tagString.Length > 0 Then tagString = Mid(tagString, 1, tagString.Length - 1)
         file.Write(tagString + "¬")
-        file.WriteLine(title + "¬" + lineOrPage + "¬" + linepagecount.ToString() + "¬" + questionType + "¬" + markSchemeType + "¬" + questionImageLocation + "¬" + markSchemeImageLocation)
+
+        file.Write(title + "¬")
+        file.Write(_getOutputString(lineOrPages) + "¬")
+        file.Write(_getOutputString(linepagecounts) + "¬")
+        file.Write(_getOutputString(questionTypes) + "¬")
+        file.WriteLine(_getOutputString(markSchemeTypes) + "¬")
+
+        'file.WriteLine(questionImageLocation + "¬" + markSchemeImageLocation)
+
         file.Close()
     End Sub
+
+    Private Function _getOutputString(list As List(Of String))
+        Dim result As String = ""
+        For Each item In list
+            result += item + ","
+        Next
+        If result.Length > 0 Then result = Mid(result, 1, result.Length - 1)
+        Return (result)
+    End Function
+
+    Private Function _getOutputString(list As List(Of Integer))
+        Dim result As String = ""
+        For Each item In list
+            result += item.ToString() + ","
+        Next
+        If result.Length > 0 Then result = Mid(result, 1, result.Length - 1)
+        Return (result)
+    End Function
 
     Function renderQuestion(Optional questionNumber As Integer = 0, Optional format As format = Nothing, Optional papersize As paperRatio = paperRatio.A)
 
@@ -892,132 +1050,150 @@ Public Class question
 
         Dim textPadding As Integer = 5
         Dim questionPosition As New Rectangle(New Point(questionNumberPosition.Width + textPadding, 0), New Size(result.Width - (questionNumberPosition.Width + textPadding + textPadding), result.Height))
+        Dim answerposition As New Rectangle()
 
-        If questionType = "Written" Then
-            Dim counter = question.Length
-            Dim workingString As String = question
-            Dim lines As New List(Of String)
-            Dim addString As String = workingString
-            Dim width As Integer = 0
-            Dim cutString As Boolean = False
-            Do Until workingString.Length = 0
-                addString = workingString
-                width = TextRenderer.MeasureText(addString, format.font).Width
-                While width > questionPosition.Width
-                    cutString = True
-                    counter += -1
-                    addString = Mid(workingString, 1, counter)
-                    width = TextRenderer.MeasureText(addString, format.font).Width
-                End While
-                If addString.LastIndexOf(" ") <> -1 And cutString Then
-                    counter = addString.LastIndexOf(" ")
-                    addString = Mid(workingString, 1, counter)
+        Dim questionCounter = 0
+
+        For Each question In questions
+
+            If questionTypes(questionCounter) = "Written" Then
+                Dim counter = question.Length
+                Dim workingString As String = question
+                If questions.Count > 1 Then
+                    counter += 3
+                    workingString = Convert.ToChar(questionCounter + 97) + ") " + workingString
                 End If
-                lines.Add(addString)
-                workingString = Mid(workingString, counter + 1)
-                counter = workingString.Length
-                cutString = False
-            Loop
-            position = New Point(questionNumberPosition.Width + textPadding, 0)
-            For Each line In lines
-                TextRenderer.DrawText(graphics, line, format.font, position, format.fontColour)
-                position.Y += TextRenderer.MeasureText(line, format.font).Height
-            Next
-            questionPosition.Height = position.Y
-        Else
-            Dim questionImage As New Bitmap(questionImageLocation)
-            Dim resultQuestionImage As Bitmap
-            'If questionImage.Width > questionPosition.Width Or questionImage.Width < questionPosition.Width * 0.4 Then
-            Dim scalefactor As Double = questionPosition.Width / questionImage.Width
-            resultQuestionImage = New Bitmap(questionImage, questionImage.Width * scalefactor, questionImage.Height * scalefactor)
-            'End If
-            If questionImage.Height > questionPosition.Height Then
-                scalefactor = questionPosition.Height / questionImage.Height
+                Dim lines As New List(Of String)
+                Dim addString As String = workingString
+                Dim width As Integer = 0
+                Dim cutString As Boolean = False
+                Do Until workingString.Length = 0
+                    addString = workingString
+                    width = TextRenderer.MeasureText(addString, format.font).Width
+                    While width > questionPosition.Width
+                        cutString = True
+                        counter += -1
+                        addString = Mid(workingString, 1, counter)
+                        width = TextRenderer.MeasureText(addString, format.font).Width
+                    End While
+                    If addString.LastIndexOf(" ") <> -1 And cutString Then
+                        counter = addString.LastIndexOf(" ")
+                        addString = Mid(workingString, 1, counter)
+                    End If
+                    lines.Add(addString)
+                    workingString = Mid(workingString, counter + 1)
+                    counter = workingString.Length
+                    cutString = False
+                Loop
+                position = questionPosition.Location
+                Dim height As Integer = 0
+                For Each line In lines
+                    TextRenderer.DrawText(graphics, line, format.font, position, format.fontColour)
+                    position.Y += TextRenderer.MeasureText(line, format.font).Height
+                    height += TextRenderer.MeasureText(line, format.font).Height
+                Next
+                questionPosition.Height = height
+            Else
+                Dim questionImage As New Bitmap(question)
+                Dim resultQuestionImage As Bitmap
+                'If questionImage.Width > questionPosition.Width Or questionImage.Width < questionPosition.Width * 0.4 Then
+                Dim scalefactor As Double = questionPosition.Width / questionImage.Width
                 resultQuestionImage = New Bitmap(questionImage, questionImage.Width * scalefactor, questionImage.Height * scalefactor)
+                'End If
+                If questionImage.Height > questionPosition.Height Then
+                    scalefactor = questionPosition.Height / questionImage.Height
+                    resultQuestionImage = New Bitmap(questionImage, questionImage.Width * scalefactor, questionImage.Height * scalefactor)
+                End If
+                graphics.DrawImage(resultQuestionImage, questionPosition.Location)
+                questionPosition.Height = resultQuestionImage.Height
             End If
-            graphics.DrawImage(resultQuestionImage, questionPosition.Location)
-            questionPosition.Height = resultQuestionImage.Height
-        End If
-        For Each resource In resources
-            Dim resourceScaled As New Bitmap(resource.image)
-            If resourceScaled.Width < result.Width * 0.5 Then
-                Dim scaleFactor As Double = (result.Width * 0.5) / resourceScaled.Width
-                resourceScaled = New Bitmap(resourceScaled, resourceScaled.Width * scaleFactor, resourceScaled.Height * scaleFactor)
-            ElseIf resourceScaled.Width > result.Width Then
-                Dim scaleFactor As Double = result.Width / resourceScaled.Width
-                resourceScaled = New Bitmap(resourceScaled, resourceScaled.Width * scaleFactor, resourceScaled.Height * scaleFactor)
+            For Each resource In resources
+                Dim resourceScaled As New Bitmap(resource.image)
+                If resourceScaled.Width < result.Width * 0.5 Then
+                    Dim scaleFactor As Double = (result.Width * 0.5) / resourceScaled.Width
+                    resourceScaled = New Bitmap(resourceScaled, resourceScaled.Width * scaleFactor, resourceScaled.Height * scaleFactor)
+                ElseIf resourceScaled.Width > result.Width Then
+                    Dim scaleFactor As Double = result.Width / resourceScaled.Width
+                    resourceScaled = New Bitmap(resourceScaled, resourceScaled.Width * scaleFactor, resourceScaled.Height * scaleFactor)
+                End If
+                position = New Point((result.Width - resourceScaled.Width) / 2, questionPosition.Bottom)
+                graphics.DrawImage(resourceScaled, position)
+                questionPosition.Height += resourceScaled.Height
+            Next
+
+            If questionTypes(questionCounter) = "Written" Then
+                Dim Size As Size = TextRenderer.MeasureText("(" + markss(questionCounter).ToString + ")", boldItalicFont)
+                position = New Point(result.Width - Size.Width, questionPosition.Bottom - Size.Height)
+                TextRenderer.DrawText(graphics, "(" + markss(questionCounter).ToString + ")", boldItalicFont, position, format.fontColour)
             End If
-            position = New Point((result.Width - resourceScaled.Width) / 2, questionPosition.Bottom)
-            graphics.DrawImage(resourceScaled, position)
-            questionPosition.Height += resourceScaled.Height
+
+            Dim questionanswerpadding As Integer = 10
+            Dim lineSpacing As Integer = 50
+            answerposition = New Rectangle(New Point(0, questionPosition.Y + questionPosition.Height + questionanswerpadding + lineSpacing), New Size(result.Width, 0))
+
+            If lineOrPages(questionCounter) = "Lines" Then
+                For counter = 1 To linepagecounts(questionCounter)
+                    graphics.DrawLine(New Pen(Color.Black), New Point(answerPosition.X, answerPosition.Y + answerPosition.Height), New Point(answerPosition.Width, answerPosition.Y + answerPosition.Height))
+                    If answerPosition.Y + answerPosition.Height + lineSpacing < result.Height Then
+                        answerPosition.Height += lineSpacing
+                    Else
+                        resultList.Add(New Bitmap(result))
+                        graphics.Clear(Color.White)
+                        TextRenderer.DrawText(graphics, "Question " + questionNumber.ToString() + " continued", format.font, New Point(0, 0), format.fontColour)
+                        answerPosition.Height = 0
+                        answerPosition.Y = TextRenderer.MeasureText("Question " + questionNumber.ToString() + " continued", format.font).Height + questionanswerpadding + lineSpacing
+                    End If
+                Next
+                'Dim old As New Bitmap(result)
+                'result = New Bitmap(result.Width, answerPosition.Y + answerPosition.Height + 1)
+                'graphics = Graphics.FromImage(result)
+                'graphics.DrawImage(old, New Point(0, 0))
+            ElseIf lineOrPages(questionCounter) = "Pages" Then
+                Dim newPageCount As Integer = 0
+                Do
+                    graphics.DrawLine(New Pen(Color.Black), New Point(answerPosition.X, answerPosition.Y + answerPosition.Height), New Point(answerPosition.Width, answerPosition.Y + answerPosition.Height))
+                    If answerPosition.Y + answerPosition.Height + lineSpacing < result.Height Then
+                        answerPosition.Height += lineSpacing
+                    Else
+                        If newPageCount + 2 > linepagecounts(questionCounter) Then Exit Do
+                        resultList.Add(New Bitmap(result))
+                        graphics.Clear(Color.White)
+                        TextRenderer.DrawText(graphics, "Question " + questionNumber.ToString() + " continued", format.font, New Point(0, 0), format.fontColour)
+                        answerPosition.Height = 0
+                        answerPosition.Y = TextRenderer.MeasureText("Question " + questionNumber.ToString() + " continued", format.font).Height + questionanswerpadding + lineSpacing
+                        newPageCount += 1
+                    End If
+                Loop
+                'Dim old As New Bitmap(result)
+                'result = New Bitmap(result.Width, answerPosition.Y + answerPosition.Height + 1)
+                'graphics = Graphics.FromImage(result)
+                'graphics.DrawImage(old, New Point(0, 0))
+            Else
+                For counter = 1 To linepagecounts(questionCounter)
+                    'graphics.DrawLine(New Pen(Color.Black), New Point(answerPosition.X, answerPosition.Y + answerPosition.Height), New Point(answerPosition.Width, answerPosition.Y + answerPosition.Height))
+                    If answerPosition.Y + answerPosition.Height + lineSpacing < result.Height Then
+                        answerPosition.Height += lineSpacing
+                    Else
+                        resultList.Add(New Bitmap(result))
+                        graphics.Clear(Color.White)
+                        TextRenderer.DrawText(graphics, "Question " + questionNumber.ToString() + " continued", format.font, New Point(0, 0), format.fontColour)
+                        answerPosition.Height = 0
+                        answerPosition.Y = TextRenderer.MeasureText("Question " + questionNumber.ToString() + " continued", format.font).Height + questionanswerpadding + lineSpacing
+                    End If
+                Next
+                graphics.DrawLine(New Pen(Color.Black), New Point(answerPosition.X + (answerPosition.Width * 0.8), answerPosition.Bottom), New Point(answerPosition.Width, answerPosition.Bottom))
+
+            End If
+
+            questionCounter += 1
+            questionPosition.Y = answerPosition.Bottom
+
         Next
 
-        If questionType = "Written" Then
-            Dim Size As Size = TextRenderer.MeasureText("(" + marks.ToString + ")", boldItalicFont)
-            position = New Point(result.Width - Size.Width, questionPosition.Bottom - Size.Height)
-            TextRenderer.DrawText(graphics, "(" + marks.ToString + ")", boldItalicFont, position, format.fontColour)
-        End If
-
-        Dim questionanswerpadding As Integer = 10
-        Dim lineSpacing As Integer = 50
-        Dim answerPosition As New Rectangle(New Point(0, questionPosition.Y + questionPosition.Height + questionanswerpadding + lineSpacing), New Size(result.Width, 0))
-
-        If lineOrPage = "Lines" Then
-            For counter = 1 To linepagecount
-                graphics.DrawLine(New Pen(Color.Black), New Point(answerPosition.X, answerPosition.Y + answerPosition.Height), New Point(answerPosition.Width, answerPosition.Y + answerPosition.Height))
-                If answerPosition.Y + answerPosition.Height + lineSpacing < result.Height Then
-                    answerPosition.Height += lineSpacing
-                Else
-                    resultList.Add(New Bitmap(result))
-                    graphics.Clear(Color.White)
-                    TextRenderer.DrawText(graphics, "Question " + questionNumber.ToString() + " continued", format.font, New Point(0, 0), format.fontColour)
-                    answerPosition.Height = 0
-                    answerPosition.Y = TextRenderer.MeasureText("Question " + questionNumber.ToString() + " continued", format.font).Height + questionanswerpadding + lineSpacing
-                End If
-            Next
-            Dim old As New Bitmap(result)
-            result = New Bitmap(result.Width, answerPosition.Y + answerPosition.Height + 1)
-            graphics = Graphics.FromImage(result)
-            graphics.DrawImage(old, New Point(0, 0))
-        ElseIf lineOrPage = "Pages" Then
-            Dim newPageCount As Integer = 0
-            Do
-                graphics.DrawLine(New Pen(Color.Black), New Point(answerPosition.X, answerPosition.Y + answerPosition.Height), New Point(answerPosition.Width, answerPosition.Y + answerPosition.Height))
-                If answerPosition.Y + answerPosition.Height + lineSpacing < result.Height Then
-                    answerPosition.Height += lineSpacing
-                Else
-                    If newPageCount + 2 > linepagecount Then Exit Do
-                    resultList.Add(New Bitmap(result))
-                    graphics.Clear(Color.White)
-                    TextRenderer.DrawText(graphics, "Question " + questionNumber.ToString() + " continued", format.font, New Point(0, 0), format.fontColour)
-                    answerPosition.Height = 0
-                    answerPosition.Y = TextRenderer.MeasureText("Question " + questionNumber.ToString() + " continued", format.font).Height + questionanswerpadding + lineSpacing
-                    newPageCount += 1
-                End If
-            Loop
-            Dim old As New Bitmap(result)
-            result = New Bitmap(result.Width, answerPosition.Y + answerPosition.Height + 1)
-            graphics = Graphics.FromImage(result)
-            graphics.DrawImage(old, New Point(0, 0))
-        Else
-            For counter = 1 To linepagecount
-                'graphics.DrawLine(New Pen(Color.Black), New Point(answerPosition.X, answerPosition.Y + answerPosition.Height), New Point(answerPosition.Width, answerPosition.Y + answerPosition.Height))
-                If answerPosition.Y + answerPosition.Height + lineSpacing < result.Height Then
-                    answerPosition.Height += lineSpacing
-                Else
-                    resultList.Add(New Bitmap(result))
-                    graphics.Clear(Color.White)
-                    TextRenderer.DrawText(graphics, "Question " + questionNumber.ToString() + " continued", format.font, New Point(0, 0), format.fontColour)
-                    answerPosition.Height = 0
-                    answerPosition.Y = TextRenderer.MeasureText("Question " + questionNumber.ToString() + " continued", format.font).Height + questionanswerpadding + lineSpacing
-                End If
-            Next
-            graphics.DrawLine(New Pen(Color.Black), New Point(answerPosition.X + (answerPosition.Width * 0.8), answerPosition.Bottom), New Point(answerPosition.Width, answerPosition.Bottom))
-            Dim old As New Bitmap(result)
-            result = New Bitmap(result.Width, answerPosition.Y + answerPosition.Height + 1)
-            graphics = Graphics.FromImage(result)
-            graphics.DrawImage(old, New Point(0, 0))
-        End If
+        Dim old As New Bitmap(result)
+        result = New Bitmap(result.Width, answerposition.Bottom + 1)
+        graphics = Graphics.FromImage(result)
+        graphics.DrawImage(old, New Point(0, 0))
 
         resultList.Add(result)
         Return resultList
@@ -1297,12 +1473,12 @@ Public Class publication
         For Each questionKey In completeQuestions.Keys
             Dim question As question = completeQuestions(questionKey)
             If question.containsTag(tags) And Not question.containsTag(excludedTags) Then
-                If question.marks > minMarks And question.marks < maxMarks Then
+                If question.totalMarks > minMarks And question.totalMarks < maxMarks Then
                     result.Add(questionKey, question)
                 End If
             End If
             If question.tags.Count = 0 And includeUntagged Then
-                If question.marks > minMarks And question.marks < maxMarks Then
+                If question.totalMarks > minMarks And question.totalMarks < maxMarks Then
                     result.Add(questionKey, question)
                 End If
             End If

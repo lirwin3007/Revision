@@ -48,11 +48,11 @@
         resultimage.Save("screenshot" + counter.ToString + ".png")
         result = "screenshot" + counter.ToString + ".png"
         If isquestion Then
-            Form1.assessments(Form1.getSelectedAssessment()).questions(Form1.listboxQuestions.SelectedItem.ID).questionImageLocation = "screenshot" + counter.ToString + ".png"
-            Form1.picQuestion.ImageLocation = Form1.assessments(Form1.getSelectedAssessment()).questions(Form1.listboxQuestions.SelectedItem.ID).questionImageLocation
+            Form1.assessments(Form1.getSelectedAssessment()).questions(Form1.listboxQuestions.SelectedItem.ID).questions(Form1.listQuestionParts.SelectedIndex) = "screenshot" + counter.ToString + ".png"
+            Form1.picQuestion.ImageLocation = Form1.assessments(Form1.getSelectedAssessment()).questions(Form1.listboxQuestions.SelectedItem.ID).questions(Form1.listQuestionParts.SelectedIndex)
         Else
-            Form1.assessments(Form1.getSelectedAssessment()).questions(Form1.listboxQuestions.SelectedItem.ID).markSchemeImageLocation = "screenshot" + counter.ToString + ".png"
-            Form1.picMarkScheme.ImageLocation = Form1.assessments(Form1.getSelectedAssessment()).questions(Form1.listboxQuestions.SelectedItem.ID).markSchemeImageLocation
+            Form1.assessments(Form1.getSelectedAssessment()).questions(Form1.listboxQuestions.SelectedItem.ID).markSchemes(Form1.listQuestionParts.SelectedIndex) = "screenshot" + counter.ToString + ".png"
+            Form1.picMarkScheme.ImageLocation = Form1.assessments(Form1.getSelectedAssessment()).questions(Form1.listboxQuestions.SelectedItem.ID).markSchemes(Form1.listQuestionParts.SelectedIndex)
         End If
         Me.Hide()
         result = Nothing
