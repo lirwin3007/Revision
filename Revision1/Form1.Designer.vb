@@ -1246,7 +1246,7 @@ Partial Class Form1
         Me.cbxLinePage.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cbxLinePage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbxLinePage.FormattingEnabled = True
-        Me.cbxLinePage.Items.AddRange(New Object() {"Lines", "Pages"})
+        Me.cbxLinePage.Items.AddRange(New Object() {"Lines", "Pages", "Blank Lines"})
         Me.cbxLinePage.Location = New System.Drawing.Point(145, 9)
         Me.cbxLinePage.Name = "cbxLinePage"
         Me.cbxLinePage.Size = New System.Drawing.Size(136, 21)

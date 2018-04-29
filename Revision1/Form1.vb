@@ -979,7 +979,7 @@ Public Class question
             result = New Bitmap(result.Width, answerPosition.Y + answerPosition.Height + 1)
             graphics = Graphics.FromImage(result)
             graphics.DrawImage(old, New Point(0, 0))
-        Else
+        ElseIf lineOrPage = "Pages" Then
             Dim newPageCount As Integer = 0
             Do
                 graphics.DrawLine(New Pen(Color.Black), New Point(answerPosition.X, answerPosition.Y + answerPosition.Height), New Point(answerPosition.Width, answerPosition.Y + answerPosition.Height))
@@ -995,6 +995,24 @@ Public Class question
                     newPageCount += 1
                 End If
             Loop
+            Dim old As New Bitmap(result)
+            result = New Bitmap(result.Width, answerPosition.Y + answerPosition.Height + 1)
+            graphics = Graphics.FromImage(result)
+            graphics.DrawImage(old, New Point(0, 0))
+        Else
+            For counter = 1 To linepagecount
+                'graphics.DrawLine(New Pen(Color.Black), New Point(answerPosition.X, answerPosition.Y + answerPosition.Height), New Point(answerPosition.Width, answerPosition.Y + answerPosition.Height))
+                If answerPosition.Y + answerPosition.Height + lineSpacing < result.Height Then
+                    answerPosition.Height += lineSpacing
+                Else
+                    resultList.Add(New Bitmap(result))
+                    graphics.Clear(Color.White)
+                    TextRenderer.DrawText(graphics, "Question " + questionNumber.ToString() + " continued", format.font, New Point(0, 0), format.fontColour)
+                    answerPosition.Height = 0
+                    answerPosition.Y = TextRenderer.MeasureText("Question " + questionNumber.ToString() + " continued", format.font).Height + questionanswerpadding + lineSpacing
+                End If
+            Next
+            graphics.DrawLine(New Pen(Color.Black), New Point(answerPosition.X + (answerPosition.Width * 0.8), answerPosition.Bottom), New Point(answerPosition.Width, answerPosition.Bottom))
             Dim old As New Bitmap(result)
             result = New Bitmap(result.Width, answerPosition.Y + answerPosition.Height + 1)
             graphics = Graphics.FromImage(result)
