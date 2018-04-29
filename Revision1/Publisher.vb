@@ -3,6 +3,8 @@
     Dim styles As New Dictionary(Of String, Bitmap)
     Public assessment As assessment
 
+    Dim updateNumberOfQuestion As Boolean = True
+
     Private Sub buttonNext_Click(sender As Object, e As EventArgs) Handles buttonNext.Click
         mainTab.SelectedIndex += 1
         updateEnables()
@@ -72,10 +74,12 @@
 
     Private Sub nudMinMark_ValueChanged(sender As Object, e As EventArgs) Handles nudMinMark.ValueChanged
         nudMaxMark.Minimum = nudMinMark.Value + 1
+        updateQuestionCount()
     End Sub
 
     Private Sub nudMaxMark_ValueChanged(sender As Object, e As EventArgs) Handles nudMaxMark.ValueChanged
         nudMinMark.Maximum = nudMaxMark.Value
+        updateQuestionCount()
     End Sub
 
 
@@ -107,8 +111,14 @@
 
     End Sub
 
+    Sub updateQuestionCount()
+        If updateNumberOfQuestion Then
+            nudQuestionCount.Maximum = getQuestions().Count
+        End If
+    End Sub
+
     Private Sub listTags_SelectedIndexChanged(sender As Object, e As EventArgs) Handles listTags.SelectedIndexChanged
-        nudQuestionCount.Maximum = getQuestions().Count
+        updateQuestionCount()
     End Sub
 
 
@@ -177,6 +187,23 @@
         For i = 0 To listTagsExcluded.Items.Count - 1
             listTagsExcluded.SetItemChecked(i, False)
         Next
+    End Sub
+
+    Private Sub listTagsExcluded_SelectedIndexChanged(sender As Object, e As EventArgs) Handles listTagsExcluded.SelectedIndexChanged
+        updateQuestionCount()
+    End Sub
+
+    Private Sub nudQuestionCount_ValueChanged(sender As Object, e As EventArgs) Handles nudQuestionCount.ValueChanged
+        updateNumberOfQuestion = False
+    End Sub
+
+    Private Sub checkIncludeUntagged_CheckedChanged(sender As Object, e As EventArgs) Handles checkIncludeUntagged.CheckedChanged
+        updateQuestionCount()
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        updateNumberOfQuestion = True
+        updateQuestionCount()
     End Sub
 End Class
 

@@ -66,6 +66,8 @@ Partial Class Publisher
         Me.buttonNext = New System.Windows.Forms.Button()
         Me.buttonFinish = New System.Windows.Forms.Button()
         Me.buttonPrevious = New System.Windows.Forms.Button()
+        Me.TableLayoutPanel14 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.mainTab.SuspendLayout()
         Me.TabPage1.SuspendLayout()
@@ -87,6 +89,7 @@ Partial Class Publisher
         Me.TableLayoutPanel11.SuspendLayout()
         CType(Me.nudQuestionCount, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel2.SuspendLayout()
+        Me.TableLayoutPanel14.SuspendLayout()
         Me.SuspendLayout()
         '
         'TableLayoutPanel1
@@ -519,8 +522,8 @@ Partial Class Publisher
         Me.TableLayoutPanel11.ColumnCount = 2
         Me.TableLayoutPanel11.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel11.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel11.Controls.Add(Me.nudQuestionCount, 0, 0)
         Me.TableLayoutPanel11.Controls.Add(Me.Label7, 0, 0)
+        Me.TableLayoutPanel11.Controls.Add(Me.TableLayoutPanel14, 1, 0)
         Me.TableLayoutPanel11.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel11.Location = New System.Drawing.Point(3, 3)
         Me.TableLayoutPanel11.Name = "TableLayoutPanel11"
@@ -532,10 +535,10 @@ Partial Class Publisher
         'nudQuestionCount
         '
         Me.nudQuestionCount.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.nudQuestionCount.Location = New System.Drawing.Point(338, 9)
+        Me.nudQuestionCount.Location = New System.Drawing.Point(3, 6)
         Me.nudQuestionCount.Maximum = New Decimal(New Integer() {99, 0, 0, 0})
         Me.nudQuestionCount.Name = "nudQuestionCount"
-        Me.nudQuestionCount.Size = New System.Drawing.Size(330, 20)
+        Me.nudQuestionCount.Size = New System.Drawing.Size(225, 20)
         Me.nudQuestionCount.TabIndex = 5
         '
         'Label7
@@ -618,6 +621,31 @@ Partial Class Publisher
         Me.buttonPrevious.Text = "< Previous"
         Me.buttonPrevious.UseVisualStyleBackColor = True
         '
+        'TableLayoutPanel14
+        '
+        Me.TableLayoutPanel14.ColumnCount = 2
+        Me.TableLayoutPanel14.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70.0!))
+        Me.TableLayoutPanel14.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.0!))
+        Me.TableLayoutPanel14.Controls.Add(Me.nudQuestionCount, 0, 0)
+        Me.TableLayoutPanel14.Controls.Add(Me.Button1, 1, 0)
+        Me.TableLayoutPanel14.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel14.Location = New System.Drawing.Point(338, 3)
+        Me.TableLayoutPanel14.Name = "TableLayoutPanel14"
+        Me.TableLayoutPanel14.RowCount = 1
+        Me.TableLayoutPanel14.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel14.Size = New System.Drawing.Size(330, 32)
+        Me.TableLayoutPanel14.TabIndex = 4
+        '
+        'Button1
+        '
+        Me.Button1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Button1.Location = New System.Drawing.Point(234, 3)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(93, 26)
+        Me.Button1.TabIndex = 6
+        Me.Button1.Text = "Set to Maximum"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
         'Publisher
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -654,6 +682,7 @@ Partial Class Publisher
         Me.TableLayoutPanel11.PerformLayout()
         CType(Me.nudQuestionCount, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel2.ResumeLayout(False)
+        Me.TableLayoutPanel14.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -702,4 +731,6 @@ Partial Class Publisher
     Friend WithEvents TableLayoutPanel12 As TableLayoutPanel
     Friend WithEvents btnDeselectAllInclude As Button
     Friend WithEvents btnSelectAllInclude As Button
+    Friend WithEvents TableLayoutPanel14 As TableLayoutPanel
+    Friend WithEvents Button1 As Button
 End Class
