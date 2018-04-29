@@ -38,8 +38,16 @@ Partial Class Publisher
         Me.Label6 = New System.Windows.Forms.Label()
         Me.checkIncludeUntagged = New System.Windows.Forms.CheckBox()
         Me.TableLayoutPanel8 = New System.Windows.Forms.TableLayoutPanel()
+        Me.TableLayoutPanel13 = New System.Windows.Forms.TableLayoutPanel()
+        Me.btnDeselectAllExclude = New System.Windows.Forms.Button()
+        Me.btnSelectAllExclude = New System.Windows.Forms.Button()
         Me.listTags = New System.Windows.Forms.CheckedListBox()
         Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.listTagsExcluded = New System.Windows.Forms.CheckedListBox()
+        Me.TableLayoutPanel12 = New System.Windows.Forms.TableLayoutPanel()
+        Me.btnDeselectAllInclude = New System.Windows.Forms.Button()
+        Me.btnSelectAllInclude = New System.Windows.Forms.Button()
         Me.TableLayoutPanel7 = New System.Windows.Forms.TableLayoutPanel()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.TableLayoutPanel9 = New System.Windows.Forms.TableLayoutPanel()
@@ -58,8 +66,6 @@ Partial Class Publisher
         Me.buttonNext = New System.Windows.Forms.Button()
         Me.buttonFinish = New System.Windows.Forms.Button()
         Me.buttonPrevious = New System.Windows.Forms.Button()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.listTagsExcluded = New System.Windows.Forms.CheckedListBox()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.mainTab.SuspendLayout()
         Me.TabPage1.SuspendLayout()
@@ -71,6 +77,8 @@ Partial Class Publisher
         Me.TableLayoutPanel5.SuspendLayout()
         Me.TableLayoutPanel10.SuspendLayout()
         Me.TableLayoutPanel8.SuspendLayout()
+        Me.TableLayoutPanel13.SuspendLayout()
+        Me.TableLayoutPanel12.SuspendLayout()
         Me.TableLayoutPanel7.SuspendLayout()
         Me.TableLayoutPanel9.SuspendLayout()
         CType(Me.nudMaxMark, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -272,18 +280,56 @@ Partial Class Publisher
         Me.TableLayoutPanel8.ColumnCount = 2
         Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel8.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel8.Controls.Add(Me.TableLayoutPanel13, 1, 2)
         Me.TableLayoutPanel8.Controls.Add(Me.listTags, 0, 1)
         Me.TableLayoutPanel8.Controls.Add(Me.Label2, 0, 0)
         Me.TableLayoutPanel8.Controls.Add(Me.Label8, 1, 0)
         Me.TableLayoutPanel8.Controls.Add(Me.listTagsExcluded, 1, 1)
+        Me.TableLayoutPanel8.Controls.Add(Me.TableLayoutPanel12, 0, 2)
         Me.TableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel8.Location = New System.Drawing.Point(3, 135)
         Me.TableLayoutPanel8.Name = "TableLayoutPanel8"
-        Me.TableLayoutPanel8.RowCount = 2
+        Me.TableLayoutPanel8.RowCount = 3
         Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.0!))
-        Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 95.0!))
+        Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80.0!))
+        Me.TableLayoutPanel8.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15.0!))
         Me.TableLayoutPanel8.Size = New System.Drawing.Size(671, 258)
         Me.TableLayoutPanel8.TabIndex = 2
+        '
+        'TableLayoutPanel13
+        '
+        Me.TableLayoutPanel13.ColumnCount = 2
+        Me.TableLayoutPanel13.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel13.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel13.Controls.Add(Me.btnDeselectAllExclude, 1, 0)
+        Me.TableLayoutPanel13.Controls.Add(Me.btnSelectAllExclude, 0, 0)
+        Me.TableLayoutPanel13.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel13.Location = New System.Drawing.Point(338, 221)
+        Me.TableLayoutPanel13.Name = "TableLayoutPanel13"
+        Me.TableLayoutPanel13.RowCount = 1
+        Me.TableLayoutPanel13.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel13.Size = New System.Drawing.Size(330, 34)
+        Me.TableLayoutPanel13.TabIndex = 5
+        '
+        'btnDeselectAllExclude
+        '
+        Me.btnDeselectAllExclude.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.btnDeselectAllExclude.Location = New System.Drawing.Point(168, 3)
+        Me.btnDeselectAllExclude.Name = "btnDeselectAllExclude"
+        Me.btnDeselectAllExclude.Size = New System.Drawing.Size(159, 28)
+        Me.btnDeselectAllExclude.TabIndex = 1
+        Me.btnDeselectAllExclude.Text = "Deselect All"
+        Me.btnDeselectAllExclude.UseVisualStyleBackColor = True
+        '
+        'btnSelectAllExclude
+        '
+        Me.btnSelectAllExclude.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.btnSelectAllExclude.Location = New System.Drawing.Point(3, 3)
+        Me.btnSelectAllExclude.Name = "btnSelectAllExclude"
+        Me.btnSelectAllExclude.Size = New System.Drawing.Size(159, 28)
+        Me.btnSelectAllExclude.TabIndex = 0
+        Me.btnSelectAllExclude.Text = "Select All"
+        Me.btnSelectAllExclude.UseVisualStyleBackColor = True
         '
         'listTags
         '
@@ -292,7 +338,7 @@ Partial Class Publisher
         Me.listTags.FormattingEnabled = True
         Me.listTags.Location = New System.Drawing.Point(3, 15)
         Me.listTags.Name = "listTags"
-        Me.listTags.Size = New System.Drawing.Size(329, 240)
+        Me.listTags.Size = New System.Drawing.Size(329, 200)
         Me.listTags.TabIndex = 0
         '
         'Label2
@@ -303,6 +349,60 @@ Partial Class Publisher
         Me.Label2.Size = New System.Drawing.Size(72, 12)
         Me.Label2.TabIndex = 1
         Me.Label2.Text = "Include Tags:"
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(338, 0)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(75, 12)
+        Me.Label8.TabIndex = 2
+        Me.Label8.Text = "Exclude Tags:"
+        '
+        'listTagsExcluded
+        '
+        Me.listTagsExcluded.CheckOnClick = True
+        Me.listTagsExcluded.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.listTagsExcluded.FormattingEnabled = True
+        Me.listTagsExcluded.Location = New System.Drawing.Point(338, 15)
+        Me.listTagsExcluded.Name = "listTagsExcluded"
+        Me.listTagsExcluded.Size = New System.Drawing.Size(330, 200)
+        Me.listTagsExcluded.TabIndex = 3
+        '
+        'TableLayoutPanel12
+        '
+        Me.TableLayoutPanel12.ColumnCount = 2
+        Me.TableLayoutPanel12.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel12.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel12.Controls.Add(Me.btnDeselectAllInclude, 1, 0)
+        Me.TableLayoutPanel12.Controls.Add(Me.btnSelectAllInclude, 0, 0)
+        Me.TableLayoutPanel12.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel12.Location = New System.Drawing.Point(3, 221)
+        Me.TableLayoutPanel12.Name = "TableLayoutPanel12"
+        Me.TableLayoutPanel12.RowCount = 1
+        Me.TableLayoutPanel12.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel12.Size = New System.Drawing.Size(329, 34)
+        Me.TableLayoutPanel12.TabIndex = 4
+        '
+        'btnDeselectAllInclude
+        '
+        Me.btnDeselectAllInclude.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.btnDeselectAllInclude.Location = New System.Drawing.Point(167, 3)
+        Me.btnDeselectAllInclude.Name = "btnDeselectAllInclude"
+        Me.btnDeselectAllInclude.Size = New System.Drawing.Size(159, 28)
+        Me.btnDeselectAllInclude.TabIndex = 1
+        Me.btnDeselectAllInclude.Text = "Deselect All"
+        Me.btnDeselectAllInclude.UseVisualStyleBackColor = True
+        '
+        'btnSelectAllInclude
+        '
+        Me.btnSelectAllInclude.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.btnSelectAllInclude.Location = New System.Drawing.Point(3, 3)
+        Me.btnSelectAllInclude.Name = "btnSelectAllInclude"
+        Me.btnSelectAllInclude.Size = New System.Drawing.Size(158, 28)
+        Me.btnSelectAllInclude.TabIndex = 0
+        Me.btnSelectAllInclude.Text = "Select All"
+        Me.btnSelectAllInclude.UseVisualStyleBackColor = True
         '
         'TableLayoutPanel7
         '
@@ -518,25 +618,6 @@ Partial Class Publisher
         Me.buttonPrevious.Text = "< Previous"
         Me.buttonPrevious.UseVisualStyleBackColor = True
         '
-        'Label8
-        '
-        Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(338, 0)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(75, 12)
-        Me.Label8.TabIndex = 2
-        Me.Label8.Text = "Exclude Tags:"
-        '
-        'listTagsExcluded
-        '
-        Me.listTagsExcluded.CheckOnClick = True
-        Me.listTagsExcluded.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.listTagsExcluded.FormattingEnabled = True
-        Me.listTagsExcluded.Location = New System.Drawing.Point(338, 15)
-        Me.listTagsExcluded.Name = "listTagsExcluded"
-        Me.listTagsExcluded.Size = New System.Drawing.Size(330, 240)
-        Me.listTagsExcluded.TabIndex = 3
-        '
         'Publisher
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -559,6 +640,8 @@ Partial Class Publisher
         Me.TableLayoutPanel10.PerformLayout()
         Me.TableLayoutPanel8.ResumeLayout(False)
         Me.TableLayoutPanel8.PerformLayout()
+        Me.TableLayoutPanel13.ResumeLayout(False)
+        Me.TableLayoutPanel12.ResumeLayout(False)
         Me.TableLayoutPanel7.ResumeLayout(False)
         Me.TableLayoutPanel7.PerformLayout()
         Me.TableLayoutPanel9.ResumeLayout(False)
@@ -613,4 +696,10 @@ Partial Class Publisher
     Friend WithEvents Label7 As Label
     Friend WithEvents Label8 As Label
     Friend WithEvents listTagsExcluded As CheckedListBox
+    Friend WithEvents TableLayoutPanel13 As TableLayoutPanel
+    Friend WithEvents btnDeselectAllExclude As Button
+    Friend WithEvents btnSelectAllExclude As Button
+    Friend WithEvents TableLayoutPanel12 As TableLayoutPanel
+    Friend WithEvents btnDeselectAllInclude As Button
+    Friend WithEvents btnSelectAllInclude As Button
 End Class

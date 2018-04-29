@@ -155,6 +155,29 @@
         Return result
     End Function
 
+    Private Sub btnSelectAllInclude_Click(sender As Object, e As EventArgs) Handles btnSelectAllInclude.Click
+        For i = 0 To listTags.Items.Count - 1
+            listTags.SetItemChecked(i, True)
+        Next
+    End Sub
+
+    Private Sub btnDeselectAllInclude_Click(sender As Object, e As EventArgs) Handles btnDeselectAllInclude.Click
+        For i = 0 To listTags.Items.Count - 1
+            listTags.SetItemChecked(i, False)
+        Next
+    End Sub
+
+    Private Sub btnSelectAllExclude_Click(sender As Object, e As EventArgs) Handles btnSelectAllExclude.Click
+        For i = 0 To listTagsExcluded.Items.Count - 1
+            listTagsExcluded.SetItemChecked(i, True)
+        Next
+    End Sub
+
+    Private Sub btnDeselectAllExclude_Click(sender As Object, e As EventArgs) Handles btnDeselectAllExclude.Click
+        For i = 0 To listTagsExcluded.Items.Count - 1
+            listTagsExcluded.SetItemChecked(i, False)
+        Next
+    End Sub
 End Class
 
 Public Class questionCollection
