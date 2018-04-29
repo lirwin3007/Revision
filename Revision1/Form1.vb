@@ -725,9 +725,9 @@ Public Class assessment
             counter += 1
         End While
 
-        If question Is Nothing Then question = defaultQuestion.questions
-        If markScheme Is Nothing Then markScheme = defaultQuestion.markSchemes
-        If marks Is Nothing Then marks = defaultQuestion.markss
+        If question Is Nothing Then question = New List(Of String)(defaultQuestion.questions)
+        If markScheme Is Nothing Then markScheme = New List(Of String)(defaultQuestion.markSchemes)
+        If marks Is Nothing Then marks = New List(Of Integer)(defaultQuestion.markss)
 
         Dim newQuestion As question = defaultQuestion.Copy()
         newQuestion.path = path
@@ -942,6 +942,15 @@ Public Class question
         Dim myCopy As question = DirectCast(Me.MemberwiseClone(), question)
         myCopy.resources = New List(Of resource)
         myCopy.tags = New List(Of String)
+        myCopy.questions = New List(Of String)
+        myCopy.markSchemes = New List(Of String)
+        myCopy.markss = New List(Of Integer)
+        myCopy.markss.Add(1)
+        myCopy.lineOrPages = New List(Of String)({lineOrPages(0)})
+        myCopy.linepagecounts = New List(Of Integer)({linepagecounts(0)})
+        myCopy.questionTypes = New List(Of String)({questionTypes(0)})
+        myCopy.markSchemeTypes = New List(Of String)({markSchemeTypes(0)})
+
         Return myCopy
     End Function
 
