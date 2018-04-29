@@ -86,7 +86,7 @@
 
     Sub generatePublication()
 
-        If getquestions().Count = 0 Then
+        If getQuestions(assessment.questions).Count = 0 Then
             MsgBox("No questions found! Please broaden search criteria", MsgBoxStyle.Critical, "Error")
             mainTab.SelectedIndex = 2
             buttonCancel.Visible = True
@@ -112,8 +112,11 @@
     End Sub
 
     Sub updateQuestionCount()
-        If updateNumberOfQuestion Then
-            nudQuestionCount.Maximum = getQuestions().Count
+        If Not assessment Is Nothing Then
+            nudQuestionCount.Maximum = getQuestions(assessment.questions).Count
+            If updateNumberOfQuestion Then
+                nudQuestionCount.Value = nudQuestionCount.Maximum
+            End If
         End If
     End Sub
 
@@ -121,20 +124,23 @@
         updateQuestionCount()
     End Sub
 
-
-
-    Function getQuestions() As Dictionary(Of String, question)
-        Dim result As New Dictionary(Of String, question)
-        For Each questionKey In assessment.questions.Keys
-            Dim question As question = assessment.questions(questionKey)
-            For Each tagName In listTags.CheckedItems
-                If question.tags.Contains(tagName) Then
-                    If question.totalMarks > nudMinMark.Value And question.totalMarks < nudMaxMark.Value Then
-                        result.Add(questionKey, question)
-                    End If
-                    Exit For
-                End If
+    Function getQuestions(completeQuestions As Dictionary(Of Integer, question)) As Dictionary(Of Integer, question)
+        Dim result As New Dictionary(Of Integer, question)
+        For Each questionKey In completeQuestions.Keys
+            Dim question As question = completeQuestions(questionKey)
+            Dim tags As New List(Of String)
+            For Each item In listTags.CheckedItems
+                tags.Add(item)
             Next
+            Dim excludedTags As New List(Of String)
+            For Each item In listTagsExcluded.CheckedItems
+                excludedTags.Add(item)
+            Next
+            If question.containsTag(tags) And Not question.containsTag(excludedTags) Then
+                If question.totalMarks > nudMinMark.Value And question.totalMarks < nudMaxMark.Value Then
+                    result.Add(questionKey, question)
+                End If
+            End If
             If question.tags.Count = 0 And checkIncludeUntagged.Checked Then
                 If question.totalMarks > nudMinMark.Value And question.totalMarks < nudMaxMark.Value Then
                     result.Add(questionKey, question)
@@ -142,26 +148,6 @@
             End If
         Next
 
-        Dim finalResult As Dictionary(Of String, question) = result
-        If result.Count > nudQuestionCount.Value Then
-            result = jumble(result)
-            finalResult = New Dictionary(Of String, question)
-            For counter = 0 To nudQuestionCount.Value - 1
-                finalResult.Add(result.Keys(counter), result(result.Keys(counter)))
-            Next
-        End If
-
-        Return result
-    End Function
-
-    Function jumble(collection As Dictionary(Of String, question)) As Dictionary(Of String, question)
-        Dim result As New Dictionary(Of String, question)
-        Do Until collection.Count = 0
-            Dim random As Integer = Rnd() * (collection.Count - 1)
-            Dim randomKey As String = collection.Keys(random)
-            result.Add(randomKey, collection(randomKey))
-            collection.Remove(randomKey)
-        Loop
         Return result
     End Function
 
@@ -169,32 +155,32 @@
         For i = 0 To listTags.Items.Count - 1
             listTags.SetItemChecked(i, True)
         Next
+        updateQuestionCount()
     End Sub
 
     Private Sub btnDeselectAllInclude_Click(sender As Object, e As EventArgs) Handles btnDeselectAllInclude.Click
         For i = 0 To listTags.Items.Count - 1
             listTags.SetItemChecked(i, False)
         Next
+        updateQuestionCount()
     End Sub
 
     Private Sub btnSelectAllExclude_Click(sender As Object, e As EventArgs) Handles btnSelectAllExclude.Click
         For i = 0 To listTagsExcluded.Items.Count - 1
             listTagsExcluded.SetItemChecked(i, True)
         Next
+        updateQuestionCount()
     End Sub
 
     Private Sub btnDeselectAllExclude_Click(sender As Object, e As EventArgs) Handles btnDeselectAllExclude.Click
         For i = 0 To listTagsExcluded.Items.Count - 1
             listTagsExcluded.SetItemChecked(i, False)
         Next
+        updateQuestionCount()
     End Sub
 
     Private Sub listTagsExcluded_SelectedIndexChanged(sender As Object, e As EventArgs) Handles listTagsExcluded.SelectedIndexChanged
         updateQuestionCount()
-    End Sub
-
-    Private Sub nudQuestionCount_ValueChanged(sender As Object, e As EventArgs) Handles nudQuestionCount.ValueChanged
-        updateNumberOfQuestion = False
     End Sub
 
     Private Sub checkIncludeUntagged_CheckedChanged(sender As Object, e As EventArgs) Handles checkIncludeUntagged.CheckedChanged
@@ -204,6 +190,10 @@
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         updateNumberOfQuestion = True
         updateQuestionCount()
+    End Sub
+
+    Private Sub nudQuestionCount_Enter(sender As Object, e As EventArgs) Handles nudQuestionCount.Enter
+        updateNumberOfQuestion = False
     End Sub
 End Class
 
