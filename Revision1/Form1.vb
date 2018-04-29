@@ -1395,6 +1395,10 @@ Public Class test
         fileReader.Close()
     End Sub
 
+    Public Overrides Function ToString() As String
+        Return "Test " + ID.ToString() + " Marked " + results.Count.ToString() + " times"
+    End Function
+
     Sub save(path)
         Dim file As IO.StreamWriter = My.Computer.FileSystem.OpenTextFileWriter(path + "\" + ID.ToString() + "\info.txt", False)
         Dim qString As String = ""
